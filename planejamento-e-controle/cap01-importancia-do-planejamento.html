@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cap. 1 — Importância do Planejamento | Apostila interna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+.carimbo h1{font-size:clamp(2.6rem,7vw,4.6rem)}
+
+/* ---------- afirmacao em destaque ---------- */
+.afirmacao{background:var(--branco);border-left:6px solid var(--marca);border-top:1px solid var(--linha);border-right:1px solid var(--linha);border-bottom:1px solid var(--linha);padding:clamp(1.1rem,3vw,1.8rem);margin:1.8rem 0}
+.afirmacao p{margin:0;font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:clamp(1.25rem,2.6vw,1.6rem);line-height:1.25;max-width:44ch}
+.afirmacao .origem{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.1em;color:var(--tinta-2);margin-top:.9rem;font-weight:400}
+
+/* ---------- lista com barra (referencia ao livro) ---------- */
+.quadro{background:var(--branco);border:1px solid var(--linha);display:flex;margin:1.8rem 0}
+.quadro .barra{width:22px;flex:none;background:linear-gradient(180deg,var(--tinta),var(--tinta-2))}
+.quadro ol{list-style:none;margin:0;padding:0;flex:1}
+.quadro li{padding:.85rem 1.2rem;border-bottom:1px solid var(--linha);display:grid;grid-template-columns:2.1rem 1fr;gap:.2rem .4rem}
+.quadro li:last-child{border-bottom:0}
+.quadro .letra{font-family:"IBM Plex Mono",monospace;font-size:.82rem;color:var(--marca);padding-top:.2rem}
+.quadro .item{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.28rem;line-height:1.15}
+.quadro .desc{grid-column:2;font-size:.97rem;color:var(--tinta-2);line-height:1.5;margin:.2rem 0 0;max-width:60ch}
+
+/* ---------- figura ---------- */
+.figura{background:var(--branco);border:1px solid var(--linha);padding:clamp(.9rem,2.5vw,1.6rem);margin:1.8rem 0}
+.figura svg{width:100%;height:auto;display:block}
+.figura figcaption{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.05rem;color:var(--tinta-2);margin:.9rem 0 0;border-left:4px solid var(--marca);padding-left:.7rem}
+.duas-leituras{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--linha);border:1px solid var(--linha);margin:1.6rem 0}
+.duas-leituras > div{background:var(--branco);padding:clamp(1rem,2.5vw,1.5rem)}
+.duas-leituras h3{margin:0 0 .5rem;font-size:1.3rem;display:flex;align-items:center;gap:.6rem}
+.duas-leituras h3::before{content:"";width:14px;height:14px;flex:none}
+.duas-leituras .constr h3::before{background:#8FB3C4}
+.duas-leituras .destr h3::before{background:var(--marca)}
+.duas-leituras p{margin:0;font-size:.98rem;color:var(--tinta-2);line-height:1.55}
+
+/* ---------- causas ---------- */
+.causa{background:var(--branco);border:1px solid var(--linha);border-top:4px solid var(--tinta);padding:clamp(1.1rem,3vw,1.9rem);margin:1.6rem 0}
+.causa h3{margin:0 0 .8rem;font-size:1.45rem;display:flex;gap:.7rem;align-items:baseline}
+.causa h3 .letra{font-family:"IBM Plex Mono",monospace;font-size:.85rem;color:var(--marca);font-weight:500}
+.causa p{margin:0 0 .9rem}
+.causa p:last-child{margin-bottom:0}
+.causa .contraponto{border-left:3px solid var(--marca);padding:.7rem 0 .7rem 1rem;background:linear-gradient(90deg,rgba(224,162,28,.09),rgba(224,162,28,0));font-size:.98rem}
+.causa .contraponto strong{font-family:"Barlow Condensed",sans-serif;font-size:1.1rem;letter-spacing:.01em}
+
+@media (max-width:900px){
+  .duas-leituras{grid-template-columns:1fr}
+}
+@media print{
+  .figura{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+<p class="trilha"><a href="../index.html">Portal</a> / <a href="index.html">Planejamento e controle</a> / Capítulo 1</p>
+
+<header class="carimbo-wrap">
+  <div class="carimbo">
+    <div class="campo-principal">
+      <p class="obra">MATERIAL INTERNO / EQUIPE DE PLANEJAMENTO E CONTROLE DE OBRAS</p>
+      <h1><span class="cap">CAPÍTULO 1</span>Importância do planejamento</h1>
+      <p class="chamada">Por que a obra que é planejada custa menos, atrasa menos e desgasta menos gente — e por que, mesmo assim, tanta gente ainda planeja mal.</p>
+      <a class="proximo" href="cap02-ciclo-de-vida-do-projeto.html">Ir para o Capítulo 2</a>
+    </div>
+    <div class="meta">
+      <div><span class="r">ASSUNTO</span><span class="v">Fundamentos de planejamento</span></div>
+      <div><span class="r">PÚBLICO</span><span class="v">Equipe técnica e de campo</span></div>
+      <div><span class="r">BASE</span><span class="v">Mattos, A. D.</span></div>
+      <div><span class="r">USO</span><span class="v">Treinamento interno</span></div>
+    </div>
+  </div>
+  <div class="fita"><i></i><i></i><i></i><i></i></div>
+</header>
+
+<div class="corpo">
+  <nav class="sumario" aria-label="Sumário do capítulo">
+    <p>Neste capítulo</p>
+    <ol>
+      <li><a href="#abertura"><span>1.0</span>Por que planejar</a></li>
+      <li><a href="#beneficios"><span>1.1</span>Benefícios do planejamento</a></li>
+      <li><a href="#oportunidade"><span>Fig. 1.1</span>Quando mudar ainda é barato</a></li>
+      <li><a href="#deficiencia"><span>1.2</span>A deficiência do planejamento</a></li>
+      <li><a href="#causas"><span>1.3</span>Causas da deficiência</a></li>
+      <li><a href="#doutrina"><span>1.4</span>A reunião como doutrina</a></li>
+      <li><a href="#pratica"><span>1.5</span>O que vale para a nossa equipe</a></li>
+    </ol>
+  </nav>
+
+  <main id="conteudo">
+
+    <section id="abertura">
+      <div class="titulo"><span class="num">1.0</span><h2>Por que planejar</h2></div>
+      <p class="intro">Planejar é decidir antes o que vai ser feito, por quem, com quais recursos e em que ordem. Não é preencher cronograma para cumprir tabela: é reduzir o número de decisões improvisadas que a obra vai exigir depois, quando cada decisão já custa dinheiro e tempo.</p>
+      <p>O gestor que planeja é obrigado a estudar o projeto, atacar o escopo pedaço por pedaço, estimar durações e enxergar as dependências entre serviços. Esse esforço, feito antes, é o que dá a ele domínio sobre o empreendimento. É por isso que o planejamento é hoje um dos principais indicadores de competência de uma construtora — e não mais um enfeite de escritório.</p>
+
+      <h3>O que os estudos do setor mostram</h3>
+      <p>O processo de planejamento e controle tem impacto direto no desempenho da produção. Pesquisas feitas no Brasil e no exterior chegam à mesma conclusão, e ela é incômoda: boa parte dos problemas crônicos da construção não vem da falta de tecnologia, e sim da falta de gestão.</p>
+
+      <div class="afirmacao">
+        <p>Falhas de planejamento e controle estão entre as principais causas da baixa produtividade da construção, das perdas elevadas e da qualidade fraca do que o setor entrega.</p>
+        <p class="origem">CONCLUSÃO RECORRENTE EM ESTUDOS NACIONAIS E INTERNACIONAIS</p>
+      </div>
+
+      <p>A leitura prática disso é simples: produtividade baixa, desperdício e retrabalho não são características naturais da obra. São sintomas de um processo de gestão que não antecipou nada.</p>
+      <p>Há ainda um argumento de sobrevivência empresarial. Planejar sustenta a continuidade da empresa porque dá ao gestor a capacidade de responder rápido e com acerto: acompanhando a evolução do empreendimento, ele percebe cedo o que está saindo do rumo e consegue redirecionar a estratégia enquanto ainda há margem para isso.</p>
+      <p>Este capítulo cobre quatro coisas: o que a obra ganha quando é planejada, por que mudar cedo é barato e mudar tarde é caro, o que acontece quando o planejamento é fraco e por que, historicamente, ele ainda é fraco em boa parte do setor.</p>
+    </section>
+
+    <section id="beneficios">
+      <div class="titulo"><span class="num">1.1</span><h2>Benefícios do planejamento</h2></div>
+      <p>Ao planejar, o gestor adquire alto grau de conhecimento do empreendimento, o que o torna mais eficiente na condução dos trabalhos. Os principais ganhos são estes:</p>
+
+      <div class="quadro">
+        <div class="barra" aria-hidden="true"></div>
+        <ol>
+          <li><span class="letra">(a)</span><span class="item">Conhecimento pleno da obra</span><p class="desc">Estudar o projeto e montar a rede de atividades obriga a entender como a obra se constrói de fato. Quem planeja deixa de conhecer a obra só pelo contrato e passa a conhecê-la pela sequência executiva.</p></li>
+          <li><span class="letra">(b)</span><span class="item">Detecção de situações desfavoráveis</span><p class="desc">Desvios de prazo e de produtividade aparecem cedo, ainda como tendência. Isso dá tempo de agir enquanto a correção é barata, em vez de constatar o atraso quando ele já é irreversível.</p></li>
+          <li><span class="letra">(c)</span><span class="item">Agilidade de decisões</span><p class="desc">Com o plano na mão, decidir deixa de depender de opinião. As alternativas podem ser simuladas e comparadas antes de virar ordem de serviço.</p></li>
+          <li><span class="letra">(d)</span><span class="item">Relação com o orçamento</span><p class="desc">Prazo e custo andam juntos. Ao ligar o cronograma ao orçamento, é possível avaliar o gasto ao longo do tempo e comparar o realizado com o previsto de forma coerente.</p></li>
+          <li><span class="letra">(e)</span><span class="item">Otimização da alocação de recursos</span><p class="desc">O plano mostra picos e vales de mão de obra e equipamento. Com folgas conhecidas, dá para nivelar equipes, adiantar frentes e evitar equipe parada ou equipamento ocioso.</p></li>
+          <li><span class="letra">(f)</span><span class="item">Referência para acompanhamento</span><p class="desc">Sem linha de base não existe controle: só existe relato. O plano é o padrão contra o qual o avanço real é medido.</p></li>
+          <li><span class="letra">(g)</span><span class="item">Padronização</span><p class="desc">Uniformiza o entendimento de todos sobre o que precisa ser feito. Diminui a dependência do estilo pessoal de cada engenheiro e facilita a rotina gerencial entre obras diferentes.</p></li>
+          <li><span class="letra">(h)</span><span class="item">Referência para metas</span><p class="desc">Metas só são justas quando saem de um plano coerente. Programas de produtividade e bonificação precisam de um alvo calculado, não de um número escolhido no chute.</p></li>
+          <li><span class="letra">(i)</span><span class="item">Documentação e rastreabilidade</span><p class="desc">Registra decisões, mudanças e ocorrências ao longo da obra. Esse histórico sustenta pleitos, defende a empresa em discussões contratuais e explica o que aconteceu meses depois.</p></li>
+          <li><span class="letra">(j)</span><span class="item">Criação de dados históricos</span><p class="desc">Cada obra planejada e controlada alimenta o banco de produtividades e índices da empresa. É o que faz a próxima estimativa nascer melhor que a anterior.</p></li>
+          <li><span class="letra">(k)</span><span class="item">Profissionalismo</span><p class="desc">Uma obra planejada transmite organização a cliente, fiscalização e à própria equipe. Postura profissional é percebida — e cobrada — pelo mercado.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="oportunidade">
+      <div class="titulo"><span class="num">Fig. 1.1</span><h2>Quando mudar ainda é barato</h2></div>
+      <p>Há um ponto do empreendimento em que uma mudança agrega valor e outro em que a mesma mudança só destrói valor. A diferença entre os dois é tempo. Duas curvas explicam isso: o <strong>potencial para agregar valor</strong>, que só faz cair ao longo do empreendimento, e o <strong>custo da mudança</strong>, que só faz subir.</p>
+
+      <figure class="figura">
+        <svg viewBox="0 0 780 420" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Gráfico do grau de oportunidade da mudança em função do tempo: a curva do potencial para agregar valor cai da concepção à finalização, enquanto a curva do custo da mudança sobe. As duas se cruzam durante a execução.">
+          <defs>
+            <marker id="pt1" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#14232B"/></marker>
+            <path id="c-valor" d="M84,62 C 210,66 265,95 355,180 C 435,258 520,320 716,338" fill="none"/>
+            <path id="c-custo" d="M84,338 C 255,335 325,305 405,245 C 485,185 575,95 716,62" fill="none"/>
+          </defs>
+
+          <!-- faixas de oportunidade -->
+          <rect x="84" y="58" width="346" height="284" fill="#DDE7EC"/>
+          <rect x="530" y="58" width="186" height="284" fill="#F5E7CB"/>
+
+          <!-- divisores de fase -->
+          <g stroke="#465862" stroke-width="1.6" stroke-dasharray="6 5">
+            <line x1="230" y1="46" x2="230" y2="342"/>
+            <line x1="360" y1="46" x2="360" y2="342"/>
+            <line x1="600" y1="46" x2="600" y2="342"/>
+            <line x1="716" y1="46" x2="716" y2="342"/>
+          </g>
+
+          <!-- rotulos de fase -->
+          <g font-family="'Barlow Condensed',sans-serif" font-weight="600" font-size="18" fill="#14232B" text-anchor="middle">
+            <text x="157" y="38">Concepção</text>
+            <text x="295" y="38">Desenvolvimento</text>
+            <text x="480" y="38">Execução</text>
+            <text x="658" y="38">Finalização</text>
+          </g>
+
+          <!-- eixos -->
+          <line x1="84" y1="342" x2="756" y2="342" stroke="#14232B" stroke-width="2" marker-end="url(#pt1)"/>
+          <line x1="84" y1="342" x2="84" y2="46" stroke="#14232B" stroke-width="2"/>
+          <text x="30" y="200" font-family="'IBM Plex Mono',monospace" font-size="13" fill="#14232B" text-anchor="middle" transform="rotate(-90 30 200)">Grau de oportunidade</text>
+          <text x="400" y="378" font-family="'IBM Plex Mono',monospace" font-size="14" fill="#14232B" text-anchor="middle">Tempo</text>
+
+          <!-- curvas -->
+          <use href="#c-valor" xlink:href="#c-valor" stroke="#14232B" stroke-width="3.5" stroke-linecap="round"/>
+          <use href="#c-custo" xlink:href="#c-custo" stroke="#E0A21C" stroke-width="3.5" stroke-linecap="round"/>
+
+          <!-- rotulos sobre as curvas -->
+          <text font-family="'Barlow Condensed',sans-serif" font-weight="600" font-size="17" fill="#14232B" dy="-9">
+            <textPath href="#c-valor" xlink:href="#c-valor" startOffset="26%">Potencial para agregar valor</textPath>
+          </text>
+          <text font-family="'Barlow Condensed',sans-serif" font-weight="600" font-size="17" fill="#9A6B08" dy="-9">
+            <textPath href="#c-custo" xlink:href="#c-custo" startOffset="52%">Custo da mudança</textPath>
+          </text>
+
+          <!-- rotulos das areas -->
+          <g font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="26" fill="#14232B" text-anchor="middle">
+            <text x="205" y="228">Oportunidade</text><text x="205" y="252">construtiva</text>
+            <text x="623" y="228">Oportunidade</text><text x="623" y="252">destrutiva</text>
+          </g>
+        </svg>
+        <figcaption>Figura 1.1 — Grau de oportunidade da mudança em função do tempo</figcaption>
+      </figure>
+
+      <div class="duas-leituras">
+        <div class="constr">
+          <h3>Oportunidade construtiva</h3>
+          <p>No início, quase tudo ainda está no papel. Alterar solução, sequência ou método custa pouco mais que uma reunião, e o ganho possível é grande. É aqui que o planejamento tem o melhor retorno — justamente quando parece que a obra "ainda nem começou".</p>
+        </div>
+        <div class="destr">
+          <h3>Oportunidade destrutiva</h3>
+          <p>Perto do fim, a mesma mudança encontra serviço executado, material comprado e equipe alocada. Ela vira demolição, retrabalho, aditivo e atraso. O potencial de agregar valor já se esgotou; o que sobra é custo.</p>
+        </div>
+      </div>
+
+      <p>É esse gráfico que responde a quem diz que planejar atrasa o começo da obra. Não atrasa: antecipa a discussão para o único momento em que ela ainda é barata. Toda decisão empurrada para frente muda de lado no gráfico.</p>
+    </section>
+
+    <section id="deficiencia">
+      <div class="titulo"><span class="num">1.2</span><h2>A deficiência do planejamento</h2></div>
+      <p>Se os benefícios são tão claros, por que boa parte das obras ainda chega ao fim com prazo estourado e custo acima do previsto? Porque planejamento deficiente não é ausência de cronograma — é cronograma que ninguém usa.</p>
+      <p>Os sintomas são conhecidos: o plano é feito no início e nunca mais atualizado; o cronograma da diretoria não é o cronograma do campo; a medição de avanço é feita por percepção; a equipe de produção descobre a programação da semana no dia em que ela começa. Em todos esses casos existe um documento chamado planejamento, mas ele não governa a obra.</p>
+      <p>O efeito é sempre o mesmo: as decisões voltam a ser tomadas na urgência, o retrabalho aparece, os recursos ficam mal distribuídos e a obra passa a ser conduzida por reação, não por antecipação. E, como mostra a Figura 1.1, decidir por reação significa decidir tarde — do lado caro do gráfico.</p>
+    </section>
+
+    <section id="causas">
+      <div class="titulo"><span class="num">1.3</span><h2>Causas da deficiência</h2></div>
+      <p>As causas dessa deficiência em planejamento e controle podem ser agrupadas em quatro aspectos, todos arraigados de longa data na cultura do setor:</p>
+
+      <div class="quadro">
+        <div class="barra" aria-hidden="true"></div>
+        <ol>
+          <li><span class="letra">(a)</span><span class="item">Planejamento e controle como atividades de um único setor</span></li>
+          <li><span class="letra">(b)</span><span class="item">Descrédito por falta de certeza nos parâmetros</span></li>
+          <li><span class="letra">(c)</span><span class="item">Planejamento excessivamente informal</span></li>
+          <li><span class="letra">(d)</span><span class="item">Mito do tocador de obras</span></li>
+        </ol>
+      </div>
+
+      <div class="causa">
+        <h3><span class="letra">(a)</span>Planejamento e controle como atividades de um único setor</h3>
+        <p>É comum a empresa tratar planejamento como tarefa exclusiva de um departamento, geralmente ligado à sede. O setor emite cronogramas, curvas e relatórios; o restante da organização apenas recebe. O plano vira um produto entregue, não um acordo construído.</p>
+        <p>O resultado é previsível: quem executa não se sente autor do plano e, portanto, não se sente responsável por ele. Suprimentos, produção, qualidade e segurança seguem cada um com sua própria versão da realidade, e o cronograma passa a competir com a rotina em vez de organizá-la.</p>
+        <div class="contraponto"><strong>Como corrigimos:</strong> o plano é elaborado com quem vai executar. Engenheiro de produção, mestre, encarregado e suprimentos participam da definição de sequência, durações e restrições. Planejamento é função de todos; o setor apenas consolida, formaliza e cobra.</div>
+      </div>
+
+      <div class="causa">
+        <h3><span class="letra">(b)</span>Descrédito por falta de certeza nos parâmetros</h3>
+        <p>A incerteza é inerente à construção. Ela vem da variabilidade do produto e das condições locais, da natureza dos processos de produção e da própria falta de domínio das empresas sobre esses processos. Como as premissas podem não se confirmar, muita gente conclui que planejar não adianta.</p>
+        <p>A conclusão está errada. O planejamento não é uma profecia: é um exercício técnico que estima o impacto das atividades dentro do cenário futuro mais verossímil disponível hoje. À medida que o tempo passa, as incertezas vão sendo incorporadas ao plano por meio de alterações e adaptações, com o uso das produtividades corretas para cada situação real de trabalho.</p>
+        <p>Um plano que muda não é um plano que falhou. Plano que nunca muda, esse sim, é plano que ninguém está usando.</p>
+        <div class="contraponto"><strong>Como corrigimos:</strong> replanejamento é rotina, não exceção. Cada ciclo de atualização registra a produtividade realmente obtida e devolve esse número para a base de dados da empresa. A antiga crença de que desperdício e informalidade são intrínsecos à construção não se sustenta mais.</div>
+      </div>
+
+      <div class="causa">
+        <h3><span class="letra">(c)</span>Planejamento excessivamente informal</h3>
+        <p>Sem um processo formal, o planejamento vira combinação verbal: decide-se na conversa de corredor, programa-se na cabeça do engenheiro e ajusta-se no rádio. Nada é registrado, nada é comparado depois, e cada obra funciona de um jeito.</p>
+        <p>A informalidade custa caro porque impede a comparação entre o previsto e o realizado. Se a programação não foi escrita, não há como saber se ela foi cumprida — e, sem isso, não há aprendizado nem responsabilização.</p>
+        <div class="contraponto"><strong>Como corrigimos:</strong> ciclo fixo e documentado. Programação semanal escrita, distribuída antes do início da semana, medição do que foi concluído e análise das causas do não cumprimento. Mesma rotina, mesmos formatos, em todas as obras.</div>
+      </div>
+
+      <div class="causa">
+        <h3><span class="letra">(d)</span>Mito do tocador de obras</h3>
+        <p>Ainda é comum a supervalorização do "tocador de obras": o engenheiro que decide rápido, apoiado apenas na experiência e na intuição, e para quem planejar é perda de tempo. Como não há planejamento, a obra realmente passa a depender de alguém capaz de apagar incêndios o dia inteiro — e isso reforça o mito. Forma-se um círculo vicioso, em que a falta de planejamento cria a carência justamente desse perfil de profissional.</p>
+        <p>Como a construção se desenvolveu historicamente com muita informalidade e num ambiente em que o desperdício era tido como aceitável, valorizou-se o "tocador" em detrimento do "gerente". A consequência foi o afastamento do pessoal de campo em relação ao planejamento e ao acompanhamento: virou assunto de escritório.</p>
+        <p>A comparação internacional é dura. Em países mais desenvolvidos, mestres de obra e encarregados dedicam bem mais tempo do que os colegas brasileiros a analisar a programação e a pensar com antecedência nas ações e providências das semanas seguintes.</p>
+        <div class="contraponto"><strong>Como corrigimos:</strong> experiência não é substituída, é usada como entrada do plano. O bom mestre é quem melhor sabe estimar produtividade e antever restrição — desde que sente para pensar a semana antes que ela comece.</div>
+      </div>
+    </section>
+
+    <section id="doutrina">
+      <div class="doutrina">
+        <h2>A reunião de acompanhamento é onde o plano vira cultura</h2>
+        <p class="sub">Ponto de atenção da nossa equipe</p>
+        <p>O item (d) explica por que a nossa reunião de acompanhamento tem um papel maior do que revisar percentuais. Ela é o instrumento que aproxima o campo do planejamento — e essa aproximação não acontece sozinha. Ela precisa ser ensinada, repetida e cobrada até virar hábito.</p>
+        <p>Chamamos isso internamente de <strong>doutrinar o pessoal de campo</strong>: fazer com que mestre, encarregado e líder de frente entendam o plano, discordem dele quando for o caso e saiam da sala tendo assumido a semana como compromisso próprio. Um plano que só o setor de planejamento defende não se sustenta na obra. Todos precisam abraçar o projeto — o cronograma é da obra inteira, não do planejador.</p>
+        <ul class="regras">
+          <li><b>Todo mundo que executa participa</b><span>Se a frente de serviço está na programação, o responsável por ela está na reunião. Ninguém recebe meta por rádio ou por WhatsApp sem ter estado na mesa.</span></li>
+          <li><b>Cada um fala da sua frente</b><span>Quem apresenta o avanço é quem executou, não o planejador. Isso muda a postura: o campo deixa de ser auditado e passa a prestar contas do que assumiu.</span></li>
+          <li><b>Discordar é obrigação, não atrito</b><span>Se a duração está irreal ou a restrição não foi resolvida, o lugar de dizer isso é ali. Silêncio na reunião vira atraso na semana seguinte.</span></li>
+          <li><b>Toda meta não cumprida tem causa registrada</b><span>Falta de material, projeto, efetivo, retrabalho, clima. Sem a causa, a mesma falha se repete e ninguém aprende nada com ela.</span></li>
+          <li><b>A semana seguinte sai da reunião fechada</b><span>Com responsável, quantidade e data para cada serviço. A reunião termina com compromissos, não com um resumo do que aconteceu.</span></li>
+          <li><b>A linguagem é a do campo</b><span>Quantidades, frentes e datas. Termos técnicos de planejamento se explicam quando aparecem, sempre. Plano que a equipe não entende, a equipe não cumpre.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="pratica">
+      <div class="titulo"><span class="num">1.5</span><h2>O que vale para a nossa equipe</h2></div>
+      <p>Fechamento prático do capítulo. Use como verificação rápida em qualquer obra da empresa:</p>
+      <div class="checklist">
+        <ul>
+          <li><span class="caixa" aria-hidden="true"></span><span>O plano da obra foi construído com produção e suprimentos, e não entregue pronto pelo setor de planejamento.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>As decisões que mais pesam em custo e prazo estão sendo tomadas do lado construtivo da Figura 1.1, e não empurradas para a execução.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>Existe uma linha de base formal e ela é comparada com o realizado em ciclo fixo.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>A programação semanal é escrita e chega ao campo antes do início da semana.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>Toda meta não cumprida tem causa registrada e tratada.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>As produtividades reais medidas na obra voltam para a base histórica da empresa.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>Mestres e encarregados participam da reunião de acompanhamento e apresentam suas frentes.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>O replanejamento acontece por rotina, sem ser tratado como falha de quem planejou.</span></li>
+        </ul>
+      </div>
+      <p class="nota-fonte">Material interno de treinamento, elaborado pela equipe a partir da estrutura do Capítulo 1 de <em>Planejamento e Controle de Obras</em>, de Aldo Dórea Mattos. O texto é redação própria, com comentários e práticas adaptados à nossa realidade; a Figura 1.1 foi redesenhada a partir do gráfico do autor. Para o conteúdo original, consulte a obra.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div>
+    <span>Apostila interna — Capítulo 1</span>
+    <span><a href="cap02-ciclo-de-vida-do-projeto.html">Capítulo 2 — Ciclo de vida do projeto</a></span>
+  </div>
+</footer>
+</body>
+</html>

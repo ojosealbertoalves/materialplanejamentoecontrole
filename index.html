@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conteúdo interno de treinamento | Apostila interna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/base.css">
+<style>
+.carimbo h1{font-size:clamp(2.5rem,6.6vw,4.4rem)}
+
+/* ---------- grade de secoes ---------- */
+.secoes-wrap{max-width:1180px;margin:0 auto;padding:clamp(1.2rem,4vw,3rem)}
+.secoes-wrap > p{font-size:1.05rem;color:var(--tinta-2);margin:0 0 1.6rem}
+.lista-secoes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--linha);border:1px solid var(--linha)}
+
+/* bloco duplicável para cada nova seção */
+.secao-card{background:var(--branco);padding:clamp(1.3rem,3.5vw,2rem);text-decoration:none;color:var(--tinta);display:flex;flex-direction:column;gap:.7rem;border-top:4px solid var(--marca)}
+.secao-card:hover{background:#F6F7F7}
+.secao-card .secao-num{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;color:var(--tinta-2)}
+.secao-card h2{font-size:clamp(1.4rem,3vw,1.8rem);margin:0}
+.secao-card p{margin:0;font-size:.98rem;color:var(--tinta-2);line-height:1.55;max-width:44ch}
+.secao-card .secao-acessar{margin-top:.4rem;font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1rem;color:var(--tinta)}
+.secao-card:hover .secao-acessar{color:var(--marca)}
+
+.secao-card.em-breve{border-top-color:var(--concreto);color:var(--tinta-2);cursor:default}
+.secao-card.em-breve .secao-acessar{color:var(--concreto)}
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+<header class="carimbo-wrap">
+  <div class="carimbo">
+    <div class="campo-principal">
+      <p class="obra">MATERIAL INTERNO / EQUIPE DE PLANEJAMENTO E CONTROLE DE OBRAS</p>
+      <h1><span class="cap">PORTAL DE TREINAMENTO</span>Conteúdo interno de treinamento</h1>
+      <p class="chamada">Apostilas internas organizadas por seção, para consulta da equipe a qualquer momento.</p>
+    </div>
+    <div class="meta">
+      <div><span class="r">ASSUNTO</span><span class="v">Portal de treinamento interno</span></div>
+      <div><span class="r">SEÇÕES</span><span class="v">01 disponível</span></div>
+      <div><span class="r">PÚBLICO</span><span class="v">Toda a equipe</span></div>
+      <div><span class="r">USO</span><span class="v">Treinamento interno</span></div>
+    </div>
+  </div>
+  <div class="fita"><i></i><i></i><i></i><i></i></div>
+</header>
+
+<main id="conteudo" class="secoes-wrap">
+  <p>Escolha uma seção para ver os capítulos disponíveis.</p>
+
+  <div class="lista-secoes">
+    <!-- SEÇÃO: início (duplique este bloco para adicionar uma nova seção) -->
+    <a class="secao-card" href="planejamento-e-controle/index.html">
+      <span class="secao-num">SEÇÃO 01</span>
+      <h2>Planejamento e controle</h2>
+      <p>Fundamentos do planejamento, ciclo de vida do projeto e prática de controle de obras.</p>
+      <span class="secao-acessar">Acessar seção →</span>
+    </a>
+    <!-- SEÇÃO: fim -->
+  </div>
+</main>
+
+<footer>
+  <div>
+    <span>Portal de treinamento interno</span>
+  </div>
+</footer>
+</body>
+</html>

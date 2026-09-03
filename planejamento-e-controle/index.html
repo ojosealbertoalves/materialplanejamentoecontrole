@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planejamento e controle | Apostila interna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+.carimbo h1{font-size:clamp(2.5rem,6.6vw,4.4rem)}
+
+/* ---------- lista de capitulos ---------- */
+.capitulos-wrap{max-width:1180px;margin:0 auto;padding:clamp(1.2rem,4vw,3rem)}
+.capitulos-wrap > p{font-size:1.05rem;color:var(--tinta-2);margin:0 0 1.6rem}
+.lista-capitulos{display:flex;flex-direction:column;gap:1px;background:var(--linha);border:1px solid var(--linha)}
+
+/* bloco duplicável para cada novo capítulo */
+.cap-item{display:grid;grid-template-columns:64px 1fr 28px;gap:1.2rem;align-items:center;background:var(--branco);padding:clamp(1.1rem,3vw,1.7rem) clamp(1.2rem,3vw,1.8rem);text-decoration:none;color:var(--tinta)}
+.cap-item:hover{background:#F6F7F7}
+.cap-item:hover .cap-seta{color:var(--marca);transform:translateX(3px)}
+.cap-num{font-family:"IBM Plex Mono",monospace;font-size:1.4rem;color:var(--marca);font-weight:500}
+.cap-corpo{display:flex;flex-direction:column;gap:.35rem}
+.cap-titulo{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.5rem;line-height:1.1}
+.cap-desc{font-size:.98rem;color:var(--tinta-2);max-width:60ch}
+.cap-seta{font-size:1.3rem;color:var(--tinta-2);transition:transform .15s,color .15s}
+
+@media (max-width:480px){
+  .cap-item{grid-template-columns:44px 1fr}
+  .cap-seta{display:none}
+}
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+<p class="trilha"><a href="../index.html">Portal</a> / Planejamento e controle</p>
+
+<header class="carimbo-wrap">
+  <div class="carimbo">
+    <div class="campo-principal">
+      <p class="obra">MATERIAL INTERNO / EQUIPE DE PLANEJAMENTO E CONTROLE DE OBRAS</p>
+      <h1><span class="cap">SEÇÃO 01</span>Planejamento e controle</h1>
+      <p class="chamada">Fundamentos do planejamento, ciclo de vida do projeto e prática de controle de obras, capítulo a capítulo.</p>
+    </div>
+    <div class="meta">
+      <div><span class="r">ASSUNTO</span><span class="v">Planejamento e controle de obras</span></div>
+      <div><span class="r">CAPÍTULOS</span><span class="v">02 disponíveis</span></div>
+      <div><span class="r">BASE</span><span class="v">Mattos, A. D.</span></div>
+      <div><span class="r">USO</span><span class="v">Treinamento interno</span></div>
+    </div>
+  </div>
+  <div class="fita"><i></i><i></i><i></i><i></i></div>
+</header>
+
+<main id="conteudo" class="capitulos-wrap">
+  <p>Capítulos desta seção, em ordem de leitura.</p>
+
+  <div class="lista-capitulos">
+    <!-- CAPÍTULO: início (duplique este bloco para adicionar um novo capítulo) -->
+    <a class="cap-item" href="cap01-importancia-do-planejamento.html">
+      <span class="cap-num">01</span>
+      <span class="cap-corpo">
+        <span class="cap-titulo">Importância do planejamento</span>
+        <span class="cap-desc">Por que a obra planejada custa menos, atrasa menos e desgasta menos gente — e por que tanta gente ainda planeja mal.</span>
+      </span>
+      <span class="cap-seta" aria-hidden="true">→</span>
+    </a>
+    <!-- CAPÍTULO: fim -->
+
+    <!-- CAPÍTULO: início (duplique este bloco para adicionar um novo capítulo) -->
+    <a class="cap-item" href="cap02-ciclo-de-vida-do-projeto.html">
+      <span class="cap-num">02</span>
+      <span class="cap-corpo">
+        <span class="cap-titulo">Ciclo de vida do projeto</span>
+        <span class="cap-desc">Os quatro estágios da obra e o que muda no papel do planejamento em cada um deles.</span>
+      </span>
+      <span class="cap-seta" aria-hidden="true">→</span>
+    </a>
+    <!-- CAPÍTULO: fim -->
+  </div>
+</main>
+
+<footer>
+  <div>
+    <span>Planejamento e controle — Índice de capítulos</span>
+    <span><a href="../index.html">Voltar ao portal</a></span>
+  </div>
+</footer>
+</body>
+</html>

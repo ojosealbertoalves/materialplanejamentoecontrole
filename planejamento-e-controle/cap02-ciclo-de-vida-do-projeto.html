@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cap. 2 — Ciclo de vida do projeto | Apostila interna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+.carimbo h1{font-size:clamp(2.4rem,6.4vw,4.3rem)}
+em.termo{font-style:italic}
+
+/* ---------- caracteristicas ---------- */
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--linha);border:1px solid var(--linha);margin:1.8rem 0}
+.duas > div{background:var(--branco);padding:clamp(1rem,2.5vw,1.6rem)}
+.duas h3{margin:0 0 .5rem;font-size:1.35rem}
+.duas p{margin:0;font-size:.98rem;color:var(--tinta-2);line-height:1.55}
+
+/* ---------- quadro comparativo ---------- */
+figure{margin:2rem 0}
+figcaption{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.05rem;color:var(--tinta-2);margin-bottom:.6rem;border-left:4px solid var(--marca);padding-left:.7rem}
+table{width:100%;border-collapse:collapse;background:var(--branco);border:1px solid var(--tinta)}
+th{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.2rem;text-align:left;padding:.7rem 1rem;border-bottom:2px solid var(--tinta);background:#F6F7F7}
+th:first-child{border-right:1px solid var(--tinta)}
+td{padding:.65rem 1rem;border-bottom:1px solid var(--linha);font-size:.98rem;vertical-align:top}
+td:first-child{border-right:1px solid var(--tinta)}
+tr:last-child td{border-bottom:0}
+th .sinal{color:var(--marca);font-family:"IBM Plex Mono",monospace;font-size:.8rem;margin-right:.4rem}
+
+/* ---------- curva S ---------- */
+.curva{background:var(--branco);border:1px solid var(--linha);padding:clamp(.9rem,2.5vw,1.6rem)}
+.curva svg{width:100%;height:auto;display:block}
+.legenda-curva{font-size:.92rem;color:var(--tinta-2);margin:.9rem 0 0;max-width:70ch}
+
+/* ---------- estagios ---------- */
+.estagio{background:var(--branco);border:1px solid var(--linha);margin:1.6rem 0;display:grid;grid-template-columns:96px 1fr}
+.estagio .rotulo{background:var(--tinta);color:#fff;padding:1.2rem .9rem;display:flex;flex-direction:column;align-items:center;gap:.3rem}
+.estagio .rotulo .alg{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:2.6rem;line-height:1;color:var(--marca)}
+.estagio .rotulo .txt{font-family:"IBM Plex Mono",monospace;font-size:.6rem;letter-spacing:.12em;color:#9FB0B7}
+.estagio .conteudo{padding:clamp(1rem,2.5vw,1.7rem)}
+.estagio h3{margin:0 0 .9rem;font-size:1.5rem}
+.estagio > .conteudo > p{margin:0 0 1rem;color:var(--tinta-2);font-size:.99rem}
+.itens{list-style:none;margin:0;padding:0}
+.itens li{padding:.6rem 0 .6rem 1.1rem;border-top:1px solid var(--linha);position:relative;font-size:.98rem;line-height:1.5}
+.itens li::before{content:"";position:absolute;left:0;top:1.05rem;width:5px;height:5px;background:var(--marca)}
+.itens b{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.16rem;letter-spacing:.01em;margin-right:.35rem}
+.seta{color:var(--azul);font-weight:600}
+
+@media (max-width:900px){
+  .duas{grid-template-columns:1fr}
+  .estagio{grid-template-columns:1fr}
+  .estagio .rotulo{flex-direction:row;justify-content:flex-start;gap:.7rem;padding:.7rem 1rem;align-items:baseline}
+  .estagio .rotulo .alg{font-size:1.8rem}
+  table{font-size:.92rem}
+}
+@media print{
+  .estagio .rotulo{background:#fff;color:#000;border-right:1px solid #000}
+  .estagio .rotulo .alg,.estagio .rotulo .txt{color:#000}
+}
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+<p class="trilha"><a href="../index.html">Portal</a> / <a href="index.html">Planejamento e controle</a> / Capítulo 2</p>
+
+<header class="carimbo-wrap">
+  <div class="carimbo">
+    <div class="campo-principal">
+      <p class="obra">MATERIAL INTERNO / EQUIPE DE PLANEJAMENTO E CONTROLE DE OBRAS</p>
+      <h1><span class="cap">CAPÍTULO 2</span>Ciclo de vida do projeto</h1>
+      <p class="chamada">Toda obra nasce, cresce, entrega e encerra. Saber em que estágio ela está define o que se planeja, o que se decide e o que já não dá mais para mudar.</p>
+      <a class="volta" href="cap01-importancia-do-planejamento.html">Voltar ao Capítulo 1</a>
+    </div>
+    <div class="meta">
+      <div><span class="r">ASSUNTO</span><span class="v">Projeto e seus estágios</span></div>
+      <div><span class="r">PÚBLICO</span><span class="v">Equipe técnica e de campo</span></div>
+      <div><span class="r">BASE</span><span class="v">Mattos, A. D.</span></div>
+      <div><span class="r">USO</span><span class="v">Treinamento interno</span></div>
+    </div>
+  </div>
+  <div class="fita"><i></i><i></i><i></i><i></i></div>
+</header>
+
+<div class="corpo">
+  <nav class="sumario" aria-label="Sumário do capítulo">
+    <p>Neste capítulo</p>
+    <ol>
+      <li><a href="#projeto"><span>2.1</span>O que é projeto</a></li>
+      <li><a href="#quadro"><span>2.1.1</span>Projeto ou operação</a></li>
+      <li><a href="#ciclo"><span>2.2</span>Estágios do ciclo de vida</a></li>
+      <li><a href="#estagios"><span>2.2.1</span>Os quatro estágios</a></li>
+      <li><a href="#leitura"><span>2.3</span>Onde entra o planejamento</a></li>
+      <li><a href="#pratica"><span>2.4</span>O que vale para a nossa equipe</a></li>
+    </ol>
+  </nav>
+
+  <main id="conteudo">
+
+    <section id="projeto">
+      <div class="titulo"><span class="num">2.1</span><h2>O que é projeto</h2></div>
+      <p class="intro">Na construção, a palavra <em class="termo">projeto</em> costuma significar o plano gráfico da edificação: plantas, cortes e cotas, os projetos de arquitetura, estrutura e instalações. É o equivalente ao <em class="termo">design</em> em inglês.</p>
+      <p>Aqui usamos a palavra em outro sentido, o gerencial — o equivalente a <em class="termo">project</em>. Nessa acepção, projeto é <q>um esforço temporário empreendido para criar um produto, serviço ou resultado exclusivo</q>, na definição do PMBoK. É essa a leitura que vale para todo o material de planejamento: quando falarmos em projeto, estamos falando do empreendimento como um todo, e não do desenho.</p>
+      <p>Dessa definição saem duas características que importam para quem planeja:</p>
+
+      <div class="duas">
+        <div>
+          <h3>Temporário</h3>
+          <p>O projeto tem alcance no tempo, com duração finita e início e fim bem definidos. O fim acontece quando os objetivos estabelecidos são alcançados — não quando a equipe se cansa ou o contrato vence. Prazo, portanto, é parte da definição, não uma consequência.</p>
+        </div>
+        <div>
+          <h3>Produto único</h3>
+          <p>A unicidade se traduz no produto físico que materializa o objetivo do projeto. Não é linha de montagem nem fabricação em série. Mesmo uma construtora que produz blocos de apartamentos iguais não anula esse caráter: são produtos similares que obedecem a um mesmo espírito de projeto, e cada um enfrenta terreno, equipe e condições próprias.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quadro">
+      <div class="titulo"><span class="num">2.1.1</span><h2>Projeto ou operação continuada</h2></div>
+      <p>Com essa definição, dá para separar o que é projeto do que é operação contínua e repetitiva. A diferença não é o tamanho nem a complexidade: é a existência de início, fim e produto único.</p>
+
+      <figure>
+        <figcaption>Quadro 2.1 — Distinção entre projeto e operação continuada</figcaption>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col"><span class="sinal">01</span>É projeto</th>
+              <th scope="col"><span class="sinal">02</span>Não é projeto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Construção de um galpão para armazenamento de grãos</td><td>Movimentação diária dos grãos com equipamento</td></tr>
+            <tr><td>Ampliação de uma usina de concreto</td><td>Operação cotidiana da usina de concreto</td></tr>
+            <tr><td>Instalação de uma fábrica de peças pré-moldadas</td><td>Fabricação das peças pré-moldadas</td></tr>
+            <tr><td>Construção de um hotel de 10 andares</td><td>Operação e manutenção do hotel</td></tr>
+          </tbody>
+        </table>
+      </figure>
+      <p>Repare no padrão: à esquerda, construir a estrutura; à direita, usar a estrutura depois de pronta. Operação continuada também precisa de gestão, mas não se planeja com cronograma de obra — se planeja com rotina, meta de produção e manutenção.</p>
+    </section>
+
+    <section id="ciclo">
+      <div class="titulo"><span class="num">2.2</span><h2>Estágios do ciclo de vida</h2></div>
+      <p>O ciclo de vida do empreendimento compreende vários estágios. Quando se traça o percentual pronto ao longo do tempo, o resultado é uma curva em S: começo lento, meio acelerado e fim novamente lento.</p>
+
+      <div class="curva">
+        <svg viewBox="0 0 760 400" role="img" aria-label="Curva S do ciclo de vida do projeto, com percentual pronto no eixo vertical, tempo no eixo horizontal e os quatro estágios delimitados.">
+          <defs>
+            <marker id="ponta" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto">
+              <path d="M0,0 L9,4.5 L0,9 z" fill="#14232B"/>
+            </marker>
+          </defs>
+          <!-- faixas dos estagios -->
+          <rect x="72" y="60" width="168" height="270" fill="#F4F6F6"/>
+          <rect x="240" y="60" width="130" height="270" fill="#EDF0F0"/>
+          <rect x="370" y="60" width="250" height="270" fill="#F4F6F6"/>
+          <rect x="620" y="60" width="90" height="270" fill="#EDF0F0"/>
+          <!-- linha 100% -->
+          <line x1="72" y1="60" x2="710" y2="60" stroke="#14232B" stroke-width="1.5" stroke-dasharray="6 5"/>
+          <text x="24" y="64" font-family="'IBM Plex Mono',monospace" font-size="14" fill="#14232B">100%</text>
+          <!-- divisores -->
+          <line x1="240" y1="60" x2="240" y2="330" stroke="#465862" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <line x1="370" y1="60" x2="370" y2="330" stroke="#465862" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <line x1="620" y1="60" x2="620" y2="330" stroke="#465862" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <line x1="710" y1="60" x2="710" y2="330" stroke="#465862" stroke-width="1.5" stroke-dasharray="5 5"/>
+          <!-- eixos -->
+          <line x1="72" y1="345" x2="740" y2="345" stroke="#14232B" stroke-width="2" marker-end="url(#ponta)"/>
+          <line x1="72" y1="345" x2="72" y2="26" stroke="#14232B" stroke-width="2" marker-end="url(#ponta)"/>
+          <text x="86" y="26" font-family="'IBM Plex Mono',monospace" font-size="14" fill="#14232B">% pronto</text>
+          <text x="700" y="374" font-family="'IBM Plex Mono',monospace" font-size="14" fill="#14232B" text-anchor="end">tempo</text>
+          <!-- curva S -->
+          <path d="M72,330 C 170,329 215,320 260,300 C 330,268 400,150 470,110 C 540,70 630,62 710,60"
+                fill="none" stroke="#14232B" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- rotulos dos estagios -->
+          <g font-family="'Barlow Condensed',sans-serif" font-weight="600" font-size="19" fill="#14232B" text-anchor="middle">
+            <text x="156" y="205">Estágio</text><text x="156" y="228" fill="#E0A21C" font-size="24">I</text>
+            <text x="305" y="205">Estágio</text><text x="305" y="228" fill="#E0A21C" font-size="24">II</text>
+            <text x="495" y="205">Estágio</text><text x="495" y="228" fill="#E0A21C" font-size="24">III</text>
+            <text x="665" y="205">Estágio</text><text x="665" y="228" fill="#E0A21C" font-size="24">IV</text>
+          </g>
+        </svg>
+        <p class="legenda-curva">Figura 2.1 — Percentual pronto ao longo do tempo. A inclinação da curva mostra o ritmo de produção: baixo nos estágios de estudo e detalhamento, alto na execução, baixo de novo na finalização.</p>
+      </div>
+    </section>
+
+    <section id="estagios">
+      <div class="titulo"><span class="num">2.2.1</span><h2>Os quatro estágios</h2></div>
+
+      <div class="estagio">
+        <div class="rotulo"><span class="alg">I</span><span class="txt">ESTÁGIO</span></div>
+        <div class="conteudo">
+          <h3>Concepção e viabilidade</h3>
+          <p>O empreendimento ainda é uma intenção. Define-se o que será feito, se vale a pena e com que dinheiro.</p>
+          <ul class="itens">
+            <li><b>Definição do escopo</b>— determinação do programa de necessidades, isto é, as linhas gerais do objeto a ser projetado e construído.</li>
+            <li><b>Formulação do empreendimento</b>— delimitação do objeto em lotes, fases e forma de contratação.</li>
+            <li><b>Estimativa de custos</b>— orçamento preliminar, feito com indicadores históricos.</li>
+            <li><b>Estudo de viabilidade</b>— análise de custo-benefício, avaliação dos resultados esperados frente ao custo orçado e determinação do montante necessário ao longo do tempo.</li>
+            <li><b>Identificação da fonte orçamentária</b>— recursos próprios, empréstimo, linha de financiamento ou solução mista.</li>
+            <li><b>Anteprojeto <span class="seta">→</span> projeto básico</b>— o anteprojeto evolui até o projeto básico, quando já reúne os elementos necessários para orçamento, especificações e identificação dos serviços.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="estagio">
+        <div class="rotulo"><span class="alg">II</span><span class="txt">ESTÁGIO</span></div>
+        <div class="conteudo">
+          <h3>Detalhamento do projeto e do planejamento</h3>
+          <p>A intenção vira documento executável. É aqui que nasce o cronograma que a obra vai perseguir.</p>
+          <ul class="itens">
+            <li><b>Orçamento analítico</b>— composição de custos dos serviços, com relação de insumos e margem de erro menor que a do orçamento preliminar.</li>
+            <li><b>Planejamento</b>— elaboração de um cronograma de obra realista, com definição de prazo e marcos contratuais.</li>
+            <li><b>Projeto básico <span class="seta">→</span> projeto executivo</b>— detalhamento do projeto básico, com todos os elementos necessários à execução da obra.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="estagio">
+        <div class="rotulo"><span class="alg">III</span><span class="txt">ESTÁGIO</span></div>
+        <div class="conteudo">
+          <h3>Execução</h3>
+          <p>É o estágio mais longo e o de maior consumo de recursos — o trecho íngreme da curva S.</p>
+          <ul class="itens">
+            <li><b>Obras civis</b>— execução dos serviços de campo, aplicação de materiais e utilização de mão de obra e equipamentos.</li>
+            <li><b>Montagens mecânicas e instalações elétricas e sanitárias</b>— atividades de campo.</li>
+            <li><b>Controle da qualidade</b>— verificação de que os parâmetros técnicos e contratuais foram observados.</li>
+            <li><b>Administração contratual</b>— medições, diário de obras, aplicação de penalidades e aditivos ao contrato.</li>
+            <li><b>Fiscalização de obra ou serviço</b>— supervisão das atividades de campo, reuniões de avaliação do progresso e resolução de problemas.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="estagio">
+        <div class="rotulo"><span class="alg">IV</span><span class="txt">ESTÁGIO</span></div>
+        <div class="conteudo">
+          <h3>Finalização</h3>
+          <p>A obra existe, mas o projeto só termina quando é aceito, entregue e liquidado.</p>
+          <ul class="itens">
+            <li><b>Comissionamento</b>— colocação em funcionamento e testes de operação do produto final.</li>
+            <li><b>Inspeção final</b>— testes para recebimento do objeto contratado.</li>
+            <li><b>Transferência de responsabilidades</b>— recebimento da obra e destinação final do produto.</li>
+            <li><b>Liberação de retenção contratual</b>— quando a contratante reteve valores da executante.</li>
+            <li><b>Resolução das últimas pendências</b>— encontro de contas, pagamento de medições atrasadas e negociação de pleitos contratuais.</li>
+            <li><b>Termo de recebimento</b>— provisório e definitivo.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="leitura">
+      <div class="leitura">
+        <h2>Onde entra o planejamento em cada estágio</h2>
+        <p class="sub">Leitura da nossa equipe</p>
+        <p>O ciclo de vida não é teoria de livro: ele diz o que a equipe de planejamento deve estar fazendo hoje. O erro mais comum é agir como se planejamento fosse assunto exclusivo do estágio II.</p>
+        <p>Vale reter uma regra dura do ciclo: <strong>a capacidade de influenciar custo e prazo é máxima no começo e mínima no fim</strong> — é a Figura 1.1 do capítulo anterior aplicada aos estágios. No estágio I, mudar uma decisão custa uma reunião. No estágio III, custa demolição. Por isso o esforço de planejamento tem que ser pesado justamente quando a curva ainda está baixa e parece que "nada está acontecendo".</p>
+        <ul class="regras">
+          <li><b>Estágio I — planejar para decidir</b><span>Aqui o planejamento entrega ordem de grandeza: prazo global, marcos e curva de desembolso. Serve para a decisão de investir, não para tocar a obra.</span></li>
+          <li><b>Estágio II — planejar para comprometer</b><span>É onde se constrói a linha de base: EAP, sequência, durações, recursos e marcos contratuais. Depois daqui, todo desvio será medido contra este plano.</span></li>
+          <li><b>Estágio III — planejar para controlar</b><span>O planejamento vira ciclo: programar a semana, medir o avanço, registrar causas de desvio e replanejar. Sem esse ciclo, a linha de base envelhece e é abandonada.</span></li>
+          <li><b>Estágio IV — planejar para aprender</b><span>Encerramento não é só assinar termo. É fechar produtividades reais, consolidar o histórico e registrar o que atrasou e por quê, para a próxima obra começar melhor.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="pratica">
+      <div class="titulo"><span class="num">2.4</span><h2>O que vale para a nossa equipe</h2></div>
+      <p>Verificação rápida, aplicável a qualquer empreendimento da carteira:</p>
+      <div class="checklist">
+        <ul>
+          <li><span class="caixa" aria-hidden="true"></span><span>Sabemos dizer, sem hesitar, em que estágio cada obra da carteira está hoje.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>Quando dizemos "projeto", está claro se falamos do desenho ou do empreendimento.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>A obra tem início, fim e produto definidos — e não virou operação continuada disfarçada de obra.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>A linha de base foi fechada no estágio II, antes da mobilização do campo.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>O orçamento analítico e o cronograma falam a mesma língua: mesmos serviços, mesmas quantidades.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>As decisões caras estão sendo tomadas enquanto ainda são baratas, no início da curva.</span></li>
+          <li><span class="caixa" aria-hidden="true"></span><span>O encerramento inclui consolidação de produtividades reais na base histórica da empresa.</span></li>
+        </ul>
+      </div>
+      <p class="nota-fonte">Material interno de treinamento, elaborado pela equipe a partir da estrutura do Capítulo 2 de <em>Planejamento e Controle de Obras</em>, de Aldo Dórea Mattos. O texto é redação própria; a definição de projeto é citada do PMBoK, referência usada pelo autor. Para o conteúdo original, consulte a obra.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div>
+    <span>Apostila interna — Capítulo 2</span>
+    <span><a href="cap01-importancia-do-planejamento.html" style="color:#E0A21C">Capítulo 1 — Importância do planejamento</a></span>
+  </div>
+</footer>
+</body>
+</html>
