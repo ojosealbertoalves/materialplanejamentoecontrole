@@ -38,6 +38,8 @@ a{color:var(--azul)}
 .carimbo h1 .cap{display:block;font-size:clamp(1rem,2.2vw,1.25rem);font-weight:600;letter-spacing:.22em;color:var(--marca);margin-bottom:.5rem;font-family:"IBM Plex Mono",monospace}
 .carimbo .chamada{margin:1.4rem 0 0;max-width:52ch;font-size:1.06rem;color:var(--tinta-2)}
 .proximo,.volta{display:inline-block;margin-top:1.2rem;font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.05rem;text-decoration:none;border-bottom:2px solid var(--marca);color:var(--tinta)}
+.links-cap{margin-top:1.2rem;display:flex;gap:1.4rem;flex-wrap:wrap}
+.links-cap a{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.05rem;text-decoration:none;border-bottom:2px solid var(--marca);color:var(--tinta)}
 .meta{display:grid;grid-template-rows:repeat(4,1fr)}
 .meta div{border-bottom:1px solid var(--linha);padding:.85rem 1.2rem;display:flex;flex-direction:column;justify-content:center}
 .meta div:last-child{border-bottom:0}
@@ -83,7 +85,7 @@ h3{font-size:1.35rem;margin:2.2rem 0 .6rem}
 .checklist ul{list-style:none;margin:0;padding:0}
 .checklist li{display:grid;grid-template-columns:26px 1fr;gap:.8rem;padding:.7rem 0;border-bottom:1px dashed var(--linha);align-items:start}
 .checklist li:last-child{border-bottom:0}
-.checklist .caixa{width:16px;height:16px;border:2px solid var(--tinta);margin-top:.35rem}
+.checklist .caixa,.checklist .caixa-v{width:16px;height:16px;border:2px solid var(--tinta);margin-top:.35rem}
 .nota-fonte{font-size:.88rem;color:var(--tinta-2);border-top:2px solid var(--tinta);padding-top:1rem;max-width:var(--max);margin-top:2rem}
 
 footer{background:var(--tinta);color:#AEBAC0;padding:2rem clamp(1.2rem,4vw,3rem);font-size:.85rem}
@@ -103,7 +105,7 @@ footer a{color:#E0A21C}
 }
 @media print{
   body{background:#fff;font-size:11pt}
-  nav.sumario,.fita,footer,.proximo,.volta,.trilha{display:none}
+  nav.sumario,.fita,footer,.proximo,.volta,.links-cap,.trilha{display:none}
   .corpo{grid-template-columns:1fr;padding:0}
   .doutrina,.leitura{background:#fff;color:#000;border:1px solid #000;border-left:8px solid #000}
   .doutrina h2,.doutrina p,.doutrina strong,.leitura h2,.leitura p,.leitura strong,.regras b,.regras span{color:#000}

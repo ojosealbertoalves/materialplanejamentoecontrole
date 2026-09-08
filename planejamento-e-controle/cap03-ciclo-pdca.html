@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cap. 3 — Ciclo PDCA | Apostila interna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+.carimbo h1{font-size:clamp(2.6rem,7vw,4.6rem)}
+.capitular::first-letter{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:4.2rem;float:left;line-height:.82;margin:.12em .12em 0 0;color:var(--tinta)}
+.leitura a{color:var(--marca)}
+
+/* ---------- caixa lateral ---------- */
+.caixa{background:var(--branco);border:1px solid var(--linha);display:flex;margin:2rem 0}
+.caixa .barra{width:22px;flex:none;background:linear-gradient(180deg,var(--tinta),var(--tinta-2))}
+.caixa .dentro{padding:clamp(1rem,2.5vw,1.6rem)}
+.caixa h3{margin:0 0 .6rem;font-size:1.3rem}
+.caixa p{font-size:.98rem;color:var(--tinta-2);margin:0 0 .8rem}
+.caixa ul{margin:0;padding-left:1.1rem}
+.caixa li{font-size:.97rem;color:var(--tinta-2);margin-bottom:.35rem;line-height:1.5}
+
+/* ---------- figura ---------- */
+.figura{background:var(--branco);border:1px solid var(--linha);padding:clamp(.9rem,2.5vw,1.6rem);margin:1.8rem 0}
+.figura svg{width:100%;height:auto;display:block;max-width:660px;margin:0 auto}
+.figura figcaption{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.05rem;color:var(--tinta-2);margin:.9rem 0 0;border-left:4px solid var(--marca);padding-left:.7rem}
+
+/* ---------- legenda das letras ---------- */
+.letras{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--linha);border:1px solid var(--linha);margin:1.6rem 0}
+.letras > div{background:var(--branco);padding:1rem}
+.letras b{display:block;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:2rem;line-height:1;color:var(--marca)}
+.letras .en{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--tinta-2);display:block;margin:.4rem 0 .2rem}
+.letras .pt{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.2rem}
+
+/* ---------- quadrantes ---------- */
+.quadrante{background:var(--branco);border:1px solid var(--linha);margin:1.6rem 0;display:grid;grid-template-columns:96px 1fr}
+.quadrante .rotulo{background:var(--tinta);color:#fff;padding:1.2rem .9rem;display:flex;flex-direction:column;align-items:center;gap:.3rem}
+.quadrante .rotulo .alg{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:2.8rem;line-height:1;color:var(--marca)}
+.quadrante .rotulo .txt{font-family:"IBM Plex Mono",monospace;font-size:.58rem;letter-spacing:.1em;color:#9FB0B7;text-align:center}
+.quadrante .conteudo{padding:clamp(1rem,2.5vw,1.7rem)}
+.quadrante h3{margin:0 0 .9rem;font-size:1.5rem}
+.quadrante > .conteudo > p{margin:0 0 1rem}
+.itens{list-style:none;margin:1rem 0 0;padding:0}
+.itens li{padding:.7rem 0 .7rem 1.1rem;border-top:1px solid var(--linha);position:relative;font-size:.98rem;line-height:1.5}
+.itens li::before{content:"";position:absolute;left:0;top:1.15rem;width:5px;height:5px;background:var(--marca)}
+.itens b{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.16rem;letter-spacing:.01em;margin-right:.35rem}
+.alerta{border-left:3px solid var(--marca);padding:.7rem 0 .7rem 1rem;background:linear-gradient(90deg,rgba(224,162,28,.09),rgba(224,162,28,0));font-size:.98rem;margin-top:1.2rem}
+.alerta strong{font-family:"Barlow Condensed",sans-serif;font-size:1.1rem}
+
+@media (max-width:900px){
+  .letras{grid-template-columns:1fr 1fr}
+  .quadrante{grid-template-columns:1fr}
+  .quadrante .rotulo{flex-direction:row;justify-content:flex-start;gap:.7rem;padding:.7rem 1rem;align-items:baseline}
+  .quadrante .rotulo .alg{font-size:1.9rem}
+}
+@media print{
+  .quadrante .rotulo{background:#fff;color:#000;border-right:1px solid #000}
+  .quadrante .rotulo .alg,.quadrante .rotulo .txt{color:#000}
+  .figura{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+<p class="trilha"><a href="../index.html">Portal</a> / <a href="index.html">Planejamento e controle</a> / Capítulo 3</p>
+
+<header class="carimbo-wrap">
+  <div class="carimbo">
+    <div class="campo-principal">
+      <p class="obra">MATERIAL INTERNO / EQUIPE DE PLANEJAMENTO E CONTROLE DE OBRAS</p>
+      <h1><span class="cap">CAPÍTULO 3</span>Ciclo PDCA</h1>
+      <p class="chamada">Planejar uma vez não é planejar. O PDCA é o desenho que mostra por que planejamento e controle são a mesma rotina, girando semana após semana até o fim da obra.</p>
+      <div class="links-cap">
+        <a href="cap02-ciclo-de-vida-do-projeto.html">Voltar ao Capítulo 2</a>
+      </div>
+    </div>
+    <div class="meta">
+      <div><span class="r">ASSUNTO</span><span class="v">Melhoria contínua</span></div>
+      <div><span class="r">PÚBLICO</span><span class="v">Equipe técnica e de campo</span></div>
+      <div><span class="r">BASE</span><span class="v">Mattos, A. D.</span></div>
+      <div><span class="r">USO</span><span class="v">Treinamento interno</span></div>
+    </div>
+  </div>
+  <div class="fita"><i></i><i></i><i></i><i></i></div>
+</header>
+
+<div class="corpo">
+  <nav class="sumario" aria-label="Sumário do capítulo">
+    <p>Neste capítulo</p>
+    <ol>
+      <li><a href="#abertura"><span>3.0</span>Melhoria contínua</a></li>
+      <li><a href="#figura"><span>Fig. 3.1</span>O ciclo PDCA</a></li>
+      <li><a href="#planejar"><span>3.1</span>P — Planejar</a></li>
+      <li><a href="#desempenhar"><span>3.2</span>D — Desempenhar</a></li>
+      <li><a href="#checar"><span>3.3</span>C — Checar</a></li>
+      <li><a href="#agir"><span>3.4</span>A — Agir</a></li>
+      <li><a href="#mecanica"><span>3.5</span>Mecânica do PDCA</a></li>
+      <li><a href="#leitura"><span>3.6</span>Como aplicamos</a></li>
+      <li><a href="#pratica"><span>3.7</span>O que vale para a nossa equipe</a></li>
+    </ol>
+  </nav>
+
+  <main id="conteudo">
+
+    <section id="abertura">
+      <div class="titulo"><span class="num">3.0</span><h2>Melhoria contínua</h2></div>
+      <p class="intro capitular">Com o desenvolvimento das técnicas de gestão, no final da década de 1980, alguns princípios passaram a nortear o gerenciamento das obras. Um deles é o da melhoria contínua: todo processo deve ter um controle permanente, capaz de aferir o desempenho dos meios empregados e de provocar mudanças de procedimento que tornem as metas alcançáveis.</p>
+      <p>Esse princípio é bem ilustrado pelo ciclo PDCA. A representação gráfica deixa evidente que planejar e controlar é trabalho constante ao longo do empreendimento. Não existe planejamento inicial que sobreviva sem atualização com o passar das semanas.</p>
+
+      <div class="caixa">
+        <div class="barra" aria-hidden="true"></div>
+        <div class="dentro">
+          <h3>De onde vem o PDCA</h3>
+          <p>O ciclo foi desenvolvido originalmente por Walter Shewhart, na década de 1920, e ganhou notoriedade com Edwards Deming nos anos 1950. Deming é autor dos princípios do Gerenciamento da Qualidade Total (TQM). Entre eles:</p>
+          <ul>
+            <li>Deve haver constância de propósitos para a melhoria do produto e do serviço.</li>
+            <li>A qualidade do produto nasce no estágio inicial.</li>
+            <li>As pessoas devem trabalhar em equipe, sem barreiras entre departamentos, de modo que consigam prever problemas e soluções.</li>
+            <li>O processo de melhoria é competência de todos.</li>
+          </ul>
+        </div>
+      </div>
+      <p>Repare que dois desses princípios já apareceram no Capítulo 1: qualidade e produtividade nascem no início do empreendimento, e a responsabilidade pelo processo é de todos — não de um setor.</p>
+    </section>
+
+    <section id="figura">
+      <div class="titulo"><span class="num">Fig. 3.1</span><h2>O ciclo PDCA</h2></div>
+      <p>Por ciclo PDCA entende-se um conjunto de ações ordenadas e interligadas entre si, dispostas graficamente em um círculo no qual cada quadrante corresponde a uma fase do processo.</p>
+
+      <div class="letras">
+        <div><b>P</b><span class="en">plan</span><span class="pt">Planejar</span></div>
+        <div><b>D</b><span class="en">do</span><span class="pt">Desempenhar</span></div>
+        <div><b>C</b><span class="en">check</span><span class="pt">Checar</span></div>
+        <div><b>A</b><span class="en">act</span><span class="pt">Agir</span></div>
+      </div>
+
+      <figure class="figura">
+        <svg viewBox="140 20 500 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama circular do ciclo PDCA dividido em quatro quadrantes: Planejar, com os setores estudar o projeto, definir metodologia e gerar cronograma e programação; Desempenhar, com informar e motivar e executar a atividade; Checar, com aferir o resultado e comparar previsto e realizado; e Agir, com implementar ações corretivas. Setas externas indicam o giro contínuo do ciclo.">
+          <defs>
+            <marker id="seta3" markerWidth="10" markerHeight="10" refX="6" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#14232B"/></marker>
+          </defs>
+
+          <!-- setores -->
+          <path d="M390,240 L390.0,85.0 A155,155 0 0 1 467.5,105.8 Z" fill="#FAFBFB" stroke="#14232B" stroke-width="1.6"/>
+          <path d="M390,240 L467.5,105.8 A155,155 0 0 1 524.2,162.5 Z" fill="#FAFBFB" stroke="#14232B" stroke-width="1.6"/>
+          <path d="M390,240 L524.2,162.5 A155,155 0 0 1 545.0,240.0 Z" fill="#FAFBFB" stroke="#14232B" stroke-width="1.6"/>
+          <path d="M390,240 L545.0,240.0 A155,155 0 0 1 499.6,349.6 Z" fill="#DDE7EC" stroke="#14232B" stroke-width="1.6"/>
+          <path d="M390,240 L499.6,349.6 A155,155 0 0 1 390.0,395.0 Z" fill="#DDE7EC" stroke="#14232B" stroke-width="1.6"/>
+          <path d="M390,240 L390.0,395.0 A155,155 0 0 1 280.4,349.6 Z" fill="#C3D2D9" stroke="#14232B" stroke-width="1.6"/>
+          <path d="M390,240 L280.4,349.6 A155,155 0 0 1 235.0,240.0 Z" fill="#C3D2D9" stroke="#14232B" stroke-width="1.6"/>
+          <path d="M390,240 L235.0,240.0 A155,155 0 0 1 390.0,85.0 Z" fill="#F5E7CB" stroke="#14232B" stroke-width="1.6"/>
+
+          <!-- rotulos dos setores -->
+          <g font-family="'Barlow Condensed',sans-serif" font-weight="600" fill="#14232B">
+            <text x="418.1" y="127.8" font-size="14" text-anchor="middle"><tspan x="418.1" dy="0">Estudar</tspan><tspan x="418.1" dy="14">o projeto</tspan></text>
+            <text x="470.9" y="146.2" font-size="14" text-anchor="middle"><tspan x="470.9" dy="0">Definir</tspan><tspan x="470.9" dy="14">metodo-</tspan><tspan x="470.9" dy="14">logia</tspan></text>
+            <text x="502.8" y="196.1" font-size="13.5" text-anchor="middle"><tspan x="502.8" dy="0">Gerar</tspan><tspan x="502.8" dy="14">cronograma</tspan><tspan x="502.8" dy="14">e programação</tspan></text>
+            <text x="484.9" y="270.6" font-size="14.5" text-anchor="middle"><tspan x="484.9" dy="0">Informar</tspan><tspan x="484.9" dy="15">e motivar</tspan></text>
+            <text x="427.5" y="320.7" font-size="14.5" text-anchor="middle"><tspan x="427.5" dy="0">Executar</tspan><tspan x="427.5" dy="15">a atividade</tspan></text>
+            <text x="354.0" y="321.4" font-size="14.5" text-anchor="middle"><tspan x="354.0" dy="0">Aferir o</tspan><tspan x="354.0" dy="15">resultado</tspan></text>
+            <text x="298.7" y="263.3" font-size="14.5" text-anchor="middle"><tspan x="298.7" dy="0">Comparar</tspan><tspan x="298.7" dy="15">previsto e</tspan><tspan x="298.7" dy="15">realizado</tspan></text>
+            <text x="326.4" y="160.3" font-size="15.5" text-anchor="middle"><tspan x="326.4" dy="0">Implementar</tspan><tspan x="326.4" dy="16">ações</tspan><tspan x="326.4" dy="16">corretivas</tspan></text>
+          </g>
+
+          <!-- setas do ciclo -->
+          <g fill="none" stroke="#14232B" stroke-width="2.4">
+            <path d="M193.1,233.1 A197,197 0 0 1 362.6,44.9" marker-end="url(#seta3)"/>
+            <path d="M396.9,43.1 A197,197 0 0 1 585.1,212.6" marker-end="url(#seta3)"/>
+            <path d="M586.9,246.9 A197,197 0 0 1 417.4,435.1" marker-end="url(#seta3)"/>
+            <path d="M383.1,436.9 A197,197 0 0 1 194.9,267.4" marker-end="url(#seta3)"/>
+          </g>
+
+          <!-- rotulos externos -->
+          <g font-family="'Barlow Condensed',sans-serif" text-anchor="middle" fill="#14232B">
+            <text x="567" y="63"><tspan font-size="30" font-weight="700" fill="#E0A21C">P</tspan><tspan x="567" dy="19" font-size="16" font-weight="600">(Planejar)</tspan></text>
+            <text x="567" y="410"><tspan font-size="30" font-weight="700" fill="#E0A21C">D</tspan><tspan x="567" dy="19" font-size="16" font-weight="600">(Desempenhar)</tspan></text>
+            <text x="213" y="410"><tspan font-size="30" font-weight="700" fill="#E0A21C">C</tspan><tspan x="213" dy="19" font-size="16" font-weight="600">(Checar)</tspan></text>
+            <text x="213" y="63"><tspan font-size="30" font-weight="700" fill="#E0A21C">A</tspan><tspan x="213" dy="19" font-size="16" font-weight="600">(Agir)</tspan></text>
+          </g>
+        </svg>
+        <figcaption>Figura 3.1 — O ciclo PDCA e seus setores</figcaption>
+      </figure>
+
+      <h3>O mérito do ciclo</h3>
+      <p>O ciclo deixa patente para a equipe do projeto que não basta planejar. Não é suficiente delinear previamente a metodologia, os prazos e os recursos necessários sem que haja monitoramento da atividade e comparação entre os resultados reais e os desejados.</p>
+      <p>E ele se encaixa especialmente bem na construção civil, por causa da quantidade de variáveis envolvidas: mão de obra, suprimento, intempéries, interferências, retrabalho e perdas periódicas de produtividade. O PDCA dá forma à relação entre planejamento, controle e as ações preventivas e corretivas cabíveis.</p>
+      <p>Como o nome diz, o PDCA não se esgota em uma rodada. Deve ser usado continuamente — e quanto mais frequente a aplicação de seus preceitos, mais aperfeiçoado fica o planejamento. Mesmo na fase prévia à obra, durante o planejamento inicial, o ciclo pode ser empregado para verificar se o que está sendo planejado tem consistência.</p>
+    </section>
+
+    <section id="planejar">
+      <div class="titulo"><span class="num">3.1</span><h2>P — Planejar</h2></div>
+      <div class="quadrante">
+        <div class="rotulo"><span class="alg">P</span><span class="txt">PLAN<br>PLANEJAR</span></div>
+        <div class="conteudo">
+          <h3>Antever a lógica construtiva</h3>
+          <p>Nessa etapa entra em cena a equipe de planejamento da obra, que busca antever a lógica construtiva e suas interfaces, gerando informações de prazos e metas físicas. O quadrante se subdivide em três setores:</p>
+          <ul class="itens">
+            <li><b>Estudar o projeto</b>— análise dos projetos, visita técnica ao local da obra, identificação e avaliação de interferências.</li>
+            <li><b>Definir metodologia</b>— definição dos processos construtivos, plano de ataque da obra, sequência das atividades, logística de materiais e equipamentos e consulta a documentos de obras similares.</li>
+            <li><b>Gerar o cronograma e as programações</b>— coordenar as informações para que a obra tenha um cronograma racional e factível, considerando quantitativos, produtividades adotadas no orçamento, mão de obra disponível e influência da pluviosidade local.</li>
+          </ul>
+          <div class="alerta"><strong>Em uma frase:</strong> o planejamento é o intuito operacional da empresa. Representa aquilo que se deve seguir para alcançar o objetivo do empreendimento.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="desempenhar">
+      <div class="titulo"><span class="num">3.2</span><h2>D — Desempenhar</h2></div>
+      <div class="quadrante">
+        <div class="rotulo"><span class="alg">D</span><span class="txt">DO<br>DESEMPENHAR</span></div>
+        <div class="conteudo">
+          <h3>Materializar o plano no campo</h3>
+          <p>A segunda etapa é a materialização do planejamento no campo: o que foi prescrito no papel entra no terreno da realização física. São dois setores:</p>
+          <ul class="itens">
+            <li><b>Informar e motivar</b>— explicitar a todos os envolvidos o método a ser empregado, a sequência das atividades e as durações previstas, além de tirar as dúvidas da equipe. Encarregados e supervisores são instruídos sobre o que está programado, quais as tarefas, os prazos, os recursos disponíveis e os requisitos de qualidade. O envolvimento e o interesse das equipes aumentam de forma perceptível quando o planejamento e as programações lhes são apresentados.</li>
+            <li><b>Executar a atividade</b>— a realização física da tarefa. Para que a obra seja gerenciada corretamente, o que foi informado pelo planejamento precisa ser cumprido no campo, sem alterações deliberadas de rumo por parte dos executores. Executar é cumprir — ou ao menos tentar cumprir — o que foi planejado para o período.</li>
+          </ul>
+          <div class="alerta"><strong>Atenção:</strong> o planejamento representa a intenção de conduta do construtor, mas o que acontece no campo nem sempre reflete o que foi planejado. As discrepâncias surgem por falta de comunicação, por falta de entendimento do que foi planejado, por premissas inadequadas na fase de planejamento, por inexequibilidade do plano ou por condições alheias à vontade do construtor.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="checar">
+      <div class="titulo"><span class="num">3.3</span><h2>C — Checar</h2></div>
+      <div class="quadrante">
+        <div class="rotulo"><span class="alg">C</span><span class="txt">CHECK<br>CHECAR</span></div>
+        <div class="conteudo">
+          <h3>Aferir o que foi efetivamente realizado</h3>
+          <p>A terceira etapa é a aferição do que foi efetivamente realizado. Essa função de verificação consiste em comparar o previsto com o realizado e apontar as diferenças de prazo, custo e qualidade. É aqui que o monitoramento e o controle do projeto se manifestam. São dois setores:</p>
+          <ul class="itens">
+            <li><b>Aferir o realizado</b>— levantar no campo o que foi executado no período de análise. É uma tarefa de apropriação de dados, na qual se compilam as quantidades de cada serviço efetuado.</li>
+            <li><b>Comparar o previsto e o realizado</b>— confrontar o executado com o que estava previsto no planejamento. É um processo vital para o construtor, porque é o maior manancial de informações gerenciais: aqui se detectam os desvios e seus impactos, assim como os adiantamentos da obra e os respectivos benefícios.</li>
+          </ul>
+          <p>Quanto a prazo, a verificação está na checagem das datas de início e término das atividades em relação às datas planejadas — o progresso real da tarefa sendo monitorado de maneira sistemática. Os levantamentos de progresso podem ser feitos por técnicos de planejamento ou, o que é mais comum, pelo pessoal de campo, que os remete continuamente ao setor de planejamento.</p>
+          <p>Toda informação capaz de reduzir desvios futuros deve ser coletada e disponibilizada para a etapa seguinte. Além de constatar o desvio entre o real e o previsto, é necessário avaliar se ele foi pontual ou se representa uma tendência.</p>
+          <div class="alerta"><strong>Não pule esta parte:</strong> é neste quadrante que o planejador afere os indicadores de desempenho real. As produtividades de campo são calculadas e passam a integrar o acervo de dados da obra. Gerar esses indicadores importa porque eles retratam fielmente as condições de campo, ou seja, as circunstâncias em que as atividades foram executadas.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="agir">
+      <div class="titulo"><span class="num">3.4</span><h2>A — Agir</h2></div>
+      <div class="quadrante">
+        <div class="rotulo"><span class="alg">A</span><span class="txt">ACT<br>AGIR</span></div>
+        <div class="conteudo">
+          <h3>Corrigir o rumo — ou aproveitar a folga</h3>
+          <p>No quarto quadrante acontece o encontro de opiniões e sugestões de todos os envolvidos na operação. Isso alimenta a identificação de oportunidades de melhoria, o aperfeiçoamento do método, a detecção de focos de erro, a mudança de estratégia e a avaliação das medidas corretivas a serem tomadas.</p>
+          <ul class="itens">
+            <li><b>Quando houve desvio</b>— ações corretivas devem ser implementadas. Com finalidade preventiva, as causas do desvio precisam ser investigadas e analisadas em detalhe. Quanto mais tempo passar sem que os focos de desvio sejam debelados, menor será o tempo hábil para corrigir.</li>
+            <li><b>Quando não houve desvio relevante</b>— o quadrante deve ser visto como oportunidade para as equipes pensarem na possibilidade de reduzir o prazo da obra. Ausência de problema não é motivo para pular a etapa.</li>
+          </ul>
+          <div class="alerta"><strong>Regra do quadrante:</strong> é imprescindível a participação do pessoal de planejamento e de produção nessa etapa, porque a meta perseguida não é exclusiva de um setor — é comum a todos.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mecanica">
+      <div class="titulo"><span class="num">3.5</span><h2>Mecânica do PDCA</h2></div>
+      <p>O ciclo informa, didaticamente, que o processo de planejamento é de melhoria contínua. A mecânica é esta:</p>
+      <p><strong>Primeiro</strong>, planeja-se a obra com o máximo de dados disponíveis — orçamento, equipes, planos de ataque —, atentando para o fato de que o planejamento não é missão da área técnica, e sim um compromisso geral.</p>
+      <p><strong>Em seguida</strong>, procura-se executar a obra como planejado. É comum que as durações atribuídas no cronograma não sejam todas obedecidas, e é justamente por isso que se afere o que foi realizado. Nesse passo podem ser apropriados índices de campo e produtividades reais das equipes, além de avaliados os desvios em relação ao planejamento em vigor.</p>
+      <p><strong>Por fim</strong>, o último quadrante mostra que nesse instante o gerente precisa pensar em como colocar a obra de volta nos eixos — ou revisar o planejamento para a nova realidade.</p>
+      <p>E então o ciclo recomeça. Essa é a resposta prática à causa (b) do Capítulo 1: o plano não precisa estar certo para sempre, precisa ser corrigido com frequência.</p>
+    </section>
+
+    <section id="leitura">
+      <div class="leitura">
+        <h2>Como o PDCA vira rotina na nossa obra</h2>
+        <p class="sub">Leitura da nossa equipe</p>
+        <p>O PDCA só funciona quando tem período fixo. Sem data marcada, o ciclo trava no D: a obra executa, executa e ninguém fecha a volta. Nossa unidade de giro é a <strong>semana</strong>, com uma volta mensal mais larga para revisão de cronograma.</p>
+        <p>Vale reparar em uma coisa: o setor "informar e motivar" do quadrante D é exatamente a reunião de acompanhamento tratada no <a href="cap01-importancia-do-planejamento.html#doutrina">Capítulo 1</a>. Não é um detalhe do desenho — é o ponto em que o plano sai do escritório e vira compromisso de quem executa. Obra que pula esse setor está tentando girar o ciclo com meia equipe.</p>
+        <ul class="regras">
+          <li><b>P — segunda de manhã</b><span>Programação da semana fechada, com serviço, quantidade, frente, responsável e restrições resolvidas. Sem restrição aberta na programação.</span></li>
+          <li><b>D — durante a semana</b><span>A programação é apresentada ao campo antes de começar, não durante. Encarregado sabe tarefa, prazo, recurso e requisito de qualidade.</span></li>
+          <li><b>C — sexta</b><span>Levantamento do executado pelo próprio campo, comparação com o previsto e cálculo da produtividade real do período.</span></li>
+          <li><b>A — reunião de acompanhamento</b><span>Causa de cada desvio, ação corretiva com responsável e prazo, e a pergunta que quase ninguém faz: dá para adiantar alguma frente?</span></li>
+          <li><b>Desvio pontual ou tendência</b><span>Antes de agir, classifique. Desvio pontual pede ação na frente; tendência pede revisão de premissa, de produtividade ou de efetivo.</span></li>
+          <li><b>A volta termina no acervo</b><span>Produtividade medida entra na base de dados da empresa. Ciclo que não alimenta o histórico melhora a semana, mas não melhora a próxima obra.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="pratica">
+      <div class="titulo"><span class="num">3.7</span><h2>O que vale para a nossa equipe</h2></div>
+      <p>Verificação rápida do ciclo em qualquer obra:</p>
+      <div class="checklist">
+        <ul>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>O ciclo tem período fixo e data marcada — e não gira só quando aparece problema.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>O campo recebeu a programação e tirou dúvidas antes do início do período, não depois.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>O levantamento do realizado é feito com apropriação de quantidades, não por percepção de avanço.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>Cada desvio foi classificado como pontual ou tendência antes de gerar ação.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>As ações corretivas têm responsável e prazo, e são reconferidas no ciclo seguinte.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>Planejamento e produção estão juntos no quadrante A — a decisão não sai de um setor só.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>Quando não há desvio, a equipe discute redução de prazo em vez de encerrar a reunião mais cedo.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>As produtividades reais do período entraram no acervo de dados da obra.</span></li>
+        </ul>
+      </div>
+      <p class="nota-fonte">Material interno de treinamento, elaborado pela equipe a partir da estrutura do Capítulo 3 de <em>Planejamento e Controle de Obras</em>, de Aldo Dórea Mattos. O texto é redação própria, com comentários e rotinas adaptados à nossa realidade; a Figura 3.1 foi redesenhada a partir do diagrama do autor. Para o conteúdo original, consulte a obra.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div>
+    <span>Apostila interna — Capítulo 3</span>
+    <span><a href="cap02-ciclo-de-vida-do-projeto.html">Capítulo 2 — Ciclo de vida do projeto</a></span>
+  </div>
+</footer>
+</body>
+</html>
