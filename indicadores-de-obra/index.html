@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Indicadores da obra | Material interno</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+.carimbo h1{font-size:clamp(2.5rem,6.6vw,4.4rem)}
+
+/* ---------- lista de documentos ---------- */
+.docs-wrap{max-width:1180px;margin:0 auto;padding:clamp(1.2rem,4vw,3rem)}
+.docs-wrap > p{font-size:1.05rem;color:var(--tinta-2);margin:0 0 1.6rem}
+.lista-docs{display:flex;flex-direction:column;gap:1px;background:var(--linha);border:1px solid var(--linha)}
+
+/* bloco duplicável para cada novo documento */
+.doc-item{display:grid;grid-template-columns:64px 1fr 28px;gap:1.2rem;align-items:center;background:var(--branco);padding:clamp(1.1rem,3vw,1.7rem) clamp(1.2rem,3vw,1.8rem);text-decoration:none;color:var(--tinta)}
+.doc-item:hover{background:#F6F7F7}
+.doc-item:hover .doc-seta{color:var(--marca);transform:translateX(3px)}
+.doc-icone{font-size:1.6rem;text-align:center}
+.doc-corpo{display:flex;flex-direction:column;gap:.35rem}
+.doc-titulo{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.5rem;line-height:1.1}
+.doc-desc{font-size:.98rem;color:var(--tinta-2);max-width:60ch}
+.doc-seta{font-size:1.3rem;color:var(--tinta-2);transition:transform .15s,color .15s}
+
+@media (max-width:480px){
+  .doc-item{grid-template-columns:44px 1fr}
+  .doc-seta{display:none}
+}
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+<p class="trilha"><a href="../index.html">Portal</a> / Indicadores da obra</p>
+
+<header class="carimbo-wrap">
+  <div class="carimbo">
+    <div class="campo-principal">
+      <p class="obra">MATERIAL INTERNO / EQUIPE DE PLANEJAMENTO E CONTROLE DE OBRAS</p>
+      <h1><span class="cap">SEÇÃO 02</span>Indicadores da obra</h1>
+      <p class="chamada">Material de apoio para acompanhamento de obra — resumos e fichas de consulta rápida, fora da sequência de capítulos do livro-base.</p>
+    </div>
+    <div class="meta">
+      <div><span class="r">ASSUNTO</span><span class="v">Indicadores de desempenho</span></div>
+      <div><span class="r">DOCUMENTOS</span><span class="v">01 disponível</span></div>
+      <div><span class="r">PÚBLICO</span><span class="v">Equipe técnica e de campo</span></div>
+      <div><span class="r">USO</span><span class="v">Treinamento interno</span></div>
+    </div>
+  </div>
+  <div class="fita"><i></i><i></i><i></i><i></i></div>
+</header>
+
+<main id="conteudo" class="docs-wrap">
+  <p>Documentos desta seção. Não fazem parte da sequência de capítulos do livro-base — são materiais complementares de consulta.</p>
+
+  <div class="lista-docs">
+    <!-- DOCUMENTO: início (duplique este bloco para adicionar um novo documento) -->
+    <a class="doc-item" href="resumo-indicadores-de-obra.html">
+      <span class="doc-icone" aria-hidden="true">📊</span>
+      <span class="doc-corpo">
+        <span class="doc-titulo">Resumo de indicadores da obra</span>
+        <span class="doc-desc">Ficha de memorização dos indicadores físicos, econômico e financeiros (IFA, IFEC, IEC, ICF, IFS, IFE) — o que cada um mede e quando é crítico.</span>
+      </span>
+      <span class="doc-seta" aria-hidden="true">→</span>
+    </a>
+    <!-- DOCUMENTO: fim -->
+  </div>
+</main>
+
+<footer>
+  <div>
+    <span>Indicadores da obra — Índice de documentos</span>
+    <span><a href="../index.html">Voltar ao portal</a></span>
+  </div>
+</footer>
+</body>
+</html>

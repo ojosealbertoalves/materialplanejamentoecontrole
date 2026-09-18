@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Indicadores de Obra</title>
+<style>
+  @page {
+    size: A4;
+    margin: 16mm 14mm 18mm 14mm;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: #22303f;
+    margin: 0;
+    padding: 0;
+    font-size: 10.5pt;
+    line-height: 1.35;
+  }
+
+  /* ---------- TRILHA ---------- */
+  .trilha {
+    font-family: Arial, sans-serif;
+    font-size: 8.5pt;
+    color: #566b78;
+    padding: 10px 4px;
+  }
+  .trilha a {
+    color: #566b78;
+    text-decoration: none;
+    border-bottom: 1px solid #d7e2e8;
+  }
+  .trilha a:hover { color: #0f3d5c; border-bottom-color: #1b7ca6; }
+
+  /* ---------- CAPA / CABEÇALHO ---------- */
+  .header {
+    background: linear-gradient(135deg, #0f3d5c 0%, #145b82 60%, #1b7ca6 100%);
+    color: #fff;
+    padding: 22px 28px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    margin: 0 0 4px 0;
+    font-size: 20pt;
+    letter-spacing: 0.3px;
+  }
+  .header p {
+    margin: 0;
+    font-size: 10.5pt;
+    color: #d6ecf7;
+  }
+
+  /* ---------- CARDS DE INDICADOR ---------- */
+  .card {
+    border: 1.5px solid #d7e2e8;
+    border-left: 7px solid #1b7ca6;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    background: #fbfdfe;
+    page-break-inside: avoid;
+  }
+  .card.alto { border-left-color: #b3261e; }
+  .card.baixo { border-left-color: #b3261e; }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .sigla {
+    font-size: 15pt;
+    font-weight: 800;
+    color: #0f3d5c;
+  }
+  .nome {
+    font-size: 9pt;
+    color: #566b78;
+    font-style: italic;
+  }
+  .condicao {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 10.5pt;
+    padding: 3px 10px;
+    border-radius: 14px;
+    color: #fff;
+    background: #b3261e;
+    white-space: nowrap;
+  }
+  .condicao.normal-alto { background: #b3261e; }
+  .condicao.normal-baixo { background: #b3261e; }
+
+  .significado {
+    font-size: 10pt;
+    margin: 6px 0 4px 0;
+  }
+  .acao {
+    font-size: 9.3pt;
+    background: #eef6fa;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: 4px;
+  }
+  .acao b { color: #0f3d5c; }
+  .exemplo {
+    font-size: 9.3pt;
+    background: #fff8e1;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: 4px;
+    border: 1px dashed #e0b400;
+  }
+  .exemplo b { color: #8a6d00; }
+
+  /* ---------- SEÇÃO TÍTULO ---------- */
+  h2.section {
+    color: #0f3d5c;
+    font-size: 13pt;
+    border-bottom: 2px solid #1b7ca6;
+    padding-bottom: 4px;
+    margin: 22px 0 12px 0;
+  }
+  h2.section.pagebreak { page-break-before: always; }
+
+  /* ---------- TABELA MNEMÔNICA >1 / <1 ---------- */
+  .split-wrap {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .split-box {
+    flex: 1;
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .split-box.up {
+    background: #fdecea;
+    border: 1.5px solid #f2b8b5;
+  }
+  .split-box.down {
+    background: #fdecea;
+    border: 1.5px solid #f2b8b5;
+  }
+  .split-title {
+    font-weight: 800;
+    font-size: 11.5pt;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .split-title .num {
+    font-size: 16pt;
+  }
+  .mini-item {
+    font-size: 9.5pt;
+    margin-bottom: 6px;
+    padding-left: 4px;
+    border-left: 3px solid #b3261e;
+    padding-left: 8px;
+  }
+  .mini-item b { color: #0f3d5c; }
+
+  /* ---------- QUADRO GERAL (3 GRUPOS) ---------- */
+  .groups {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .group {
+    flex: 1;
+    text-align: center;
+    border-radius: 8px;
+    padding: 14px 8px;
+    color: #fff;
+  }
+  .group.fisico { background: #1b7ca6; }
+  .group.economico { background: #2e8b57; }
+  .group.financeiro { background: #6a4fa0; }
+  .group .titulo-g { font-weight: 800; font-size: 10.5pt; margin-bottom: 6px; }
+  .group .siglas-g { font-size: 14pt; font-weight: 800; letter-spacing: 1px; }
+  .group .desc-g { font-size: 8.3pt; margin-top: 4px; opacity: 0.92; }
+
+  /* ---------- TABELA RESUMO FINAL ---------- */
+  table.resumo {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+    margin-top: 6px;
+  }
+  table.resumo th {
+    background: #0f3d5c;
+    color: #fff;
+    padding: 6px 8px;
+    text-align: left;
+  }
+  table.resumo td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #e2e8ec;
+    vertical-align: top;
+  }
+  table.resumo tr:nth-child(even) td {
+    background: #f5fafc;
+  }
+  .tag {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 8.5pt;
+    padding: 2px 7px;
+    border-radius: 10px;
+    color: #fff;
+    background: #b3261e;
+  }
+
+  .dica {
+    background: #fff8e1;
+    border: 1.5px dashed #e0b400;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 9.5pt;
+    margin-top: 14px;
+  }
+  .dica b { color: #8a6d00; }
+
+  .footer-note {
+    text-align: center;
+    color: #8a99a3;
+    font-size: 8pt;
+    margin-top: 18px;
+  }
+
+  .tabela-wrap { overflow-x: auto; }
+  table.resumo { min-width: 640px; }
+
+  @media print {
+    .trilha { display: none; }
+    .tabela-wrap { overflow: visible; }
+    table.resumo { min-width: 0; }
+  }
+</style>
+</head>
+<body>
+
+  <p class="trilha"><a href="../index.html">Portal</a> / <a href="index.html">Indicadores da obra</a> / Resumo de indicadores</p>
+
+  <div class="header">
+    <h1>📊 Indicadores de Desempenho de Obra</h1>
+    <p>Resumo de análise crítica — material de memorização</p>
+  </div>
+
+  <h2 class="section">1. Indicadores individuais</h2>
+
+  <div class="card baixo">
+    <div class="card-top">
+      <div><span class="sigla">IFA</span> <span class="nome">Indicador Físico da Atividade</span></div>
+      <div class="condicao">&lt; 1,00</div>
+    </div>
+    <div class="significado">Mede o avanço físico de <b>uma atividade específica</b> — não da obra como um todo. Quando &lt; 1,00, aquela atividade <b>avançou menos</b> do que o previsto.</div>
+    <div class="exemplo"><b>Exemplo:</b> se o planejado era avançar <b>10%</b> em uma atividade e, na prática, avançou-se apenas <b>8%</b>, o IFA fica menor que 1. Isso indica um ponto crítico <b>naquela atividade específica</b>, e não necessariamente na obra de forma geral.</div>
+    <div class="acao"><b>Ação:</b> analisar as possíveis causas do atraso e identificar os possíveis responsáveis.</div>
+  </div>
+
+  <div class="card baixo">
+    <div class="card-top">
+      <div><span class="sigla">IFEC</span> <span class="nome">Indicador Físico-Econômico</span></div>
+      <div class="condicao">&lt; 1,00</div>
+    </div>
+    <div class="significado">Sinaliza necessidade de <b>reprogramação (projeção)</b> da execução dos serviços.</div>
+    <div class="acao"><b>Ação:</b> replanejar para que o atraso seja recuperado o mais rápido possível.</div>
+  </div>
+
+  <div class="card alto">
+    <div class="card-top">
+      <div><span class="sigla">IEC</span> <span class="nome">Indicador Econômico</span></div>
+      <div class="condicao">&gt; 1,00</div>
+    </div>
+    <div class="significado">A obra ou atividade está <b>custando mais</b> do que o previsto.</div>
+    <div class="acao"><b>Ação:</b> investigar os custos para apurar as causas dos imprevistos.</div>
+  </div>
+
+  <div class="card baixo" id="icf-card">
+    <div class="card-top">
+      <div><span class="sigla">ICF</span> <span class="nome">Indicador de Correção de Faturamento</span></div>
+      <div class="condicao">&lt; 1,00</div>
+    </div>
+    <div class="significado">A obra <b>recebeu um valor menor</b> do que deveria em relação ao executado.</div>
+    <div class="acao"><b>Ação:</b> o responsável pela obra deve se envolver diretamente para detectar a causa. Problemas comuns: atritos com a fiscalização e critérios de medição desvantajosos.</div>
+  </div>
+
+  <div class="card alto">
+    <div class="card-top">
+      <div><span class="sigla">IFS</span> <span class="nome">Indicador Financeiro de Saída</span></div>
+      <div class="condicao">&gt; 1,00</div>
+    </div>
+    <div class="significado">Houve <b>mais saída (pagamentos)</b> do que o previsto.</div>
+    <div class="acao"><b>Ação:</b> investigar as causas das distorções nos pagamentos.</div>
+  </div>
+
+  <div class="card baixo">
+    <div class="card-top">
+      <div><span class="sigla">IFE</span> <span class="nome">Indicador Financeiro de Entrada</span></div>
+      <div class="condicao">&lt; 1,00</div>
+    </div>
+    <div class="significado">Houve <b>menos entrada</b> do que o previsto para recebimentos.</div>
+    <div class="acao"><b>Ação:</b> investigar as causas. Se a obra estiver recebendo menos que o previsto, deve haver <b>cobrança junto à instituição financiadora</b> do empreendimento, buscando regularizar a defasagem.</div>
+  </div>
+
+  <h2 class="section pagebreak">2. Truque de memorização: quem fica crítico &gt; 1 e quem fica crítico &lt; 1</h2>
+
+  <div class="split-wrap">
+    <div class="split-box up">
+      <div class="split-title"><span class="num">⬆️</span> Crítico quando &gt; 1,00</div>
+      <div class="mini-item"><b>IEC</b> — custo maior que o previsto</div>
+      <div class="mini-item"><b>IFS</b> — saída (pagamento) maior que o previsto</div>
+    </div>
+    <div class="split-box down">
+      <div class="split-title"><span class="num">⬇️</span> Crítico quando &lt; 1,00</div>
+      <div class="mini-item"><b>IFA</b> — avanço físico menor que o previsto</div>
+      <div class="mini-item"><b>IFEC</b> — físico-econômico menor, exige reprogramação</div>
+      <div class="mini-item"><b>ICF</b> — faturamento recebido menor que o executado</div>
+      <div class="mini-item"><b>IFE</b> — entrada de recursos menor que o previsto</div>
+    </div>
+  </div>
+
+  <div class="dica">
+    <b>💡 Mnemônico:</b> só <b>dois</b> indicadores "sobem" para ficar críticos — os dois que envolvem <b>saída de dinheiro/custo</b> (IEC e IFS). Todos os outros quatro (que envolvem <b>físico e entrada de recursos</b>) ficam críticos quando <b>caem</b> abaixo de 1.
+  </div>
+
+  <h2 class="section">3. Visão geral: os 3 pares de indicadores</h2>
+
+  <div class="groups">
+    <div class="group fisico">
+      <div class="titulo-g">FÍSICOS</div>
+      <div class="siglas-g">IFA · IFEC</div>
+      <div class="desc-g">Avanço da execução</div>
+    </div>
+    <div class="group economico">
+      <div class="titulo-g">ECONÔMICO</div>
+      <div class="siglas-g">IEC</div>
+      <div class="desc-g">Custo da obra/atividade</div>
+    </div>
+    <div class="group financeiro">
+      <div class="titulo-g">FINANCEIROS</div>
+      <div class="siglas-g">ICF · IFS · IFE</div>
+      <div class="desc-g">Faturamento, entradas e saídas de caixa</div>
+    </div>
+  </div>
+  <p style="font-size:9pt; color:#566b78; margin-top:-8px; margin-bottom:14px;">
+    Ao todo: <b>2 indicadores físicos</b> (IFA, IFEC), <b>1 indicador econômico</b> (IEC) e <b>3 indicadores financeiros</b> (ICF, IFS, IFE).
+  </p>
+
+  <h2 class="section">4. Tabela-resumo rápida</h2>
+
+  <div class="tabela-wrap">
+  <table class="resumo">
+    <thead>
+      <tr>
+        <th>Sigla</th>
+        <th>Nome</th>
+        <th>Grupo</th>
+        <th>Condição crítica</th>
+        <th>O que fazer</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>IFA</b></td>
+        <td>Físico da Atividade</td>
+        <td>Físico</td>
+        <td><span class="tag">&lt; 1,00</span></td>
+        <td>Investigar causas do atraso e responsáveis (na atividade específica)</td>
+      </tr>
+      <tr>
+        <td><b>IFEC</b></td>
+        <td>Físico-Econômico</td>
+        <td>Físico</td>
+        <td><span class="tag">&lt; 1,00</span></td>
+        <td>Reprogramar (projetar) a execução</td>
+      </tr>
+      <tr>
+        <td><b>IEC</b></td>
+        <td>Econômico</td>
+        <td>Econômico</td>
+        <td><span class="tag">&gt; 1,00</span></td>
+        <td>Investigar causas do aumento de custo</td>
+      </tr>
+      <tr>
+        <td><b>ICF</b></td>
+        <td>Correção de Faturamento</td>
+        <td>Financeiro</td>
+        <td><span class="tag">&lt; 1,00</span></td>
+        <td>Responsável investiga fiscalização/medição</td>
+      </tr>
+      <tr>
+        <td><b>IFS</b></td>
+        <td>Financeiro de Saída</td>
+        <td>Financeiro</td>
+        <td><span class="tag">&gt; 1,00</span></td>
+        <td>Investigar distorções nos pagamentos</td>
+      </tr>
+      <tr>
+        <td><b>IFE</b></td>
+        <td>Financeiro de Entrada</td>
+        <td>Financeiro</td>
+        <td><span class="tag">&lt; 1,00</span></td>
+        <td>Investigar e cobrar instituição financiadora</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="footer-note">Material de estudo — Indicadores de Desempenho de Obra</div>
+
+</body>
+</html>
