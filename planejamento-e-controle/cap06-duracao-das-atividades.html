@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cap. 6 — Duração das atividades | Apostila interna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+.carimbo h1{font-size:clamp(2.4rem,6.4vw,4.3rem)}
+h4{font-size:1.12rem;margin:1.5rem 0 .4rem;color:var(--tinta-2)}
+
+/* ---------- dica para o planejador ---------- */
+.dica{background:var(--branco);border:2px solid var(--tinta);margin:1.8rem 0;box-shadow:7px 7px 0 rgba(20,35,43,.13)}
+.dica .rot{background:#E7EAE9;border-bottom:2px solid var(--tinta);padding:.4rem 1rem;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.12rem;letter-spacing:.04em}
+.dica .txt{padding:1rem 1.2rem}
+.dica p{margin:0 0 .8rem;font-size:.97rem}
+.dica p:last-child{margin-bottom:0}
+.dica ul{margin:.4rem 0 .8rem;padding-left:1.1rem}
+.dica li{font-size:.97rem;margin-bottom:.3rem}
+.dica hr{border:0;border-top:1px solid var(--linha);margin:.9rem 0}
+
+/* ---------- exemplo ---------- */
+.exemplo{background:var(--branco);border:1px solid var(--linha);border-left:6px solid var(--azul);padding:clamp(1rem,2.5vw,1.6rem);margin:1.8rem 0}
+.exemplo .chip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.1em;color:#fff;background:var(--azul);padding:.18rem .55rem;margin-bottom:.7rem}
+.exemplo h4{margin:0 0 .6rem;color:var(--tinta);font-size:1.2rem}
+.exemplo p{margin:0 0 .8rem}
+.exemplo .sol{border-top:1px dashed var(--linha);margin-top:1rem;padding-top:.9rem}
+.exemplo .sol b.tit{font-family:"Barlow Condensed",sans-serif;font-size:1.08rem;letter-spacing:.02em;display:block;margin-bottom:.4rem;color:var(--azul)}
+.exemplo table{margin-bottom:.4rem}
+.exemplo .rolagem + .rolagem{margin-top:1rem}
+.obs{font-size:.9rem;color:var(--tinta-2)}
+
+/* ---------- formulas ---------- */
+.formula{background:var(--branco);border:1px solid var(--linha);border-left:6px solid var(--marca);padding:1rem 1.2rem;margin:1.2rem 0;font-family:"IBM Plex Mono",monospace;font-size:.95rem;line-height:1.8;overflow-x:auto}
+.formula b{font-weight:500;color:#9A6B08}
+.caixa-formula{background:#E7EAE9;border:1px solid var(--linha);padding:clamp(1rem,2.5vw,1.5rem);margin:1.5rem 0}
+.caixa-formula .cab{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.25rem;margin-bottom:.4rem}
+.caixa-formula .via{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.08em;color:var(--tinta-2);margin:1rem 0 .3rem}
+.eq{display:flex;align-items:center;gap:.7rem;flex-wrap:nowrap;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.1rem;overflow-x:auto;padding-bottom:.2rem}
+.eq > span:first-child{white-space:nowrap}
+.frac{display:inline-flex;flex-direction:column;text-align:center;letter-spacing:.03em;white-space:nowrap}
+.frac .n{border-bottom:2px solid var(--tinta);padding:0 .6rem .2rem}
+.frac .d{padding:.2rem .6rem 0}
+
+/* ---------- dados ---------- */
+.dados{background:var(--branco);border:1px solid var(--linha);display:flex;margin:1.2rem 0;max-width:460px}
+.dados .barra{width:18px;flex:none;background:linear-gradient(180deg,var(--tinta),var(--tinta-2))}
+.dados ul{list-style:none;margin:0;padding:0;flex:1}
+.dados li{padding:.5rem .9rem;border-bottom:1px solid var(--linha);font-family:"IBM Plex Mono",monospace;font-size:.88rem}
+.dados li:last-child{border-bottom:0}
+
+/* ---------- tabelas ---------- */
+.rolagem{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:var(--branco);border:1px solid var(--tinta);margin:0}
+caption{caption-side:top;text-align:left;font-family:"Barlow Condensed",sans-serif;font-weight:600;color:var(--tinta-2);padding-bottom:.5rem;font-size:1.02rem}
+th{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.02rem;text-align:left;padding:.5rem .7rem;border-bottom:2px solid var(--tinta);background:#F6F7F7;vertical-align:bottom}
+td{padding:.45rem .7rem;border-bottom:1px solid var(--linha);font-size:.95rem;vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.cod{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--marca);width:2.2rem}
+tr.grupo td{background:#EDF0F0;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.02rem;letter-spacing:.03em}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.mono{font-family:"IBM Plex Mono",monospace;font-size:.84rem}
+.regra-nome{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.12rem;width:210px}
+.tab-min{min-width:640px}
+th.entrada{background:#DDE7EC;text-align:center}
+th.saida{background:#F5E7CB;text-align:center}
+td.saida-c{background:#FBF6EA}
+.legenda-siglas{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.2rem .9rem;margin:.6rem 0 0;font-size:.84rem;color:var(--tinta-2);font-family:"IBM Plex Mono",monospace}
+
+/* ---------- filtro da tabela ---------- */
+.filtro{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;margin:1rem 0}
+.filtro input{font-family:"Source Serif 4",serif;font-size:1rem;padding:.55rem .8rem;border:1px solid var(--tinta);background:var(--branco);min-width:0;flex:1 1 220px;max-width:420px}
+.filtro label{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.05rem}
+.filtro .cont{font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--tinta-2)}
+#tabela62 tbody tr:not(.grupo):hover td{background:#F7F3E8}
+
+@media (max-width:900px){
+  .regra-nome{width:auto}
+}
+@media (max-width:640px){
+  .eq{flex-wrap:wrap;font-size:1rem;gap:.3rem}
+  .eq > span:first-child{width:100%}
+  .frac{white-space:normal;width:100%}
+  .frac .n,.frac .d{padding-left:.2rem;padding-right:.2rem}
+  .formula{font-size:.86rem}
+}
+@media print{
+  body{font-size:10.5pt}
+  .filtro{display:none}
+  .dica{box-shadow:none}
+  .rolagem{overflow:visible}
+  .tab-min{min-width:0}
+  .dica,.exemplo,.caixa-formula{break-inside:avoid}
+  #tabela62 tbody tr{display:table-row!important}
+}
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+<p class="trilha"><a href="../index.html">Portal</a> / <a href="index.html">Planejamento e controle</a> / Capítulo 6</p>
+
+<header class="carimbo-wrap">
+  <div class="carimbo">
+    <div class="campo-principal">
+      <p class="obra">MATERIAL INTERNO / EQUIPE DE PLANEJAMENTO E CONTROLE DE OBRAS</p>
+      <h1><span class="cap">CAPÍTULO 6</span>Duração das atividades</h1>
+      <p class="chamada">De onde sai o número de dias de cada barra do cronograma. Quantidade, índice, equipe e jornada — as quatro grandezas que transformam serviço em prazo.</p>
+      <div class="links-cap">
+        <a href="cap05-estrutura-analitica-do-projeto.html">Voltar ao Capítulo 5</a>
+      </div>
+    </div>
+    <div class="meta">
+      <div><span class="r">ASSUNTO</span><span class="v">Índices e produtividades</span></div>
+      <div><span class="r">PÚBLICO</span><span class="v">Planejamento e produção</span></div>
+      <div><span class="r">BASE</span><span class="v">Mattos, A. D.</span></div>
+      <div><span class="r">USO</span><span class="v">Treinamento interno</span></div>
+    </div>
+  </div>
+  <div class="fita"><i></i><i></i><i></i><i></i></div>
+</header>
+
+<div class="corpo">
+  <nav class="sumario" aria-label="Sumário do capítulo">
+    <p>Neste capítulo</p>
+    <ol>
+      <li><a href="#conceito"><span>6.1</span>Conceito de duração</a></li>
+      <li><a href="#regras"><span>6.2</span>Regras práticas</a></li>
+      <li><a href="#fatores"><span>6.3</span>Fatores que afetam</a></li>
+      <li><a href="#parametrica"><span>6.4</span>Estimativa paramétrica</a></li>
+      <li><a href="#calculo"><span>6.4.1</span>Do índice à duração</a></li>
+      <li><a href="#formulas"><span>6.4.2</span>As quatro fórmulas</a></li>
+      <li><a href="#qdr"><span>6.5</span>Quadro Duração-Recursos</a></li>
+      <li><a href="#banco"><span>6.6</span>Banco de produtividades</a></li>
+      <li><a href="#leitura"><span>6.7</span>Como aplicamos</a></li>
+      <li><a href="#pratica"><span>6.8</span>O que vale para a nossa equipe</a></li>
+    </ol>
+  </nav>
+
+  <main id="conteudo">
+
+    <section id="conceito">
+      <div class="titulo"><span class="num">6.1</span><h2>Conceito de duração</h2></div>
+      <p class="intro capitular">Duração é a quantidade de tempo — em dias, semanas, meses, horas ou minutos — requerida para executar a atividade. Em outras palavras, é a quantidade de períodos de trabalho necessários para que a atividade seja desempenhada por inteiro.</p>
+
+      <div class="dica">
+        <div class="rot">Dica para o planejador</div>
+        <div class="txt">
+          <p>O computador não substitui a habilidade intelectual humana. De nada vale ter em mãos o melhor programa e o computador mais potente se os dados de entrada não fizerem sentido. Vale o ditado americano: <em>garbage in, garbage out</em> — se entra lixo, sai lixo.</p>
+          <p>Por isso, antes de criar arquivos e lançar dados mecanicamente, avalie a consistência do que está sendo informado ao programa.</p>
+        </div>
+      </div>
+
+      <h3>Dias úteis, não dias de calendário</h3>
+      <p>A duração estimada se refere sempre a dias (ou semanas etc.) <strong>úteis</strong> — aqueles em que efetivamente se trabalha. Uma atividade que vai consumir duas semanas de segunda a sexta tem duração de <strong>10 dias</strong>, e não de 12 como a contagem do calendário sugere: sábado e domingo não são trabalhados e, portanto, não entram na conta.</p>
+
+      <div class="dica">
+        <div class="rot">Dica para o planejador</div>
+        <div class="txt">
+          <p>É comum fornecedores e subempreiteiros darem prazos de entrega de material ou de execução de serviço em dias corridos. Confira sempre — 20 dias úteis são bem diferentes de 20 dias corridos.</p>
+          <p>Os softwares geralmente aceitam a entrada nas duas formas, em dias úteis e em dias corridos.</p>
+        </div>
+      </div>
+
+      <h3>A unidade padrão</h3>
+      <p>A unidade mais comum nos planejamentos de obra é o <strong>dia</strong>. A semana pode ser adotada em obras muito longas e na fase de pré-planejamento; <strong>horas</strong> podem ser o padrão em obras muito curtas, como paradas industriais. O importante é definir o padrão no início do planejamento e referenciar todas as durações a ele.</p>
+
+      <h3>Por que a EAP volta aqui</h3>
+      <p>Ao pensar em como determinar durações, reafirma-se a importância da Estrutura Analítica do Projeto. É muito mais preciso atribuir duração a uma atividade individualizada e simples do que a um pacote com múltiplos serviços envolvidos — "fundações", "concreto armado", "instalações elétricas", "montagens". A decomposição feita na EAP define as fronteiras de cada atividade e, por consequência, facilita a atribuição da duração.</p>
+
+      <div class="dica">
+        <div class="rot">Dica para o planejador — o tamanho certo da atividade</div>
+        <div class="txt">
+          <p>Algumas especificações técnicas de órgãos americanos impõem duração mínima de <strong>1 dia</strong> e máxima igual ao <strong>dobro da periodicidade de atualização da rede</strong>: com atualização semanal, a duração máxima é de duas semanas (10 dias); com atualização quinzenal, 30 dias, e assim por diante.</p>
+          <p>O autor prefere teorizar como <strong>1 dia &lt; d &lt; 10 dias</strong>:</p>
+          <ul>
+            <li>Se a atividade tiver <strong>d &lt; 1 dia</strong>, é pequena demais e deve se fundir a outra(s) para formar uma atividade mais longa.</li>
+            <li>Se tiver <strong>d &gt; 10 dias</strong>, deve ser desmembrada em pacotes menores (fase I e fase II, por exemplo).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="regras">
+      <div class="titulo"><span class="num">6.2</span><h2>Regras práticas</h2></div>
+      <p>Ao atribuir durações, o planejador deve ter em mente algumas regras práticas:</p>
+
+      <div class="rolagem">
+      <table class="tab-min">
+        <caption>Quadro 6.1 — Regras práticas para determinação da duração de uma atividade</caption>
+        <thead><tr><th>Regra</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="regra-nome">Avaliar as durações uma a uma</td>
+            <td>Estimar a duração de cada atividade analisando-a separadamente das demais. Para cada uma, assumir oferta suficiente de mão de obra, material e equipamento — a menos que se saiba de antemão que isso não é possível.</td>
+          </tr>
+          <tr>
+            <td class="regra-nome">Adotar o dia normal</td>
+            <td>Calcular a duração com base na jornada normal. Admitir logo de saída hora extra e turno mais longo não é boa prática, porque induz tendenciosidade. A exceção são obras naturalmente executadas em turnos diurno e noturno — barragens, estradas, obras industriais. Não é o caso, por exemplo, de obras prediais.</td>
+          </tr>
+          <tr>
+            <td class="regra-nome">Não pensar no prazo total da obra</td>
+            <td>A atribuição das durações deve ser imparcial. O planejador não deve se balizar pelo prazo total logo no início: monta a rede com durações calculadas de forma isenta e só então avalia se o total está coerente ou precisa de ajuste. O ideal é tratar cada atividade individualmente.</td>
+          </tr>
+          <tr>
+            <td class="regra-nome">Dias úteis ≠ dias corridos</td>
+            <td>Duração é quantidade de períodos de trabalho e não se confunde com dias de calendário. Numa obra que trabalha de segunda a sexta, 15 dias úteis representam 4 dias a mais do que 15 dias de calendário.</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="dica">
+        <div class="rot">Dica para o planejador — a conta de chegada</div>
+        <div class="txt">
+          <p>Muitos profissionais preparam o gráfico de barras já com o prazo total em mente e desenham as barras para caberem no prazo contratual ou na duração pretendida — é a famosa "conta de chegada".</p>
+          <p>O correto é montar o cronograma sem tendenciosidade, comparar o prazo obtido com o que se quer atingir e então, com base na técnica PERT/CPM, identificar os pontos mais recomendáveis para encurtar a duração total.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="fatores">
+      <div class="titulo"><span class="num">6.3</span><h2>Fatores que afetam a duração</h2></div>
+      <div class="rolagem">
+      <table class="tab-min">
+        <caption>Quadro 6.2 — Fatores que afetam a duração</caption>
+        <thead><tr><th>Fator</th><th>Efeito</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="regra-nome">Experiência da equipe</td>
+            <td>Quanto mais experiente a equipe, maior a facilidade em realizar a atividade e menor o tempo necessário para executá-la.</td>
+          </tr>
+          <tr>
+            <td class="regra-nome">Grau de conhecimento do serviço</td>
+            <td>Atividades novas, especiais ou pouco frequentes exigem um período de familiarização: metodologia construtiva, posicionamento de operários e equipamentos, identificação de interferências, análise de fontes de erro. A produtividade tende a crescer com o tempo — é a <strong>curva de aprendizagem</strong>.</td>
+          </tr>
+          <tr>
+            <td class="regra-nome">Apoio logístico</td>
+            <td>A duração melhora com um suporte preciso, que garanta que os operários não percam tempo esperando material ou fazendo longos deslocamentos.</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section id="parametrica">
+      <div class="titulo"><span class="num">6.4</span><h2>Estimativa paramétrica</h2></div>
+      <p>As durações estão sempre envoltas em alguma imprecisão, mas não podem ser mera adivinhação. O planejador precisa se apoiar em um parâmetro existente para estimar a duração provável de cada atividade.</p>
+      <p>No planejamento de obras, as <strong>composições de custos unitários</strong> do orçamento são a fonte por excelência para gerar durações. Composições são tabelas com os insumos do serviço, seus índices (ou coeficientes de consumo), custo unitário e custo total.</p>
+
+      <h3>Índice e produtividade</h3>
+      <p><strong>Índice</strong> é a incidência de cada insumo na execução de uma unidade do serviço. É sempre expresso em unidade de tempo por unidade de trabalho: h/kg, h/m², min/un, dia/m³, semana/t.</p>
+      <p>Inversamente, <strong>produtividade</strong> é a taxa de produção de uma pessoa, equipe ou equipamento — a quantidade de unidades produzidas em um intervalo de tempo especificado, normalmente a hora. Quanto maior a produtividade, mais unidades são feitas no mesmo tempo; quanto mais produtivo o recurso, menos tempo ele gasta na tarefa.</p>
+
+      <div class="formula">
+        <b>Produtividade = 1 ÷ índice</b><br>
+        índice de armador de 0,10 h/kg → produtividade de 10,0 kg/h<br>
+        índice de 0,15 h/kg → produtividade de 6,67 kg/h
+      </div>
+
+      <div class="dica">
+        <div class="rot">Dicas para o planejador</div>
+        <div class="txt">
+          <p>O índice também é chamado de <strong>Razão Unitária de Produção (RUP)</strong>. Quanto menor a RUP, maior a produtividade; quanto maior a RUP, menor a produtividade.</p>
+          <hr>
+          <p><strong>Produtividade não é produção.</strong> Produção é a quantidade de unidades feitas em certo período; produtividade é a rapidez com que essa produção foi atingida.</p>
+          <p>Exemplo: um pedreiro assenta 800 tijolos em um dia de 8 horas; outro assenta os mesmos 800 tijolos em 12 horas. A produção dos dois foi igual, mas a produtividade do primeiro foi 50% maior — 100 tijolos/hora contra 67 do segundo.</p>
+          <hr>
+          <p>Quando o planejador usa os índices gerados pelo orçamentista (há empresas em que as duas funções são do mesmo profissional), ganha um meio importante de amarrar orçamento e planejamento, pois os índices:</p>
+          <ul>
+            <li>revelam a produtividade orçada, que norteou a formação do custo da obra;</li>
+            <li>dão um parâmetro de comparação entre orçado e realizado;</li>
+            <li>representam o limite além do qual a atividade se torna deficitária;</li>
+            <li>permitem detectar desvios;</li>
+            <li>ajudam o gerente a estabelecer metas de desempenho para as equipes.</li>
+          </ul>
+          <p>Quanto mais precisos e confiáveis os índices vindos do orçamento ou de especialistas, mais preciso e confiável será o cronograma.</p>
+        </div>
+      </div>
+
+      <div class="exemplo">
+        <span class="chip">EXEMPLO 6.1</span>
+        <h4>Interpretar índices e produtividades de uma composição</h4>
+        <p>Serviço: alvenaria de bloco cerâmico de 9 cm (largura) × 14 cm × 19 cm, juntas horizontais e verticais de 1,5 cm, incluindo fabricação da argamassa no canteiro. Unidade: m².</p>
+        <div class="rolagem">
+        <table>
+          <caption>Composição de insumos por m² de alvenaria</caption>
+          <thead><tr><th>Insumo</th><th>Unidade</th><th class="num">Índice (ou coeficiente)</th></tr></thead>
+          <tbody>
+            <tr><td>Pedreiro</td><td class="mono">h</td><td class="num">0,90</td></tr>
+            <tr><td>Servente</td><td class="mono">h</td><td class="num">1,05</td></tr>
+            <tr><td>Bloco</td><td class="mono">un</td><td class="num">35</td></tr>
+            <tr><td>Cimento</td><td class="mono">kg</td><td class="num">3,2</td></tr>
+            <tr><td>Arenoso</td><td class="mono">m³</td><td class="num">0,010</td></tr>
+            <tr><td>Areia</td><td class="mono">m³</td><td class="num">0,015</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p class="obs">As composições têm ainda as colunas de custo unitário e custo total, omitidas aqui por não serem relevantes ao problema.</p>
+        <div class="sol">
+          <b class="tit">Solução</b>
+          <p>O insumo principal de mão de obra — o "carro-chefe" do serviço — é o <strong>pedreiro</strong>, porque é ele quem dita o ritmo da produção. O índice 0,90 significa 0,90 h/m²: gasta-se 90% de uma hora (54 minutos) de pedreiro para executar 1 m² de alvenaria. Em 1 hora a produção é um pouco maior que 1 m² — mais precisamente 1 ÷ 0,90 = <strong>1,11 m²/h</strong>, a produtividade do serviço.</p>
+          <p style="margin-bottom:0">Como o índice do servente é 1,05 h/m², a proporção servente/pedreiro é 1,05 : 0,90 = 1,16 : 1 — ou seja, <strong>7 serventes para cada 6 pedreiros</strong>.</p>
+        </div>
+      </div>
+
+      <div class="exemplo">
+        <span class="chip">EXEMPLO 6.2</span>
+        <h4>Identificar o índice que comanda o serviço e a produtividade da equipe</h4>
+        <p><strong>(i)</strong> Serviço: fôrma de chapa compensada para estruturas em geral, resinada, e = 12 mm, 3 reaproveitamentos. Unidade: m².</p>
+        <div class="rolagem">
+        <table>
+          <thead><tr><th>Insumo</th><th>Unidade</th><th class="num">Índice</th></tr></thead>
+          <tbody>
+            <tr><td>Ajudante de carpinteiro</td><td class="mono">h</td><td class="num">1,20</td></tr>
+            <tr><td>Carpinteiro</td><td class="mono">h</td><td class="num">1,20</td></tr>
+            <tr><td>Chapa compensada</td><td class="mono">m²</td><td class="num">0,43</td></tr>
+            <tr><td>Desmoldante</td><td class="mono">l</td><td class="num">0,10</td></tr>
+            <tr><td>Prego 18 × 27</td><td class="mono">kg</td><td class="num">0,25</td></tr>
+            <tr><td>Pontalete 3" × 3"</td><td class="mono">m</td><td class="num">2,00</td></tr>
+            <tr><td>Sarrafo 1" × 4"</td><td class="mono">m</td><td class="num">1,53</td></tr>
+            <tr><td>Tábua 1" × 12"</td><td class="mono">m</td><td class="num">1,40</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p style="margin-top:1.2rem"><strong>(ii)</strong> Serviço: escavação mecanizada de vala, com transporte para bota-fora a 800 m. Unidade: m³<sub>c</sub> (metro cúbico medido no corte).</p>
+        <div class="rolagem">
+        <table>
+          <thead><tr><th>Insumo</th><th>Unidade</th><th class="num">Índice</th></tr></thead>
+          <tbody>
+            <tr><td>Escavadeira</td><td class="mono">h</td><td class="num">0,0186</td></tr>
+            <tr><td>Caminhão (produtivo)</td><td class="mono">h<sub>prod</sub></td><td class="num">0,0470</td></tr>
+            <tr><td>Caminhão (improdutivo)</td><td class="mono">h<sub>improd</sub></td><td class="num">0,0080</td></tr>
+            <tr><td>Servente</td><td class="mono">h</td><td class="num">0,0372</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="sol">
+          <b class="tit">Solução</b>
+          <p><strong>(i)</strong> O carro-chefe é o <strong>carpinteiro</strong>. O índice 1,20 h/m² significa 1,20 hora de carpinteiro por m² de fôrma. A produtividade é 1 ÷ 1,20 = <strong>0,83 m²/h</strong>. A equipe tem 1 ajudante para 1 carpinteiro, porque os índices são iguais.</p>
+          <p style="margin-bottom:0"><strong>(ii)</strong> O carro-chefe é a <strong>escavadeira</strong>. O índice 0,0186 h/m³<sub>c</sub> dá produtividade de 1 ÷ 0,0186 = <strong>53,8 m³<sub>c</sub>/h</strong>. A equipe é de 1 escavadeira e 3 caminhões — (0,0470 + 0,0080) ÷ 0,0186 ≈ 3.</p>
+        </div>
+      </div>
+
+      <div class="dica">
+        <div class="rot">Dica para o planejador</div>
+        <div class="txt">
+          <p>A produtividade nem sempre se refere a um operário ou equipamento individual. Ela pode ser associada a uma patrulha ou a um grupo de equipamentos.</p>
+          <p>Exemplo: 280 m³ de aterro compactado por hora de uma patrulha com 2 rolos pé de carneiro, 1 motoniveladora, 2 caminhões-tanque e 1 trator de pneus com grade de disco.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="calculo">
+      <div class="titulo"><span class="num">6.4.1</span><h2>Do índice à duração</h2></div>
+      <p>Entendidos índice e produtividade, o planejador calcula a duração das atividades. Usando os dados do Exemplo 6.1, para executar <strong>160 m²</strong> de alvenaria — uma atividade como "alvenaria do 1º pavimento", "alvenaria da sala de controle" ou "muro externo" — os passos são:</p>
+
+      <div class="formula">
+        <b>Trabalho requerido (homem-hora)</b><br>
+        Hh = quantidade (m²) × índice (h/m²) = 160 m² × 0,90 h/m² = <b>144 h de pedreiro</b>
+      </div>
+
+      <div class="rolagem">
+      <table>
+        <caption>Tabela 6.1 — Proporcionalidade equipe-duração</caption>
+        <thead><tr><th class="num">Trabalho (Hh)</th><th>Equipe</th><th class="num">Duração (horas)</th><th class="num">Duração (dias)*</th></tr></thead>
+        <tbody>
+          <tr><td class="num">144</td><td>1 pedreiro</td><td class="num">144</td><td class="num">18</td></tr>
+          <tr><td class="num">144</td><td>2 pedreiros</td><td class="num">72</td><td class="num">9</td></tr>
+          <tr><td class="num">144</td><td>3 pedreiros</td><td class="num">48</td><td class="num">6</td></tr>
+          <tr><td class="num">144</td><td>4 pedreiros</td><td class="num">36</td><td class="num">4,5</td></tr>
+          <tr><td class="num">144</td><td>6 pedreiros</td><td class="num">24</td><td class="num">3</td></tr>
+          <tr><td class="num">144</td><td>8 pedreiros</td><td class="num">18</td><td class="num">2,25</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="obs">* Considerada jornada diária de 8 horas.</p>
+
+      <h3>O jogo entre efetivo e prazo</h3>
+      <p><strong>A duração é inversamente proporcional ao tamanho da equipe.</strong> As 144 horas de pedreiro podem ser 3 pedreiros trabalhando 6 dias, 2 pedreiros trabalhando 9 dias ou 6 pedreiros trabalhando 3 dias. A duração varia com a equipe, mas <em>o trabalho permanece constante</em>: aumentando os recursos, o tempo diminui. É o que se chama em inglês de <em>trade-off</em> entre equipe e duração.</p>
+
+      <div class="alerta"><strong>O limite físico:</strong> a tabela não pode ser extrapolada indefinidamente. Não dá para alocar 18 pedreiros e fazer a tarefa em 1 dia — ainda que a matemática permita, os pedreiros se acotovelariam e a produtividade despencaria. É preciso bom senso para achar o ponto ótimo.</div>
+
+      <h3>Dois raciocínios possíveis</h3>
+      <p>O planejador sempre escolhe entre dois caminhos: ou define o efetivo e calcula a duração, ou fixa a duração e calcula a equipe necessária.</p>
+
+      <div class="rolagem">
+      <table class="tab-min">
+        <caption>Quadro 6.3 — Relação entre duração e equipe</caption>
+        <thead><tr><th>Processo</th><th>Aplicação</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="regra-nome">Dimensionar a DURAÇÃO em função da equipe</td>
+            <td>Quando a quantidade de recursos é restrita e passa a ser determinante — por exemplo, quando se sabe de antemão que só haverá duas escavadeiras na escavação, ou que a equipe de alvenaria terá necessariamente 4 pedreiros.</td>
+          </tr>
+          <tr>
+            <td class="regra-nome">Dimensionar a EQUIPE em função da duração</td>
+            <td>Quando a duração é imposta e a incógnita é a quantidade de recursos — obras com ciclos de produção predefinidos (5 dias de alvenaria por pavimento, 10 dias de pintura por casa) ou duração fixada por condicionante externa (o desvio do rio não pode passar de 2 meses porque começa a cheia).</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="exemplo">
+        <span class="chip">EXEMPLO 6.3</span>
+        <h4>Assentamento de telha cerâmica</h4>
+        <p>Quantitativo de 200 m²; índices de pedreiro e servente de 0,8 h/m² e 1,6 h/m². Dia de 8 horas. Determinar:</p>
+        <p>(i) a produtividade de cada recurso e a equipe básica;<br>
+        (ii) a duração, sabendo que serão usados 5 pedreiros e 10 serventes;<br>
+        (iii) a quantidade de operários para executar a atividade em 10 dias.</p>
+        <div class="sol">
+          <b class="tit">Solução</b>
+          <p><strong>(i)</strong> A produtividade é o inverso do índice:<br>
+          Pedreiro (P): 1 ÷ 0,8 = <strong>1,25 m²/h</strong> ou 10 m²/dia<br>
+          Servente (S): 1 ÷ 1,6 = <strong>0,625 m²/h</strong> ou 5 m²/dia<br>
+          Logo, uma equipe básica de <strong>1P + 2S</strong> produz 10 m²/dia.</p>
+          <div class="formula">
+            <b>(ii)</b> Trabalho = 200 m² × 0,8 h/m² = 160 horas de pedreiro<br>
+            D = 160 h ÷ (5 pedreiros × 8 h/dia) = <b>4 dias</b> com a equipe 5P + 10S
+          </div>
+          <div class="formula">
+            <b>(iii)</b> Trabalho = 160 horas<br>
+            n = 160 h ÷ (10 dias × 8 h/dia) = 2 pedreiros → equipe = <b>2P + 4S</b>
+          </div>
+          <p class="obs" style="margin-bottom:0">Há várias maneiras de raciocinar para chegar aos mesmos resultados.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="formulas">
+      <div class="titulo"><span class="num">6.4.2</span><h2>As quatro fórmulas</h2></div>
+      <p>Matematicamente, os dois raciocínios se resolvem com quatro fórmulas — duas para cada caso, conforme se trabalhe com índice ou com produtividade.</p>
+
+      <div class="caixa-formula">
+        <div class="cab">Quadro 6.4 — DURAÇÃO em função da equipe</div>
+        <p class="via">USANDO ÍNDICE</p>
+        <div class="eq">
+          <span>DURAÇÃO =</span>
+          <span class="frac"><span class="n">QTDE × ÍNDICE</span><span class="d">QTDE RECURSOS × JORNADA</span></span>
+        </div>
+        <p class="via">USANDO PRODUTIVIDADE</p>
+        <div class="eq">
+          <span>DURAÇÃO =</span>
+          <span class="frac"><span class="n">QTDE</span><span class="d">PRODUTIVIDADE × QTDE RECURSOS × JORNADA</span></span>
+        </div>
+        <p class="obs" style="margin:1rem 0 0">QTDE = quantidade de serviço.</p>
+      </div>
+
+      <div class="exemplo">
+        <span class="chip">EXEMPLO 6.4</span>
+        <h4>Calcular a duração a partir do índice ou da produtividade</h4>
+        <div class="dados">
+          <div class="barra" aria-hidden="true"></div>
+          <ul>
+            <li>Quantidade = 1.440 kg de armação</li>
+            <li>Índice do armador = 0,10 h/kg</li>
+            <li>Recursos = 3 armadores</li>
+            <li>Jornada diária = 8 h</li>
+          </ul>
+        </div>
+        <div class="formula">D = (1.440 × 0,10) ÷ (3 × 8) = <b>6 dias</b></div>
+        <p style="margin:1rem 0 .4rem"><em>ou, pela produtividade do armador, de 10 kg/h:</em></p>
+        <div class="formula">D = 1.440 ÷ (10 × 3 × 8) = <b>6 dias</b></div>
+      </div>
+
+      <div class="caixa-formula">
+        <div class="cab">Quadro 6.5 — EQUIPE em função da duração</div>
+        <p class="via">USANDO ÍNDICE</p>
+        <div class="eq">
+          <span>QTDE DE RECURSOS =</span>
+          <span class="frac"><span class="n">QTDE × ÍNDICE</span><span class="d">DURAÇÃO × JORNADA</span></span>
+        </div>
+        <p class="via">USANDO PRODUTIVIDADE</p>
+        <div class="eq">
+          <span>QTDE DE RECURSOS =</span>
+          <span class="frac"><span class="n">QTDE</span><span class="d">PRODUTIVIDADE × DURAÇÃO × JORNADA</span></span>
+        </div>
+      </div>
+
+      <div class="exemplo">
+        <span class="chip">EXEMPLO 6.5</span>
+        <h4>Calcular a equipe a partir do índice ou da produtividade</h4>
+        <div class="dados">
+          <div class="barra" aria-hidden="true"></div>
+          <ul>
+            <li>Quantidade = 1.440 kg de armação</li>
+            <li>Índice do armador = 0,10 h/kg</li>
+            <li>Duração = 6 dias</li>
+            <li>Jornada diária = 8 h</li>
+          </ul>
+        </div>
+        <div class="formula">n = (1.440 × 0,10) ÷ (6 × 8) = <b>3 armadores</b></div>
+        <p style="margin:1rem 0 .4rem"><em>ou, pela produtividade do armador, de 10 kg/h:</em></p>
+        <div class="formula">n = 1.440 ÷ (10 × 6 × 8) = <b>3 armadores</b></div>
+      </div>
+    </section>
+
+    <section id="qdr">
+      <div class="titulo"><span class="num">6.5</span><h2>Quadro Duração-Recursos</h2></div>
+      <p>Na prática das construtoras, <strong>o mais comum é o planejador atribuir a duração</strong> às atividades <strong>e então calcular o efetivo necessário</strong>. É assim quando se define de antemão que a pintura de cada pavimento será feita em 10 dias, ou que cada pilar do viaduto terá a fôrma erguida em 5 dias.</p>
+      <p>Numa obra com muitas atividades, a boa medida é concentrar todos os cálculos de duração e equipe em uma planilha única — o <strong>Quadro Duração-Recursos (QDR)</strong>.</p>
+
+      <div class="rolagem">
+      <table class="tab-min">
+        <caption>Figura 6.1 — Configuração básica do QDR</caption>
+        <thead>
+          <tr>
+            <th colspan="7" class="entrada">Dados de entrada</th>
+            <th colspan="3" class="saida">Dados de saída</th>
+          </tr>
+          <tr>
+            <th>Atividade</th><th>UN</th><th>Qtde</th><th>Equipe básica</th><th>Índice da equipe</th><th>Jornada (h/dia)</th><th>Dias da equipe básica</th>
+            <th>Duração adotada (dias)</th><th>Qtde de equipes</th><th>Recursos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="7" class="obs">Vêm do orçamento: quantitativo, equipe básica e índice <em>da equipe</em>. Os dias da equipe básica são calculados.</td><td colspan="3" class="obs saida-c">O planejador arbitra a duração; a planilha devolve quantas equipes e quantos recursos são necessários.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="exemplo">
+        <span class="chip">EXEMPLO 6.6</span>
+        <h4>Definir a duração e calcular os recursos</h4>
+        <div class="rolagem">
+        <table class="tab-min">
+          <caption>Quadro 6.6 — Quantitativo de serviços, equipe básica e índice</caption>
+          <thead><tr><th>Atividade</th><th>UN</th><th class="num">Qtde</th><th>Equipe básica</th><th class="num">Índice da equipe</th><th class="num">Jornada (h/dia)</th></tr></thead>
+          <tbody>
+            <tr><td>Escavação</td><td class="mono">m³</td><td class="num">190</td><td>2 serventes</td><td class="num">2 h/m³</td><td class="num">8</td></tr>
+            <tr><td>Fôrma</td><td class="mono">m²</td><td class="num">320</td><td>1 carpinteiro + 1 ajudante</td><td class="num">1 h/m²</td><td class="num">8</td></tr>
+            <tr><td>Armação</td><td class="mono">kg</td><td class="num">6.000</td><td>1 armador + 1 ajudante</td><td class="num">0,08 h/kg</td><td class="num">8</td></tr>
+            <tr><td>Concreto</td><td class="mono">m³</td><td class="num">40</td><td>1 pedreiro + 8 serventes</td><td class="num">8 h/m³</td><td class="num">8</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="sol">
+          <b class="tit">Solução — raciocínio na armação</b>
+          <p>A equipe básica de 1 armador + 1 ajudante gasta 0,08 h por kg. Os 6.000 kg demandam 6.000 × 0,08 = 480 h da equipe, o que equivale a 60 dias de trabalho.</p>
+          <p style="margin-bottom:0">Aí entra a decisão do planejador: se ele impõe que a atividade seja executada em <strong>12 dias</strong>, são necessárias <strong>5 equipes</strong> (5 armadores + 5 ajudantes).</p>
+        </div>
+      </div>
+
+      <div class="rolagem">
+      <table class="tab-min">
+        <caption>Quadro 6.7 — QDR completo</caption>
+        <thead>
+          <tr>
+            <th colspan="6" class="entrada">Entrada</th>
+            <th colspan="4" class="saida">Saída</th>
+          </tr>
+          <tr>
+            <th>Atividade</th><th class="num">Qtde</th><th>Equipe básica</th><th class="num">Índice</th><th class="num">Jornada</th><th class="num">Dias da equipe básica</th>
+            <th class="num">Duração adotada</th><th class="num">Qtde de equipes</th><th>Recursos</th><th class="num">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Escavação</td><td class="num">190 m³</td><td class="mono">2s</td><td class="num">2 h/m³</td><td class="num">8</td><td class="num">48</td><td class="num marcado">10</td><td class="num">5</td><td>servente</td><td class="num">10</td></tr>
+          <tr><td>Fôrma</td><td class="num">320 m²</td><td class="mono">1c + 1a</td><td class="num">1 h/m²</td><td class="num">8</td><td class="num">40</td><td class="num marcado">5</td><td class="num">8</td><td>carpinteiro / ajudante</td><td class="num">8 / 8</td></tr>
+          <tr><td>Armação</td><td class="num">6.000 kg</td><td class="mono">1f + 1a</td><td class="num">0,08 h/kg</td><td class="num">8</td><td class="num">60</td><td class="num marcado">12</td><td class="num">5</td><td>armador / ajudante</td><td class="num">5 / 5</td></tr>
+          <tr><td>Concreto</td><td class="num">40 m³</td><td class="mono">1p + 8s</td><td class="num">8 h/m³</td><td class="num">8</td><td class="num">40</td><td class="num marcado">8</td><td class="num">5</td><td>pedreiro / servente</td><td class="num">5 / 40</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="obs">A escavação sai com 48 dias arredondados na planilha do autor (190 × 2 ÷ 8 = 47,5). Em destaque, a duração arbitrada pelo planejador.</p>
+
+      <h3>O formato alternativo</h3>
+      <p>Outro formato de QDR produz o mesmo resultado. Nele se informam os índices não da equipe, mas de <strong>cada recurso individualmente</strong>. É mais trabalhoso, porém mais prático quando o orçamento traz índices por recurso — como fazem os softwares de orçamento mais comuns.</p>
+
+      <div class="rolagem">
+      <table class="tab-min">
+        <caption>Quadro 6.8 — QDR em formato alternativo</caption>
+        <thead><tr><th>Atividade</th><th class="num">Qtde</th><th>Recurso</th><th class="num">Índice do recurso</th><th class="num">Jornada</th><th class="num">Dias</th><th class="num">Duração adotada</th><th class="num">Qtde recursos</th></tr></thead>
+        <tbody>
+          <tr><td>Escavação</td><td class="num">190 m³</td><td>Servente</td><td class="num">4 h/m³</td><td class="num">8</td><td class="num">95</td><td class="num marcado">10</td><td class="num">10</td></tr>
+          <tr><td rowspan="2">Fôrma</td><td class="num" rowspan="2">320 m²</td><td>Carpinteiro</td><td class="num">1 h/m²</td><td class="num">8</td><td class="num">40</td><td class="num marcado">5</td><td class="num">8</td></tr>
+          <tr><td>Ajudante</td><td class="num">1 h/m²</td><td class="num">8</td><td class="num">40</td><td class="num marcado">5</td><td class="num">8</td></tr>
+          <tr><td rowspan="2">Armação</td><td class="num" rowspan="2">6.000 kg</td><td>Armador</td><td class="num">0,08 h/kg</td><td class="num">8</td><td class="num">60</td><td class="num marcado">12</td><td class="num">5</td></tr>
+          <tr><td>Ajudante</td><td class="num">0,08 h/kg</td><td class="num">8</td><td class="num">60</td><td class="num marcado">12</td><td class="num">5</td></tr>
+          <tr><td rowspan="2">Concreto</td><td class="num" rowspan="2">40 m³</td><td>Pedreiro</td><td class="num">8 h/m³</td><td class="num">8</td><td class="num">40</td><td class="num marcado">8</td><td class="num">5</td></tr>
+          <tr><td>Servente</td><td class="num">64 h/m³</td><td class="num">8</td><td class="num">320</td><td class="num marcado">8</td><td class="num">40</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="dica">
+        <div class="rot">Dicas para o planejador — qual formato usar</div>
+        <div class="txt">
+          <p>O preenchimento é diferente nos dois casos. No formato original entra-se com a equipe básica e o índice <strong>da equipe</strong>; no alternativo, com os índices de <strong>cada recurso</strong>.</p>
+          <hr>
+          <p>O formato original é mais prático e sintético quando o planejador tem os índices da equipe básica — o que nem sempre acontece. Nos EUA, as obras são sempre orçadas a partir da produtividade da equipe básica.</p>
+          <p>O formato alternativo é mais trabalhoso, porém mais fácil quando os índices do orçamento são por recurso e não por equipe, como é comum nas construtoras brasileiras.</p>
+          <hr>
+          <p>É muito fácil montar um QDR em planilha eletrônica. Para trabalhar com produtividade em vez de índice, basta trocar a fórmula de cálculo.</p>
+        </div>
+      </div>
+
+      <h3>Exemplo passo a passo — Barragem Alegria</h3>
+      <p>Para o esquema de desvio do rio Alegria, os quantitativos são os do quadro abaixo. Com as produtividades definidas na orçamentação, as durações foram calculadas supondo 8 h/dia e semana de 5 dias:</p>
+      <div class="rolagem">
+      <table class="tab-min">
+        <thead><tr><th>Cód.</th><th>Atividade</th><th class="num">Quantidade</th><th class="num">Produtividade</th><th class="num">Duração (semanas)</th></tr></thead>
+        <tbody>
+          <tr class="grupo"><td colspan="5">Acessos</td></tr>
+          <tr><td class="cod">A</td><td>Acesso ao túnel</td><td class="num">3 km</td><td class="num">0,2 km/dia</td><td class="num">3</td></tr>
+          <tr><td class="cod">B</td><td>Acesso à ensecadeira de montante</td><td class="num">1 km</td><td class="num">0,2 km/dia</td><td class="num">1</td></tr>
+          <tr><td class="cod">C</td><td>Acesso à ensecadeira de jusante</td><td class="num">2 km</td><td class="num">0,2 km/dia</td><td class="num">2</td></tr>
+          <tr class="grupo"><td colspan="5">Túnel</td></tr>
+          <tr><td class="cod">D</td><td>Emboque do túnel</td><td class="num">12.000 m³</td><td class="num">100 m³/h</td><td class="num">3</td></tr>
+          <tr><td class="cod">E</td><td>Escavação do túnel</td><td class="num">150 m</td><td class="num">3 m/dia</td><td class="num">10</td></tr>
+          <tr class="grupo"><td colspan="5">Ensecadeiras</td></tr>
+          <tr><td class="cod">F</td><td>Construção da ensecadeira de montante</td><td class="num">30.000 m³</td><td class="num">150 m³/h</td><td class="num">5</td></tr>
+          <tr><td class="cod">G</td><td>Construção da ensecadeira de jusante</td><td class="num">12.000 m³</td><td class="num">150 m³/h</td><td class="num">2</td></tr>
+          <tr class="grupo"><td colspan="5">Fundação da barragem</td></tr>
+          <tr><td class="cod">H</td><td>Esgotamento</td><td class="num">100.000 m³</td><td class="num">100 l/s</td><td class="num">7</td></tr>
+          <tr><td class="cod">I</td><td>Escavação da fundação</td><td class="num">80.000 m³</td><td class="num">250 m³/h</td><td class="num">8</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="obs">Confira uma linha para fixar o método: emboque do túnel = 12.000 m³ ÷ (100 m³/h × 8 h/dia) = 15 dias úteis = 3 semanas.</p>
+    </section>
+
+    <section id="banco">
+      <div class="titulo"><span class="num">6.6</span><h2>Banco de dados de produtividade</h2></div>
+      <p>A tabela a seguir traz produtividades médias de serviços de edificações, retiradas de bancos de dados correntes. Servem de referência para o dimensionamento de durações.</p>
+      <div class="alerta"><strong>Use com cautela:</strong> produtividade depende de muitos fatores — equipe, método, logística, condições locais. Estes números são ponto de partida, nunca substituto do índice do nosso orçamento ou do histórico medido nas nossas obras.</div>
+
+      <div class="filtro">
+        <label for="busca">Filtrar serviço</label>
+        <input type="search" id="busca" placeholder="alvenaria, fôrma, pintura…" autocomplete="off">
+        <span class="cont" id="contador" aria-live="polite"></span>
+      </div>
+
+      <div class="rolagem">
+      <table class="tab-min" id="tabela62">
+        <caption>Tabela 6.2 — Índices e produtividades de serviços de edificações (extrato)</caption>
+        <thead><tr><th>Serviço</th><th class="num">Índice</th><th class="num">Produtividade</th><th class="num">Produção dia (8 h)</th><th>Equipe básica</th></tr></thead>
+        <tbody>
+          <tr class="grupo"><td colspan="5">Serviços preliminares</td></tr>
+          <tr><td>Limpeza de terreno</td><td class="num">1,00 h/m²</td><td class="num">1,00 m²/h</td><td class="num">8,00 m²/dia</td><td class="mono">—</td></tr>
+          <tr><td>Demolição de alvenaria</td><td class="num">0,80 h/m²</td><td class="num">1,25 m²/h</td><td class="num">10,00 m²/dia</td><td class="mono">2p+5s</td></tr>
+          <tr><td>Demolição de concreto armado</td><td class="num">1,60 h/m³</td><td class="num">0,63 m³/h</td><td class="num">5,00 m³/dia</td><td class="mono">2p+3s</td></tr>
+          <tr><td>Demolição de pisos cerâmicos</td><td class="num">0,53 h/m²</td><td class="num">1,88 m²/h</td><td class="num">15,00 m²/dia</td><td class="mono">2p+2s</td></tr>
+          <tr><td>Demolição de revestimento</td><td class="num">0,72 h/m²</td><td class="num">1,39 m²/h</td><td class="num">11,11 m²/dia</td><td class="mono">2p+2s</td></tr>
+          <tr><td>Escavação manual de valas até 2 m</td><td class="num">2,00 h/m³</td><td class="num">0,50 m³/h</td><td class="num">4,00 m³/dia</td><td class="mono">2s</td></tr>
+          <tr><td>Escavação manual de valas de 2 m a 4 m</td><td class="num">1,00 h/m³</td><td class="num">1,00 m³/h</td><td class="num">8,00 m³/dia</td><td class="mono">1p+5s</td></tr>
+          <tr><td>Reaterro simples manual</td><td class="num">4,00 h/m³</td><td class="num">0,25 m³/h</td><td class="num">2,00 m³/dia</td><td class="mono">2s</td></tr>
+          <tr><td>Reaterro compactado mecanicamente</td><td class="num">0,16 h/m³</td><td class="num">6,25 m³/h</td><td class="num">50,00 m³/dia</td><td class="mono">1a+eq</td></tr>
+          <tr><td>Canteiro — barracão</td><td class="num">2,67 h/m²</td><td class="num">0,38 m²/h</td><td class="num">3,00 m²/dia</td><td class="mono">1c+1s</td></tr>
+          <tr><td>Canteiro — tapume</td><td class="num">2,00 h/m²</td><td class="num">0,50 m²/h</td><td class="num">4,00 m²/dia</td><td class="mono">1c+1s</td></tr>
+          <tr class="grupo"><td colspan="5">Fundação</td></tr>
+          <tr><td>Estaqueamento in loco</td><td class="num">0,16 h/m</td><td class="num">6,25 m/h</td><td class="num">50,00 m/dia</td><td class="mono">1op+eq</td></tr>
+          <tr><td>Estaqueamento pré-moldado</td><td class="num">0,08 h/m</td><td class="num">12,50 m/h</td><td class="num">100,00 m/dia</td><td class="mono">1op+eq</td></tr>
+          <tr><td>Brocas — perfuração</td><td class="num">0,80 h/m</td><td class="num">1,25 m/h</td><td class="num">10,00 m/dia</td><td class="mono">2s</td></tr>
+          <tr><td>Brocas — concretagem</td><td class="num">0,53 h/m</td><td class="num">1,88 m/h</td><td class="num">15,00 m/dia</td><td class="mono">2p+2s</td></tr>
+          <tr><td>Fôrmas — fabricação, tábuas retas</td><td class="num">1,60 h/m²</td><td class="num">0,63 m²/h</td><td class="num">5,00 m²/dia</td><td class="mono">1c+1a</td></tr>
+          <tr><td>Fôrmas — colocação, tábuas retas</td><td class="num">0,57 h/m²</td><td class="num">1,75 m²/h</td><td class="num">14,00 m²/dia</td><td class="mono">1c+1a</td></tr>
+          <tr><td>Armação — fabricação CA-50</td><td class="num">0,08 h/kg</td><td class="num">12,50 kg/h</td><td class="num">100,00 kg/dia</td><td class="mono">1f+1a</td></tr>
+          <tr><td>Armação — colocação CA-50</td><td class="num">0,16 h/kg</td><td class="num">6,25 kg/h</td><td class="num">50,00 kg/dia</td><td class="mono">1f+1a</td></tr>
+          <tr><td>Lançamento de concreto estrutural manual</td><td class="num">1,33 h/m³</td><td class="num">0,75 m³/h</td><td class="num">6,00 m³/dia</td><td class="mono">2p+7s</td></tr>
+          <tr><td>Lançamento de concreto estrutural com grua</td><td class="num">0,44 h/m³</td><td class="num">2,25 m³/h</td><td class="num">18,00 m³/dia</td><td class="mono">2p+2s</td></tr>
+          <tr><td>Adensamento de concreto estrutural</td><td class="num">0,67 h/m³</td><td class="num">1,50 m³/h</td><td class="num">12,00 m³/dia</td><td class="mono">2p</td></tr>
+          <tr class="grupo"><td colspan="5">Estrutura</td></tr>
+          <tr><td>Concretagem com betoneira 320 l</td><td class="num">0,18 h/m³</td><td class="num">5,62 m³/h</td><td class="num">44,99 m³/dia</td><td class="mono">2p+7s</td></tr>
+          <tr><td>Fôrmas de compensado, retas — fabricação</td><td class="num">1,78 h/m²</td><td class="num">0,56 m²/h</td><td class="num">4,50 m²/dia</td><td class="mono">—</td></tr>
+          <tr><td>Fôrmas de compensado, retas — colocação</td><td class="num">0,94 h/m²</td><td class="num">1,06 m²/h</td><td class="num">8,50 m²/dia</td><td class="mono">—</td></tr>
+          <tr><td>Fôrmas de compensado, retas — desfôrma</td><td class="num">0,16 h/m²</td><td class="num">6,25 m²/h</td><td class="num">50,00 m²/dia</td><td class="mono">—</td></tr>
+          <tr><td>Fôrma geral</td><td class="num">0,53 h/m²</td><td class="num">1,88 m²/h</td><td class="num">15,00 m²/dia</td><td class="mono">2c+2a</td></tr>
+          <tr><td>Armação em geral</td><td class="num">0,07 h/kg</td><td class="num">15,00 kg/h</td><td class="num">120,00 kg/dia</td><td class="mono">1f+1a</td></tr>
+          <tr class="grupo"><td colspan="5">Alvenaria</td></tr>
+          <tr><td>Tijolo maciço 10 cm</td><td class="num">0,80 h/m²</td><td class="num">1,25 m²/h</td><td class="num">10,00 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Tijolo furado 15 cm (10×20×20)</td><td class="num">0,53 h/m²</td><td class="num">1,88 m²/h</td><td class="num">15,00 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Bloco de concreto 20×20×40</td><td class="num">1,14 h/m²</td><td class="num">0,88 m²/h</td><td class="num">7,00 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Bloco de concreto 15×20×40</td><td class="num">0,80 h/m²</td><td class="num">1,25 m²/h</td><td class="num">10,00 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Bloco de concreto 10×20×40</td><td class="num">0,53 h/m²</td><td class="num">1,88 m²/h</td><td class="num">15,00 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Elementos vazados de concreto</td><td class="num">2,40 h/m²</td><td class="num">0,42 m²/h</td><td class="num">3,33 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr class="grupo"><td colspan="5">Revestimentos de paredes</td></tr>
+          <tr><td>Chapisco grosso</td><td class="num">0,32 h/m²</td><td class="num">3,13 m²/h</td><td class="num">25,00 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Chapisco fino</td><td class="num">0,40 h/m²</td><td class="num">2,50 m²/h</td><td class="num">20,00 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Emboço</td><td class="num">0,40 h/m²</td><td class="num">2,50 m²/h</td><td class="num">20,00 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Reboco</td><td class="num">0,40 h/m²</td><td class="num">2,50 m²/h</td><td class="num">20,00 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Massa única</td><td class="num">0,29 h/m²</td><td class="num">3,50 m²/h</td><td class="num">28,00 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Azulejos</td><td class="num">1,00 h/m²</td><td class="num">1,00 m²/h</td><td class="num">8,00 m²/dia</td><td class="mono">1la+1s</td></tr>
+          <tr><td>Pastilhas</td><td class="num">1,60 h/m²</td><td class="num">0,63 m²/h</td><td class="num">5,00 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr class="grupo"><td colspan="5">Revestimento de pisos</td></tr>
+          <tr><td>Piso de cerâmica</td><td class="num">1,00 h/m²</td><td class="num">1,00 m²/h</td><td class="num">8,00 m²/dia</td><td class="mono">1la+1s</td></tr>
+          <tr><td>Piso cimentado liso</td><td class="num">0,80 h/m²</td><td class="num">1,25 m²/h</td><td class="num">10,00 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Piso de granilite</td><td class="num">0,64 h/m²</td><td class="num">1,56 m²/h</td><td class="num">12,50 m²/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Piso de mármore</td><td class="num">1,23 h/m²</td><td class="num">0,81 m²/h</td><td class="num">6,50 m²/dia</td><td class="mono">1ass+1s</td></tr>
+          <tr><td>Rodapé de cerâmica</td><td class="num">0,80 h/m</td><td class="num">1,25 m/h</td><td class="num">10,00 m/dia</td><td class="mono">1p+1s</td></tr>
+          <tr><td>Soleira de mármore ou cerâmica</td><td class="num">2,00 h/m</td><td class="num">0,50 m/h</td><td class="num">4,00 m/dia</td><td class="mono">1o+1a</td></tr>
+          <tr class="grupo"><td colspan="5">Divisórias e forros</td></tr>
+          <tr><td>Forro metálico</td><td class="num">2,50 h/m²</td><td class="num">0,40 m²/h</td><td class="num">3,20 m²/dia</td><td class="mono">—</td></tr>
+          <tr><td>Divisórias metálicas</td><td class="num">5,00 h/m²</td><td class="num">0,20 m²/h</td><td class="num">1,60 m²/dia</td><td class="mono">—</td></tr>
+          <tr class="grupo"><td colspan="5">Coberturas</td></tr>
+          <tr><td>Madeiramento para telhas cerâmicas</td><td class="num">0,80 h/m²</td><td class="num">1,25 m²/h</td><td class="num">10,00 m²/dia</td><td class="mono">1c+1a</td></tr>
+          <tr><td>Telha de fibrocimento 8 mm</td><td class="num">0,32 h/m²</td><td class="num">3,13 m²/h</td><td class="num">25,00 m²/dia</td><td class="mono">1p+2s</td></tr>
+          <tr><td>Telha cerâmica</td><td class="num">0,80 h/m²</td><td class="num">1,25 m²/h</td><td class="num">10,00 m²/dia</td><td class="mono">1p+2s</td></tr>
+          <tr class="grupo"><td colspan="5">Tratamentos</td></tr>
+          <tr><td>Argamassa impermeável</td><td class="num">3,00 h/m²</td><td class="num">0,33 m²/h</td><td class="num">2,67 m²/dia</td><td class="mono">—</td></tr>
+          <tr><td>Pintura asfáltica em fundação</td><td class="num">0,40 h/m²</td><td class="num">2,50 m²/h</td><td class="num">20,00 m²/dia</td><td class="mono">—</td></tr>
+          <tr><td>Impermeabilização de caixa d&#x27;água</td><td class="num">6,00 h/m²</td><td class="num">0,17 m²/h</td><td class="num">1,33 m²/dia</td><td class="mono">—</td></tr>
+          <tr class="grupo"><td colspan="5">Esquadrias</td></tr>
+          <tr><td>Janela de alumínio anodizado</td><td class="num">5,00 h/m²</td><td class="num">0,20 m²/h</td><td class="num">1,60 m²/dia</td><td class="mono">1o+1a</td></tr>
+          <tr><td>Janela de correr</td><td class="num">2,00 h/un</td><td class="num">0,50 un/h</td><td class="num">4,00 un/dia</td><td class="mono">1c+1a</td></tr>
+          <tr><td>Porta</td><td class="num">2,27 h/un</td><td class="num">0,44 un/h</td><td class="num">3,52 un/dia</td><td class="mono">1c+1a</td></tr>
+          <tr><td>Porta de madeira completa</td><td class="num">2,67 h/un</td><td class="num">0,38 un/h</td><td class="num">3,00 un/dia</td><td class="mono">1c+1a</td></tr>
+          <tr><td>Porta corta-fogo</td><td class="num">16,00 h/un</td><td class="num">0,06 un/h</td><td class="num">0,50 un/dia</td><td class="mono">1p+2s</td></tr>
+          <tr class="grupo"><td colspan="5">Pintura</td></tr>
+          <tr><td>Raspagem de superfície</td><td class="num">0,53 h/m²</td><td class="num">1,88 m²/h</td><td class="num">15,00 m²/dia</td><td class="mono">1r+1a</td></tr>
+          <tr><td>Emassamento e lixamento</td><td class="num">0,40 h/m²</td><td class="num">2,50 m²/h</td><td class="num">20,00 m²/dia</td><td class="mono">1p</td></tr>
+          <tr><td>Pintura de paredes</td><td class="num">1,20 h/m²</td><td class="num">0,83 m²/h</td><td class="num">6,67 m²/dia</td><td class="mono">—</td></tr>
+          <tr><td>Pintura de esquadrias de madeira</td><td class="num">1,40 h/m²</td><td class="num">0,71 m²/h</td><td class="num">5,71 m²/dia</td><td class="mono">—</td></tr>
+          <tr><td>Pintura de esquadrias metálicas</td><td class="num">0,90 h/m²</td><td class="num">1,11 m²/h</td><td class="num">8,89 m²/dia</td><td class="mono">—</td></tr>
+          <tr><td>Esmalte</td><td class="num">1,06 h/m²</td><td class="num">0,94 m²/h</td><td class="num">7,55 m²/dia</td><td class="mono">1p+1a</td></tr>
+          <tr><td>Verniz</td><td class="num">1,06 h/m²</td><td class="num">0,94 m²/h</td><td class="num">7,55 m²/dia</td><td class="mono">1p+1a</td></tr>
+          <tr><td>Retoques</td><td class="num">0,27 h/m²</td><td class="num">3,75 m²/h</td><td class="num">30,00 m²/dia</td><td class="mono">1p+1a</td></tr>
+          <tr class="grupo"><td colspan="5">Instalações e peças hidráulicas</td></tr>
+          <tr><td>Instalação hidráulica</td><td class="num">0,47 h/pto</td><td class="num">2,13 pto/h</td><td class="num">17,00 pto/dia</td><td class="mono">1en+1a</td></tr>
+          <tr><td>Instalação elétrica</td><td class="num">0,89 h/pto</td><td class="num">1,13 pto/h</td><td class="num">9,00 pto/dia</td><td class="mono">1en+1a</td></tr>
+          <tr><td>Fossa séptica — colocação</td><td class="num">0,50 h/pto</td><td class="num">2,00 pto/h</td><td class="num">16,00 pto/dia</td><td class="mono">1en+1a</td></tr>
+          <tr><td>Bacia de louça com caixa acoplada</td><td class="num">6,00 h/un</td><td class="num">0,17 un/h</td><td class="num">1,33 un/dia</td><td class="mono">1en</td></tr>
+          <tr><td>Lavatório com coluna</td><td class="num">6,60 h/un</td><td class="num">0,15 un/h</td><td class="num">1,21 un/dia</td><td class="mono">1en</td></tr>
+          <tr><td>Chuveiro</td><td class="num">1,00 h/un</td><td class="num">1,00 un/h</td><td class="num">8,00 un/dia</td><td class="mono">1en</td></tr>
+          <tr class="grupo"><td colspan="5">Vidros e estrutura metálica</td></tr>
+          <tr><td>Vidro</td><td class="num">0,60 h/m²</td><td class="num">1,67 m²/h</td><td class="num">13,33 m²/dia</td><td class="mono">1v+1a</td></tr>
+          <tr><td>Estruturas metálicas pesadas (acima de 20 t)</td><td class="num">0,27 h/t</td><td class="num">3,75 t/h</td><td class="num">30,00 t/dia</td><td class="mono">eq</td></tr>
+          <tr><td>Estruturas metálicas leves (até 5 t)</td><td class="num">0,05 h/t</td><td class="num">18,75 t/h</td><td class="num">150,00 t/dia</td><td class="mono">eq</td></tr>
+          <tr class="grupo"><td colspan="5">Limpeza final</td></tr>
+          <tr><td>Limpeza de pisos e revestimentos</td><td class="num">0,40 h/m²</td><td class="num">2,50 m²/h</td><td class="num">20,00 m²/dia</td><td class="mono">2s</td></tr>
+          <tr><td>Limpeza de vidros</td><td class="num">0,60 h/m²</td><td class="num">1,67 m²/h</td><td class="num">13,33 m²/dia</td><td class="mono">2s</td></tr>
+          <tr><td>Limpeza geral</td><td class="num">0,70 h/m²</td><td class="num">1,43 m²/h</td><td class="num">11,43 m²/dia</td><td class="mono">2s</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h4>Legenda das equipes</h4>
+      <div class="legenda-siglas">
+        <span>a = ajudante</span><span>ass = assentador</span><span>c = carpinteiro</span><span>cal = calafetador</span>
+        <span>en = encarregado</span><span>eq = equipamento</span><span>f = armador</span><span>la = ladrilheiro</span>
+        <span>ma = marmorista</span><span>o/of = oficial</span><span>op = operador</span><span>p = pedreiro</span>
+        <span>po = poceiro</span><span>r = raspador</span><span>s = servente</span><span>se = serralheiro</span>
+        <span>ta = taqueiro</span><span>v = vidraceiro</span>
+      </div>
+      <p class="obs" style="margin-top:1rem">Extrato da Tabela 6.2 do livro, cortesia do Eng. Pedro Antônio Lousan Badra — Sistemática Badra de Dados. A tabela completa cobre muitos outros serviços; consulte a obra quando o que você procura não estiver aqui.</p>
+    </section>
+
+    <section id="leitura">
+      <div class="leitura">
+        <h2>Como calculamos duração aqui</h2>
+        <p class="sub">Leitura da nossa equipe</p>
+        <p>Este é o capítulo que mais protege a empresa de cronograma fantasioso. Duração não é opinião: é <strong>quantidade × índice ÷ (equipe × jornada)</strong>. Quem defende um prazo sem mostrar essas grandezas está apresentando uma conta de chegada.</p>
+        <p>A origem do índice segue uma ordem de preferência: primeiro o histórico medido nas nossas obras (o acervo que o quadrante C do <a href="cap03-ciclo-pdca.html#checar">PDCA</a> alimenta), depois o índice do orçamento da obra e só então tabela de mercado. Quando usarmos tabela, isso fica registrado na memória de cálculo.</p>
+        <ul class="regras">
+          <li><b>Toda duração tem memória de cálculo</b><span>Quantidade, índice ou produtividade, equipe e jornada. Sem esses quatro campos, a atividade não entra no cronograma.</span></li>
+          <li><b>O índice do cronograma conversa com o do orçamento</b><span>Divergir é permitido, mas com justificativa por escrito. Índice diferente sem justificativa é desvio de custo esperando para acontecer.</span></li>
+          <li><b>Atividade entre 1 e 10 dias</b><span>Menor que 1 dia, funde com outra. Maior que 10 dias, desmembra em fases. Atividade longa demais esconde avanço e atrapalha a medição semanal.</span></li>
+          <li><b>Dia útil sempre</b><span>Prazo de fornecedor quase sempre vem em dia corrido — converta antes de lançar. É o erro mais barato de evitar e o mais caro de descobrir tarde.</span></li>
+          <li><b>Jornada normal como base</b><span>Hora extra não entra na estimativa inicial. Ela é recurso para recuperar atraso, não premissa de plano.</span></li>
+          <li><b>Bom senso no efetivo</b><span>Antes de dobrar a equipe para cortar o prazo pela metade, pergunte se cabe gente na frente de serviço. A produtividade cai quando a equipe se acotovela.</span></li>
+          <li><b>QDR em planilha única</b><span>Todos os cálculos de duração e equipe da obra em um arquivo só, no formato por recurso — que é como nosso orçamento gera índices.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="pratica">
+      <div class="titulo"><span class="num">6.8</span><h2>O que vale para a nossa equipe</h2></div>
+      <p>Verificação rápida antes de fechar as durações de um cronograma:</p>
+      <div class="checklist">
+        <ul>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>Toda atividade tem quantidade, índice (ou produtividade), equipe e jornada registrados.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>A origem de cada índice está identificada: histórico próprio, orçamento ou tabela de mercado.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>As durações foram estimadas uma a uma, sem olhar para o prazo total.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>Nenhuma duração usou hora extra ou turno adicional como premissa.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>Os prazos de fornecedores foram conferidos: dias úteis ou dias corridos?</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>Nenhuma atividade ficou menor que 1 dia nem maior que 10 dias sem justificativa.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>O efetivo calculado cabe fisicamente na frente de serviço.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>Existe um QDR único da obra, e ele é a fonte das durações lançadas no software.</span></li>
+        </ul>
+      </div>
+      <p class="nota-fonte">Material interno de treinamento, elaborado pela equipe a partir da estrutura do Capítulo 6 de <em>Planejamento e Controle de Obras</em>, de Aldo Dórea Mattos. O texto é redação própria, com comentários e rotinas adaptados à nossa realidade; os exemplos numéricos e o extrato da Tabela 6.2 reproduzem dados do autor para estudo interno. Para o conteúdo completo, consulte a obra.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div>
+    <span>Apostila interna — Capítulo 6</span>
+    <span><a href="cap05-estrutura-analitica-do-projeto.html">Capítulo 5 — Estrutura Analítica do Projeto</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var campo=document.getElementById('busca'),
+      tabela=document.getElementById('tabela62'),
+      contador=document.getElementById('contador');
+  if(!campo||!tabela) return;
+  var linhas=Array.prototype.slice.call(tabela.tBodies[0].rows);
+  function normaliza(t){return t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');}
+  function atualiza(){
+    var q=normaliza(campo.value.trim()), visiveis=0, grupoAtual=null, grupoTem=false;
+    function fechaGrupo(){ if(grupoAtual) grupoAtual.style.display=(!q||grupoTem)?'':'none'; }
+    linhas.forEach(function(tr){
+      if(tr.classList.contains('grupo')){ fechaGrupo(); grupoAtual=tr; grupoTem=false; return; }
+      var ok=!q||normaliza(tr.cells[0].textContent).indexOf(q)>-1;
+      tr.style.display=ok?'':'none';
+      if(ok){visiveis++;grupoTem=true;}
+    });
+    fechaGrupo();
+    contador.textContent=q?(visiveis===0?'Nenhum serviço encontrado. Tente outro termo.':visiveis+' serviço(s)'):'';
+  }
+  campo.addEventListener('input',atualiza);
+})();
+</script>
+</body>
+</html>

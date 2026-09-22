@@ -68,6 +68,12 @@ section{margin-bottom:clamp(2.5rem,6vw,4.5rem);scroll-margin-top:1.5rem}
 .titulo h2{font-size:clamp(1.7rem,4vw,2.5rem);margin:0}
 h3{font-size:1.35rem;margin:2.2rem 0 .6rem}
 .intro{font-size:1.12rem}
+.capitular::first-letter{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:4.2rem;float:left;line-height:.82;margin:.12em .12em 0 0;color:var(--tinta)}
+
+/* ---------- alerta ---------- */
+.alerta{border-left:3px solid var(--marca);padding:.7rem 0 .7rem 1rem;background:linear-gradient(90deg,rgba(224,162,28,.09),rgba(224,162,28,0));font-size:.98rem;margin:1.2rem 0}
+.alerta strong{font-family:"Barlow Condensed",sans-serif;font-size:1.1rem}
+.marcado{outline:2px solid var(--tinta);outline-offset:-3px;font-weight:600}
 
 /* ---------- leitura da equipe ---------- */
 .doutrina,.leitura{background:var(--tinta);color:#EDF0F1;padding:clamp(1.4rem,4vw,2.6rem);border-left:14px solid var(--marca)}
