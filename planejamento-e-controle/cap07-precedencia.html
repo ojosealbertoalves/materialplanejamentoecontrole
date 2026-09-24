@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cap. 7 — Precedência | Apostila interna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+:root{--marca-esc:#9A6B08}
+.carimbo h1{font-size:clamp(2.6rem,7vw,4.6rem)}
+nav.sumario a{font-size:1.06rem}
+h4{font-size:1.12rem;margin:1.5rem 0 .4rem;color:var(--tinta-2)}
+
+/* ---------- dica ---------- */
+.dica{background:var(--branco);border:2px solid var(--tinta);margin:1.8rem 0;box-shadow:7px 7px 0 rgba(20,35,43,.13)}
+.dica .rot{background:#E7EAE9;border-bottom:2px solid var(--tinta);padding:.4rem 1rem;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.12rem;letter-spacing:.04em}
+.dica .txt{padding:1rem 1.2rem}
+.dica p{margin:0 0 .8rem;font-size:.97rem}
+.dica p:last-child{margin-bottom:0}
+.dica ul{margin:.4rem 0 .8rem;padding-left:1.1rem}
+.dica li{font-size:.97rem;margin-bottom:.3rem}
+.dica hr{border:0;border-top:1px solid var(--linha);margin:.9rem 0}
+.dica .fig{margin:.6rem 0}
+.dica .fig svg{width:100%;height:auto;max-width:460px;display:block}
+
+/* ---------- exemplo / estudo de caso ---------- */
+.exemplo{background:var(--branco);border:1px solid var(--linha);border-left:6px solid var(--azul);padding:clamp(1rem,2.5vw,1.6rem);margin:1.8rem 0}
+.exemplo .chip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.1em;color:#fff;background:var(--azul);padding:.18rem .55rem;margin-bottom:.7rem}
+.exemplo h4{margin:0 0 .6rem;color:var(--tinta);font-size:1.2rem}
+.exemplo p{margin:0 0 .8rem}
+.exemplo .sol{border-top:1px dashed var(--linha);margin-top:1rem;padding-top:.9rem}
+.exemplo .sol b.tit{font-family:"Barlow Condensed",sans-serif;font-size:1.08rem;letter-spacing:.02em;display:block;margin-bottom:.4rem;color:var(--azul)}
+.exemplo ol.passos{margin:0 0 .8rem;padding-left:1.2rem}
+.exemplo ol.passos li{margin-bottom:.35rem;font-size:.98rem}
+.obs{font-size:.9rem;color:var(--tinta-2)}
+
+.caso{background:var(--branco);border:1px solid var(--tinta);margin:1.8rem 0}
+.caso .rot{background:var(--tinta);color:#fff;padding:.45rem 1rem;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.12rem;letter-spacing:.04em}
+.caso .rot em{font-style:normal;color:var(--marca);font-size:.85rem;font-family:"IBM Plex Mono",monospace;letter-spacing:.06em;margin-left:.5rem}
+.caso .txt{padding:clamp(1rem,2.5vw,1.6rem)}
+.caso p{margin:0 0 .9rem}
+.caso p:last-child{margin-bottom:0}
+
+/* ---------- figuras ---------- */
+.figura{background:var(--branco);border:1px solid var(--linha);padding:clamp(.9rem,2.5vw,1.6rem);margin:1.8rem 0}
+.figura svg{width:100%;height:auto;display:block}
+.figura figcaption{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.02rem;color:var(--tinta-2);margin:.9rem 0 0;border-left:4px solid var(--marca);padding-left:.7rem}
+.rolagem{overflow-x:auto}
+.rolagem > svg{min-width:560px}
+
+/* ---------- tabelas ---------- */
+table{width:100%;border-collapse:collapse;background:var(--branco);border:1px solid var(--tinta);margin:0}
+caption{caption-side:top;text-align:left;font-family:"Barlow Condensed",sans-serif;font-weight:600;color:var(--tinta-2);padding-bottom:.5rem;font-size:1.02rem}
+th{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.02rem;text-align:left;padding:.5rem .7rem;border-bottom:2px solid var(--tinta);background:#F6F7F7;vertical-align:bottom}
+td{padding:.45rem .7rem;border-bottom:1px solid var(--linha);font-size:.95rem;vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.cod,th.cod{font-family:"IBM Plex Mono",monospace;font-size:.82rem;color:var(--marca-esc);width:3.4rem;text-align:center}
+tr.grupo td{background:#EDF0F0;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.02rem;letter-spacing:.03em}
+td.pred{font-family:"IBM Plex Mono",monospace;font-size:.86rem;text-align:center;width:7rem}
+.tab-min{min-width:520px}
+.sigla{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:.92rem;background:#EDF0F0;padding:.05rem .35rem;border:1px solid var(--linha)}
+
+/* ---------- quadro de sequenciação anotado ---------- */
+.seq{display:grid;grid-template-columns:5rem 1fr 11rem;border:2px solid var(--tinta);background:var(--branco);margin:1.4rem 0 0;min-width:520px}
+.seq > div{border-right:1px solid var(--tinta);padding:.5rem .7rem;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.1rem;text-align:center}
+.seq > div:last-child{border-right:0}
+.seq .cab{grid-column:1/4;background:var(--tinta);color:#fff;letter-spacing:.06em;border-right:0}
+.seq .vazio{height:1.6rem;border-top:1px solid var(--linha)}
+.anot{display:grid;grid-template-columns:5rem 1fr 11rem;gap:0;min-width:520px}
+.anot > div{padding:.7rem .7rem 0;font-size:.86rem;color:var(--tinta-2);line-height:1.45;position:relative;min-width:0;overflow-wrap:break-word}
+.anot > div::before{content:"";display:block;width:2px;height:14px;background:var(--marca);margin:0 auto .5rem}
+.anot b{color:var(--tinta);font-family:"Barlow Condensed",sans-serif;font-size:1rem}
+
+/* ---------- destaques ---------- */
+.nota-dupla{background:#E7EAE9;border-left:6px solid var(--tinta);padding:1rem 1.3rem;margin:1.6rem 0}
+.nota-dupla p{margin:0 0 .7rem;font-size:.99rem}
+.nota-dupla p:last-child{margin:0}
+.nota-dupla b{font-family:"Barlow Condensed",sans-serif;font-size:1.12rem}
+.adiante{font-size:.9rem;color:var(--tinta-2);border-top:1px dashed var(--linha);padding-top:.7rem;margin-top:1.2rem}
+.adiante b{font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.08em;color:var(--marca-esc);display:block;margin-bottom:.2rem}
+.exemplos-lista{list-style:none;margin:.6rem 0 1rem;padding:0;display:flex;gap:.6rem;flex-wrap:wrap}
+.exemplos-lista li{background:var(--branco);border:1px solid var(--linha);padding:.4rem .8rem;font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:1.08rem}
+.exemplos-lista li span{color:var(--marca-esc);margin:0 .3rem}
+
+@media print{
+  body{font-size:10.5pt}
+  .caso .rot{background:#fff;color:#000;border-bottom:1px solid #000}
+  .caso .rot em{color:#000}
+  .dica{box-shadow:none}
+  .rolagem{overflow:visible}
+  .rolagem > svg,.tab-min,.seq,.anot{min-width:0}
+  .figura,.dica,.exemplo,.caso{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+<p class="trilha"><a href="../index.html">Portal</a> / <a href="index.html">Planejamento e controle</a> / Capítulo 7</p>
+
+<header class="carimbo-wrap">
+  <div class="carimbo">
+    <div class="campo-principal">
+      <p class="obra">MATERIAL INTERNO / EQUIPE DE PLANEJAMENTO E CONTROLE DE OBRAS</p>
+      <h1><span class="cap">CAPÍTULO 7</span>Precedência</h1>
+      <p class="chamada">Quem vem antes de quem. É aqui que a lógica construtiva da obra entra no cronograma — e o melhor computador do mundo não corrige uma rede malfeita.</p>
+      <div class="links-cap">
+        <a href="cap06-duracao-das-atividades.html">Voltar ao Capítulo 6</a>
+      </div>
+    </div>
+    <div class="meta">
+      <div><span class="r">ASSUNTO</span><span class="v">Sequência e dependências</span></div>
+      <div><span class="r">PÚBLICO</span><span class="v">Planejamento e produção</span></div>
+      <div><span class="r">BASE</span><span class="v">Mattos, A. D.</span></div>
+      <div><span class="r">USO</span><span class="v">Treinamento interno</span></div>
+    </div>
+  </div>
+  <div class="fita"><i></i><i></i><i></i><i></i></div>
+</header>
+
+<div class="corpo">
+  <nav class="sumario" aria-label="Sumário do capítulo">
+    <p>Neste capítulo</p>
+    <ol>
+      <li><a href="#abertura"><span>7.0</span>A lógica que coordena</a></li>
+      <li><a href="#pred-suc"><span>7.1</span>Predecessoras e sucessoras</a></li>
+      <li><a href="#quadro"><span>7.2</span>Quadro de sequenciação</a></li>
+      <li><a href="#circularidade"><span>7.3</span>Circularidade</a></li>
+      <li><a href="#mandatoria"><span>7.4</span>Dependência mandatória</a></li>
+      <li><a href="#preferencial"><span>7.5</span>Dependência preferencial</a></li>
+      <li><a href="#tipos"><span>7.6</span>Outros tipos de dependência</a></li>
+      <li><a href="#leitura"><span>7.7</span>Como aplicamos</a></li>
+      <li><a href="#pratica"><span>7.8</span>O que vale para a nossa equipe</a></li>
+    </ol>
+  </nav>
+
+  <main id="conteudo">
+
+    <section id="abertura">
+      <div class="titulo"><span class="num">7.0</span><h2>A lógica que coordena as atividades</h2></div>
+      <p class="intro capitular">Agora que as atividades já foram identificadas e contemplam a totalidade do escopo do projeto, o passo seguinte é estabelecer a lógica que as coordena: a sequência das atividades, a ordem em que elas ocorrem e o tipo de dependência que existe entre elas. Essa sequência lógica recebe o nome de <strong>precedência</strong>.</p>
+      <p>O passo precisa ser bem executado porque o produto final — o cronograma, com as datas previstas para cada atividade — é obviamente afetado pela sequência definida. Amarrar uma atividade a outra é uma das operações mais relevantes do planejamento. De nada vale uma EAP criteriosa e detalhada, nem o melhor programa de computador, se o planejador não definir uma sequência executiva lógica, plausível e exequível.</p>
+      <div class="alerta"><strong>Os dois pontos-chave:</strong> a definição das durações (Capítulo 6) e o estabelecimento da interdependência entre as atividades (este capítulo). Uma sequência incorreta gera um produto sem qualquer aplicabilidade prática — e isso vira motivo de descrédito do planejamento e do planejador. O melhor computador do mundo não corrige uma rede malfeita.</div>
+    </section>
+
+    <section id="pred-suc">
+      <div class="titulo"><span class="num">7.1</span><h2>Predecessoras e sucessoras</h2></div>
+      <p>Com a lista de todas as atividades preparada, passa-se a determinar a relação entre elas, isto é, a amarrá-las umas às outras. Embora várias atividades possam ocorrer concomitantemente, as relações de interdependência formam cadeias que, no aspecto visual global, produzem uma malha de atividades.</p>
+      <p>A moldagem do concreto pressupõe a montagem das fôrmas e a colocação da armação; a pintura de uma parede exige que a aplicação de massa tenha sido concluída; e a atividade "tomar café" não pode ocorrer antes nem em paralelo à atividade "comprar café".</p>
+
+      <h3>Predecessora</h3>
+      <p>Na montagem do planejamento, o importante é identificar bem as <strong>predecessoras</strong> de cada atividade: aquelas cuja conclusão deve necessariamente ocorrer para que a atividade em questão possa começar. Para cada atividade, o planejador identifica e registra de que outras ela depende <em>imediatamente</em> ou <em>diretamente</em>.</p>
+      <p>O termo <u>imediatamente</u> é importante. Na construção de um prédio, a pintura do 10º andar obviamente não pode acontecer antes da concretagem dos pilares do 4º andar — mas esta não se caracteriza como atividade <em>imediatamente anterior</em>. A aplicação da massa corrida, ao contrário, seria imediatamente anterior.</p>
+      <p class="obs">Outros termos usados para predecessoras: <em>precedentes</em>, <em>antecessoras</em>, <em>antecedentes</em>.</p>
+
+      <h3>Sucessora</h3>
+      <p>O conceito de sucessora é exatamente o inverso. Uma atividade <strong>sucessora</strong> de outra é aquela que pode ser iniciada <em>imediatamente</em> após a conclusão desta. Se A é predecessora de B, então B é sucessora de A.</p>
+      <p class="obs">Outros termos usados para sucessoras: <em>sucedentes</em>, <em>subsequentes</em>.</p>
+
+      <div class="dica">
+        <div class="rot">Dica para o planejador — dependência imediata</div>
+        <div class="txt">
+          <p>Ter em mente a noção de <u>dependência imediata</u> é fundamental para que não se criem vínculos redundantes na rede. Se B depende de A, e C depende de B, é desnecessário dizer que C depende de A — ao informar que a predecessora imediata é B, a dependência remota com A vem "a reboque".</p>
+          <div class="fig">
+            <svg viewBox="0 0 460 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Duas redes com as atividades A, B e C. Na primeira, A liga em B e B liga em C. Na segunda, existe ainda uma ligação direta de A para C, apontada como ligação redundante.">
+              <defs>
+                <marker id="p7a" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#14232B"/></marker>
+                <marker id="p7r" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#9A6B08"/></marker>
+              </defs>
+              <g font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="18" text-anchor="middle" fill="#14232B">
+                <!-- linha 1 -->
+                <rect x="20" y="16" width="86" height="34" fill="#fff" stroke="#14232B" stroke-width="1.6"/><text x="63" y="39">A</text>
+                <rect x="172" y="16" width="86" height="34" fill="#fff" stroke="#14232B" stroke-width="1.6"/><text x="215" y="39">B</text>
+                <rect x="324" y="16" width="86" height="34" fill="#fff" stroke="#14232B" stroke-width="1.6"/><text x="367" y="39">C</text>
+                <!-- linha 2 -->
+                <rect x="20" y="96" width="86" height="34" fill="#fff" stroke="#14232B" stroke-width="1.6"/><text x="63" y="119">A</text>
+                <rect x="172" y="96" width="86" height="34" fill="#fff" stroke="#14232B" stroke-width="1.6"/><text x="215" y="119">B</text>
+                <rect x="324" y="96" width="86" height="34" fill="#fff" stroke="#14232B" stroke-width="1.6"/><text x="367" y="119">C</text>
+              </g>
+              <g fill="none" stroke="#14232B" stroke-width="2">
+                <path d="M106,33 H164" marker-end="url(#p7a)"/>
+                <path d="M258,33 H316" marker-end="url(#p7a)"/>
+                <path d="M106,113 H164" marker-end="url(#p7a)"/>
+                <path d="M258,113 H316" marker-end="url(#p7a)"/>
+              </g>
+              <path d="M106,120 V152 H300 V120 H316" fill="none" stroke="#9A6B08" stroke-width="2.4" stroke-dasharray="6 4" marker-end="url(#p7r)"/>
+              <text x="196" y="172" font-family="'Barlow Condensed',sans-serif" font-weight="600" font-size="15" fill="#9A6B08">Ligação redundante</text>
+            </svg>
+          </div>
+          <p>Ligações redundantes não acrescentam nenhuma informação à rede e ainda geram esforço de computação.</p>
+        </div>
+      </div>
+
+      <div class="nota-dupla">
+        <p><b>Nem toda atividade tem predecessora.</b> As atividades iniciais de um projeto não têm predecessoras: podem ser iniciadas a partir do instante zero, sem depender da ocorrência anterior de nenhuma outra tarefa.</p>
+        <p><b>Nem toda atividade tem sucessora.</b> As atividades finais do projeto não têm sucessoras, pois nada vem em seguida a elas.</p>
+      </div>
+    </section>
+
+    <section id="quadro">
+      <div class="titulo"><span class="num">7.2</span><h2>Quadro de sequenciação</h2></div>
+      <p>O <strong>quadro de sequenciação</strong> é a tabela em que se definem e se registram as atividades e suas relações de interdependência. Tipicamente ele tem três colunas:</p>
+
+      <figure class="figura">
+        <div class="rolagem">
+          <div class="seq">
+            <div class="cab">QUADRO DE SEQUENCIAÇÃO</div>
+            <div>Código</div><div>Atividade</div><div>Predecessoras</div>
+            <div class="vazio"></div><div class="vazio"></div><div class="vazio"></div>
+          </div>
+          <div class="anot">
+            <div><b>Identificação simplificada</b> da atividade — pode ser com letras, números ou alfanumérica.</div>
+            <div><b>Nome da tarefa</b>, tal como identificada na EAP.</div>
+            <div><b>Atividade(s) imediatamente antecessora(s)</b>. Para identificá-las, a melhor maneira é perguntar: <em>de quem esta atividade depende?</em></div>
+          </div>
+        </div>
+        <figcaption>Figura 7.1 — Quadro de sequenciação</figcaption>
+      </figure>
+
+      <div class="exemplo">
+        <span class="chip">EXEMPLO 7.1</span>
+        <h4>Interpretar o quadro de sequenciação de um bloco de fundação</h4>
+        <div class="rolagem">
+        <table class="tab-min">
+          <thead><tr><th class="cod">Código</th><th>Atividade</th><th class="pred">Predecessoras</th></tr></thead>
+          <tbody>
+            <tr><td class="cod">A</td><td>Locação da fundação</td><td class="pred">—</td></tr>
+            <tr><td class="cod">B</td><td>Escavação da fundação</td><td class="pred">A</td></tr>
+            <tr><td class="cod">C</td><td>Montagem das fôrmas</td><td class="pred">B</td></tr>
+            <tr><td class="cod">D</td><td>Obtenção do aço</td><td class="pred">—</td></tr>
+            <tr><td class="cod">E</td><td>Preparação da armação</td><td class="pred">D</td></tr>
+            <tr><td class="cod">F</td><td>Colocação da armação</td><td class="pred">C, E</td></tr>
+            <tr><td class="cod">G</td><td>Mobilização da betoneira</td><td class="pred">—</td></tr>
+            <tr><td class="cod">H</td><td>Concretagem</td><td class="pred">F, G</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="sol">
+          <b class="tit">Solução</b>
+          <p>A lógica executiva delineada no quadro revela para qualquer pessoa o mesmo raciocínio:</p>
+          <ol class="passos">
+            <li>A obra é iniciada pela locação da fundação, mas logo de saída também podem ser feitas a obtenção do aço e as providências para mobilização da betoneira;</li>
+            <li>locada a estrutura, faz-se a escavação do terreno;</li>
+            <li>com a escavação concluída, montam-se as fôrmas no local;</li>
+            <li>a preparação da armação (dobragem) depende da aquisição do aço;</li>
+            <li>para colocar a armação dentro das fôrmas é necessário que estas tenham sido montadas e as barras, preparadas;</li>
+            <li>a concretagem requer a colocação da armação nas fôrmas e que a betoneira tenha sido instalada.</li>
+          </ol>
+          <p style="margin-bottom:0">Repare que a atividade H (concretagem) não tem C (montagem das fôrmas) como predecessora, porque C não é sua antecessora imediata — C ficou implícita em F, esta sim uma das predecessoras imediatas de H. Pode-se dizer que C "veio a reboque" de F.</p>
+        </div>
+      </div>
+
+      <h3>Raciocinar por sucessoras</h3>
+      <p>Há quem prefira fazer o planejamento raciocinando em termos de sucessoras. Nesse caso, o quadro é ajustado para incluir a coluna <em>Sucessoras</em>. A lógica permanece a mesma; muda apenas a forma de veicular a informação.</p>
+
+      <div class="exemplo">
+        <span class="chip">EXEMPLO 7.2</span>
+        <h4>O mesmo bloco de fundação, agora por sucessoras</h4>
+        <div class="rolagem">
+        <table class="tab-min">
+          <thead><tr><th class="cod">Código</th><th>Atividade</th><th class="pred">Sucessoras</th></tr></thead>
+          <tbody>
+            <tr><td class="cod">A</td><td>Locação da fundação</td><td class="pred">B</td></tr>
+            <tr><td class="cod">B</td><td>Escavação da fundação</td><td class="pred">C</td></tr>
+            <tr><td class="cod">C</td><td>Montagem das fôrmas</td><td class="pred">F</td></tr>
+            <tr><td class="cod">D</td><td>Obtenção do aço</td><td class="pred">E</td></tr>
+            <tr><td class="cod">E</td><td>Preparação da armação</td><td class="pred">F</td></tr>
+            <tr><td class="cod">F</td><td>Colocação da armação</td><td class="pred">H</td></tr>
+            <tr><td class="cod">G</td><td>Mobilização da betoneira</td><td class="pred">H</td></tr>
+            <tr><td class="cod">H</td><td>Concretagem</td><td class="pred">—</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="dica">
+        <div class="rot">Dicas para o planejador</div>
+        <div class="txt">
+          <p>A experiência tem mostrado que raciocinar em termos de <strong>predecessoras</strong> é mais intuitivo. É mais prático perguntar <strong>"de quem esta atividade depende?"</strong> do que <strong>"quem depende desta atividade?"</strong> — ou "para quem esta atividade abre caminho?" —, que é a indagação de quem prefere raciocinar por sucessoras.</p>
+          <p>Cabe a cada um escolher a maneira que melhor lhe convier. Os programas de computador permitem informar e visualizar tanto predecessoras quanto sucessoras.</p>
+          <hr>
+          <p>É muito comum, principalmente em planejamentos com grande quantidade de atividades, que algumas fiquem <u>sem predecessora e sem sucessora</u> — o que não faz sentido: elas ficam "boiando" no cronograma. Acredite: isso acontece muito!</p>
+          <p>O planejador deve sempre checar se as atividades sem sucessora realmente são atividades finais, e se aquelas sem predecessora são realmente atividades iniciais.</p>
+        </div>
+      </div>
+
+      <div class="caso">
+        <div class="rot">Exemplo passo a passo <em>BARRAGEM ALEGRIA</em></div>
+        <div class="txt">
+          <p>Para definir a precedência, vamos rememorar o esquema do desvio do rio Alegria para a construção da barragem.</p>
+          <p>Para que o maciço da barragem possa ser construído de um lado ao outro do rio, ou seja, de uma <u>ombreira</u> à outra, é preciso desviar o rio de seu curso natural, o que é feito por meio de um <u>túnel</u> localizado na ombreira. Enquanto o túnel é escavado, o rio continua correndo normalmente em seu leito. Concluído o túnel, começa-se a construir a <u>ensecadeira de montante</u> por meio de um aterro de ponta, que avança gradualmente de uma margem para a outra. À medida que a ensecadeira é feita, o rio é empurrado para o túnel. A <u>ensecadeira de jusante</u> é feita para evitar que a água que sai do túnel volte leito acima. Com as duas ensecadeiras prontas, um grande volume de água fica represado entre elas, precisando ser bombeado para que se inicie a escavação do terreno até a cota de implantação da fundação da barragem.</p>
+          <p>No estudo da obra, a construtora decidiu fazer um acesso principal até o <u>emboque</u> do túnel e de lá um ramal até o local da ensecadeira de montante. Para a ensecadeira de jusante, o acesso se dá por outro lugar, sem qualquer relação com os outros acessos.</p>
+          <p>Com essas premissas, o quadro de sequenciação é:</p>
+          <div class="rolagem" style="margin-top:1rem">
+          <table class="tab-min">
+            <thead><tr><th class="cod">Código</th><th>Atividade</th><th class="pred">Predecessoras</th></tr></thead>
+            <tbody>
+              <tr class="grupo"><td colspan="3">Acessos</td></tr>
+              <tr><td class="cod">A</td><td>Acesso ao túnel</td><td class="pred">—</td></tr>
+              <tr><td class="cod">B</td><td>Acesso até a ensecadeira de montante</td><td class="pred">A</td></tr>
+              <tr><td class="cod">C</td><td>Acesso até a ensecadeira de jusante</td><td class="pred">—</td></tr>
+              <tr class="grupo"><td colspan="3">Túnel</td></tr>
+              <tr><td class="cod">D</td><td>Emboque do túnel</td><td class="pred">A</td></tr>
+              <tr><td class="cod">E</td><td>Escavação do túnel</td><td class="pred">D</td></tr>
+              <tr class="grupo"><td colspan="3">Ensecadeiras</td></tr>
+              <tr><td class="cod">F</td><td>Construção da ensecadeira de montante</td><td class="pred">B, E</td></tr>
+              <tr><td class="cod">G</td><td>Construção da ensecadeira de jusante</td><td class="pred">C</td></tr>
+              <tr class="grupo"><td colspan="3">Fundação da barragem</td></tr>
+              <tr><td class="cod">H</td><td>Esgotamento</td><td class="pred">F, G</td></tr>
+              <tr><td class="cod">I</td><td>Escavação para fundação da barragem</td><td class="pred">H</td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p class="obs" style="margin-top:.9rem">Este exemplo será continuado nos capítulos seguintes. As durações de cada atividade estão no Capítulo 6.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="circularidade">
+      <div class="titulo"><span class="num">7.3</span><h2>Circularidade</h2></div>
+      <p>Quando se trabalha com redes de muitas atividades, às vezes o planejador se perde e termina criando por descuido o que se chama de <strong>circularidade</strong> ou <strong>circuito</strong>.</p>
+      <p>É o caso de a atividade A ser predecessora de B, que é predecessora de C, que por sua vez figura como predecessora de A:</p>
+
+      <figure class="figura">
+        <svg viewBox="0 0 480 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Três atividades A, B e C ligadas em sequência, com uma ligação de retorno de C para A formando um circuito fechado.">
+          <defs><marker id="c7" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#9A6B08"/></marker></defs>
+          <g font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="19" text-anchor="middle" fill="#14232B">
+            <rect x="60" y="30" width="90" height="36" fill="#fff" stroke="#14232B" stroke-width="1.8"/><text x="105" y="54">A</text>
+            <rect x="195" y="30" width="90" height="36" fill="#fff" stroke="#14232B" stroke-width="1.8"/><text x="240" y="54">B</text>
+            <rect x="330" y="30" width="90" height="36" fill="#fff" stroke="#14232B" stroke-width="1.8"/><text x="375" y="54">C</text>
+          </g>
+          <g fill="none" stroke="#14232B" stroke-width="2">
+            <path d="M150,48 H187" marker-end="url(#c7)"/>
+            <path d="M285,48 H322" marker-end="url(#c7)"/>
+          </g>
+          <path d="M420,66 V106 H30 V48 H52" fill="none" stroke="#9A6B08" stroke-width="2.6" marker-end="url(#c7)"/>
+          <text x="240" y="128" font-family="'Barlow Condensed',sans-serif" font-weight="600" font-size="16" fill="#9A6B08" text-anchor="middle">C não pode ser predecessora de A</text>
+        </svg>
+        <figcaption>Figura 7.2 — Circularidade (loop)</figcaption>
+      </figure>
+
+      <p>A circularidade — também chamada pelo termo inglês <em>loop</em> — é ilógica e precisa ser eliminada. Os programas de computador mais usuais detectam a circularidade e dão aviso de erro.</p>
+
+      <div class="caso">
+        <div class="rot">Estudo de caso <em>HOSPITAL (adaptado de O'BRIEN e PLOTNIK, 2005)</em></div>
+        <div class="txt">
+          <p>Um hospital tem um anexo que será demolido para dar lugar a uma nova ala. Como no anexo funciona a cozinha do hospital, o arquiteto da reforma recomendou que se criasse uma cozinha provisória no prédio existente, até que a ala ficasse pronta e nela pudesse ser instalada a nova cozinha.</p>
+          <p>No entanto, um fator só percebido durante a elaboração da precedência foi que o local previsto para a subestação da nova ala é exatamente onde seria instalada a cozinha provisória. Fica uma espécie de "cachorro correndo atrás do próprio rabo". O problema foi detectado a tempo e o arquiteto pôde fazer um novo arranjo.</p>
+
+          <figure class="figura" style="border:0;padding:0;margin:1.2rem 0 0;background:transparent">
+            <div class="rolagem">
+            <svg viewBox="0 0 700 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fluxo do hospital: construir cozinha provisória, demolir anexo, construir nova ala e equipar nova cozinha; em seguida mudar para nova cozinha, desmontar cozinha provisória e construir nova subestação, com uma ligação de retorno da subestação para a mudança de cozinha, indicada como ligação circular errada.">
+              <defs>
+                <marker id="h7" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#14232B"/></marker>
+                <marker id="h7e" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#9A6B08"/></marker>
+              </defs>
+              <g font-family="'Barlow Condensed',sans-serif" font-weight="600" font-size="15" text-anchor="middle" fill="#14232B">
+                <rect x="20" y="20" width="120" height="58" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+                <text x="80" y="42">Construir</text><text x="80" y="58">cozinha</text><text x="80" y="74">provisória</text>
+                <rect x="180" y="20" width="120" height="58" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+                <text x="240" y="50">Demolir</text><text x="240" y="66">anexo</text>
+                <rect x="340" y="20" width="120" height="58" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+                <text x="400" y="50">Construir</text><text x="400" y="66">nova ala</text>
+                <rect x="500" y="20" width="120" height="58" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+                <text x="560" y="42">Equipar</text><text x="560" y="58">nova</text><text x="560" y="74">cozinha</text>
+
+                <rect x="500" y="130" width="120" height="58" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+                <text x="560" y="152">Mudar para</text><text x="560" y="168">nova</text><text x="560" y="184">cozinha</text>
+                <rect x="500" y="240" width="120" height="58" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+                <text x="560" y="262">Desmontar</text><text x="560" y="278">cozinha</text><text x="560" y="294">provisória</text>
+                <rect x="500" y="350" width="120" height="58" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+                <text x="560" y="372">Construir</text><text x="560" y="388">nova</text><text x="560" y="404">subestação</text>
+              </g>
+              <g fill="none" stroke="#14232B" stroke-width="2">
+                <path d="M140,49 H172" marker-end="url(#h7)"/>
+                <path d="M300,49 H332" marker-end="url(#h7)"/>
+                <path d="M460,49 H492" marker-end="url(#h7)"/>
+                <path d="M560,78 V122" marker-end="url(#h7)"/>
+                <path d="M560,188 V232" marker-end="url(#h7)"/>
+                <path d="M560,298 V342" marker-end="url(#h7)"/>
+              </g>
+              <path d="M500,379 H440 V159 H492" fill="none" stroke="#9A6B08" stroke-width="2.6" marker-end="url(#h7e)"/>
+              <g font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="16" fill="#9A6B08">
+                <rect x="150" y="238" width="250" height="34" fill="#F5E7CB"/>
+                <text x="164" y="261">Ligação circular ⇒ ERRADO!</text>
+                <path d="M400,255 L436,255" stroke="#9A6B08" stroke-width="1.6" fill="none"/>
+              </g>
+            </svg>
+            </div>
+            <figcaption style="margin-top:.7rem">Figuras 7.3 e 7.4 — Circularidade na lógica do hospital</figcaption>
+          </figure>
+
+          <p style="margin-top:1rem">O circuito é este: para mudar para a nova cozinha é preciso equipá-la; para desmontar a provisória é preciso ter mudado; para construir a subestação é preciso desmontar a provisória — mas a nova ala (e portanto a nova cozinha) só funciona com a subestação pronta. A rede se fecha sobre si mesma e nenhuma das atividades consegue começar.</p>
+          <div class="alerta"><strong>A lição do caso:</strong> a circularidade não foi um erro de digitação — foi um erro de projeto que só apareceu quando alguém sentou para escrever a precedência. Montar a sequência é, muitas vezes, o primeiro teste de viabilidade real do que foi projetado.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mandatoria">
+      <div class="titulo"><span class="num">7.4</span><h2>Dependência mandatória</h2></div>
+      <p>A dependência entre duas atividades é dita <strong>mandatória</strong> ou de <strong>lógica rígida</strong> (<em>hard logic</em>) quando a ligação entre elas é <u>obrigatória</u>. Acontece quando uma atividade necessariamente tem de vir antes de outra.</p>
+      <p>Em uma edificação é impossível fazer o pilar sem a sua sapata — <em>sapata</em> é predecessora obrigatória de <em>pilar</em>. Outros exemplos comuns:</p>
+      <ul class="exemplos-lista">
+        <li>armação <span>→</span> concreto</li>
+        <li>chapisco <span>→</span> alvenaria</li>
+        <li>assentamento de tubo <span>→</span> reaterro de vala</li>
+      </ul>
+      <p>Geralmente as dependências mandatórias são inerentes à natureza do trabalho, por se tratar da impossibilidade <u>física</u> de uma coisa ocorrer sem que a anterior tenha sido executada. Mas há outras duas famílias:</p>
+      <p><strong>Contratuais</strong> — basta pensar no caso em que uma área só pode ser liberada para o construtor depois de desapropriada.</p>
+      <p><strong>Externas</strong> — envolvem relacionamento entre atividades do projeto e atividades que não são do projeto. A montagem de uma válvula redutora de pressão em uma rede de abastecimento depende do fornecimento do equipamento por um fornecedor externo; a limpeza do terreno depende da emissão da licença ambiental pelo órgão competente.</p>
+    </section>
+
+    <section id="preferencial">
+      <div class="titulo"><span class="num">7.5</span><h2>Dependência preferencial</h2></div>
+      <p>O outro tipo de dependência é a <strong>preferencial</strong>, também conhecida como <strong>arbitrada</strong>, <strong>discricionária</strong> ou de <strong>lógica fina</strong> (<em>soft logic</em>). É criada <u>por conveniência</u> da equipe executora, em função do plano de ataque da obra.</p>
+      <p>Essa dependência <em>não</em> é obrigatória: o vínculo entre as duas atividades é definido, mas existem outras sequências aceitáveis.</p>
+      <p>Na construção de um edifício, a <em>alvenaria do 2º pavimento</em> não depende necessariamente da <em>alvenaria do 1º pavimento</em> — não há restrição de ordem física. É bem possível "pular" o primeiro pavimento e atacar logo o segundo, mas por uma questão de lógica construtiva o planejador pode vincular as duas atividades.</p>
+      <div class="alerta"><strong>A diferença em uma frase:</strong> a dependência mandatória é de ordem física; a preferencial é de ordem lógica. Saber de qual tipo é cada ligação é o que permite responder, quando a obra aperta, quais amarrações podem ser revistas e quais não podem.</div>
+    </section>
+
+    <section id="tipos">
+      <div class="titulo"><span class="num">7.6</span><h2>Outros tipos de dependência</h2></div>
+      <p>Até aqui, sempre consideramos que uma atividade só poderia começar quando a predecessora terminasse — ou seja, que todas as dependências eram do tipo <strong>término-início (TI)</strong>. Esse vínculo impõe que, para B começar, A deverá ter sido <em>totalmente</em> concluída. A ligação TI é a ligação-padrão.</p>
+      <p>Embora válida para a maioria dos casos, a dependência TI nem sempre reflete o tipo de lógica que se quer imprimir à rede. Um exemplo típico é o vínculo entre <u>concretagem</u> e <u>desfôrma</u>: apesar de aquela ser predecessora desta, a relação precisa guardar uma defasagem, já que não se pode remover as fôrmas antes do período de cura do concreto.</p>
+      <p>A saída é criar uma <strong>defasagem</strong> ou <strong>retardo</strong> — o tempo de espera entre as duas atividades. Na literatura técnica o retardo às vezes é chamado de <em>atraso</em>, mas o termo não é feliz: a atividade não está atrasada, e sim deslocada por razões de lógica executiva.</p>
+
+      <figure class="figura">
+        <div class="rolagem">
+        <svg viewBox="0 0 660 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ligação término-início: em (a) a atividade B começa assim que A termina; em (b) há uma defasagem de 5 dias entre o término de A e o início de B.">
+          <defs><marker id="t7" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#14232B"/></marker></defs>
+          <g font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="16" text-anchor="middle">
+            <text x="150" y="26" font-size="17">Ligação TI</text>
+            <text x="490" y="26" font-size="17">Ligação TI + 5 dias</text>
+          </g>
+          <!-- (a) -->
+          <g>
+            <rect x="40" y="58" width="140" height="28" fill="#DDE7EC" stroke="#14232B" stroke-width="1.6"/>
+            <text x="110" y="78" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">A</text>
+            <rect x="180" y="104" width="140" height="28" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+            <text x="250" y="124" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">B</text>
+            <path d="M180,86 V96" stroke="#14232B" stroke-width="2" fill="none" marker-end="url(#t7)"/>
+            <text x="180" y="50" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">T</text>
+            <text x="180" y="150" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">I</text>
+            <text x="180" y="176" font-family="'Barlow Condensed',sans-serif" font-size="15" text-anchor="middle" fill="#465862">(a) sem defasagem</text>
+          </g>
+          <!-- (b) -->
+          <g>
+            <rect x="370" y="58" width="130" height="28" fill="#DDE7EC" stroke="#14232B" stroke-width="1.6"/>
+            <text x="435" y="78" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">A</text>
+            <rect x="560" y="104" width="90" height="28" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+            <text x="605" y="124" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">B</text>
+            <path d="M500,86 V118 H552" stroke="#14232B" stroke-width="2" fill="none" marker-end="url(#t7)"/>
+            <text x="526" y="112" font-family="'Barlow Condensed',sans-serif" font-weight="600" font-size="14" text-anchor="middle" fill="#9A6B08">5 dias</text>
+            <text x="500" y="50" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">T</text>
+            <text x="560" y="150" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">I</text>
+            <text x="510" y="176" font-family="'Barlow Condensed',sans-serif" font-size="15" text-anchor="middle" fill="#465862">(b) com defasagem</text>
+          </g>
+        </svg>
+        </div>
+        <figcaption>Figura 7.5 — Ligação TI (término-início)</figcaption>
+      </figure>
+
+      <h3>II — início-início</h3>
+      <p>Outro tipo útil é quando uma atividade não precisa que a predecessora esteja 100% terminada: B pode começar sem que A esteja concluída, havendo uma sobreposição entre elas. É a ligação <strong>II (início-início)</strong>, que também aceita início com defasagem (<em>lead</em>).</p>
+      <p>Exemplos: <u>instalação hidráulica</u> (A) e <u>instalação elétrica</u> (B) podem ser iniciadas juntas (II); <u>alvenaria</u> (A) e <u>chapisco</u> (B) de um mesmo pavimento — não é preciso que toda a alvenaria do andar tenha terminado para que o chapisco comece, bastando que a alvenaria esteja por alguns dias "na dianteira". Esse tipo de ligação também é chamado de <em>adiantamento</em> ou <em>antecipação</em>, mas são termos imprecisos.</p>
+
+      <figure class="figura">
+        <div class="rolagem">
+        <svg viewBox="0 0 660 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ligação início-início: em (a) A e B começam juntas; em (b) B começa 5 dias após o início de A.">
+          <defs><marker id="i7" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#14232B"/></marker></defs>
+          <g font-family="'Barlow Condensed',sans-serif" font-weight="700" text-anchor="middle">
+            <text x="150" y="26" font-size="17">Ligação II</text>
+            <text x="490" y="26" font-size="17">Ligação II + 5 dias</text>
+          </g>
+          <g>
+            <rect x="70" y="58" width="150" height="28" fill="#DDE7EC" stroke="#14232B" stroke-width="1.6"/>
+            <text x="145" y="78" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">A</text>
+            <rect x="70" y="104" width="110" height="28" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+            <text x="125" y="124" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">B</text>
+            <path d="M70,86 V96" stroke="#14232B" stroke-width="2" fill="none" marker-end="url(#i7)"/>
+            <text x="70" y="50" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">I</text>
+            <text x="70" y="150" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">I</text>
+            <text x="145" y="176" font-family="'Barlow Condensed',sans-serif" font-size="15" text-anchor="middle" fill="#465862">(a) sem defasagem</text>
+          </g>
+          <g>
+            <rect x="390" y="58" width="150" height="28" fill="#DDE7EC" stroke="#14232B" stroke-width="1.6"/>
+            <text x="465" y="78" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">A</text>
+            <rect x="480" y="104" width="120" height="28" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+            <text x="540" y="124" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">B</text>
+            <path d="M390,86 V118 H472" stroke="#14232B" stroke-width="2" fill="none" marker-end="url(#i7)"/>
+            <text x="430" y="112" font-family="'Barlow Condensed',sans-serif" font-weight="600" font-size="14" text-anchor="middle" fill="#9A6B08">5 dias</text>
+            <text x="390" y="50" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">I</text>
+            <text x="480" y="150" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">I</text>
+            <text x="490" y="176" font-family="'Barlow Condensed',sans-serif" font-size="15" text-anchor="middle" fill="#465862">(b) com defasagem</text>
+          </g>
+        </svg>
+        </div>
+        <figcaption>Figura 7.6 — Ligação II (início-início)</figcaption>
+      </figure>
+
+      <h3>TT — término-término</h3>
+      <p>O terceiro tipo é o <strong>TT (término-término)</strong>: estipula-se que o término de uma atividade está vinculado ao término de sua predecessora, ou seja, o fim de B depende do fim de A. Um exemplo é <u>montagem da subestação</u> (A) e <u>aluguel de gerador</u> (B) — o término da montagem decreta o fim da necessidade do gerador alugado.</p>
+
+      <figure class="figura">
+        <div class="rolagem">
+        <svg viewBox="0 0 660 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ligação término-término: em (a) A e B terminam juntas; em (b) B termina 5 dias após o término de A.">
+          <defs><marker id="tt7" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#14232B"/></marker></defs>
+          <g font-family="'Barlow Condensed',sans-serif" font-weight="700" text-anchor="middle">
+            <text x="150" y="26" font-size="17">Ligação TT</text>
+            <text x="490" y="26" font-size="17">Ligação TT + 5 dias</text>
+          </g>
+          <g>
+            <rect x="50" y="58" width="160" height="28" fill="#DDE7EC" stroke="#14232B" stroke-width="1.6"/>
+            <text x="130" y="78" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">A</text>
+            <rect x="90" y="104" width="120" height="28" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+            <text x="150" y="124" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">B</text>
+            <path d="M210,86 V96" stroke="#14232B" stroke-width="2" fill="none" marker-end="url(#tt7)"/>
+            <text x="210" y="50" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">T</text>
+            <text x="210" y="150" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">T</text>
+            <text x="130" y="176" font-family="'Barlow Condensed',sans-serif" font-size="15" text-anchor="middle" fill="#465862">(a) sem defasagem</text>
+          </g>
+          <g>
+            <rect x="370" y="58" width="150" height="28" fill="#DDE7EC" stroke="#14232B" stroke-width="1.6"/>
+            <text x="445" y="78" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">A</text>
+            <rect x="480" y="104" width="130" height="28" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+            <text x="545" y="124" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">B</text>
+            <path d="M520,72 H610 V96" stroke="#14232B" stroke-width="2" fill="none" marker-end="url(#tt7)"/>
+            <text x="565" y="64" font-family="'Barlow Condensed',sans-serif" font-weight="600" font-size="14" text-anchor="middle" fill="#9A6B08">5 dias</text>
+            <text x="520" y="50" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">T</text>
+            <text x="610" y="150" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">T</text>
+            <text x="490" y="176" font-family="'Barlow Condensed',sans-serif" font-size="15" text-anchor="middle" fill="#465862">(b) com defasagem</text>
+          </g>
+        </svg>
+        </div>
+        <figcaption>Figura 7.7 — Ligação TT (término-término)</figcaption>
+      </figure>
+
+      <h3>IT — início-término</h3>
+      <p>O quarto e último tipo é o <strong>IT (início-término)</strong>, muito pouco utilizado. É o caso em que uma atividade só pode terminar quando outra se iniciar: o fim de B depende do início de A. Um exemplo seria <u>partida da subestação</u> e <u>aluguel de gerador</u> — o início da operação da subestação amarra o fim da necessidade do gerador alugado.</p>
+
+      <figure class="figura">
+        <div class="rolagem">
+        <svg viewBox="0 0 660 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ligação início-término: em (a) B termina quando A começa; em (b) B termina 5 dias após o início de A.">
+          <defs><marker id="it7" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#14232B"/></marker></defs>
+          <g font-family="'Barlow Condensed',sans-serif" font-weight="700" text-anchor="middle">
+            <text x="150" y="26" font-size="17">Ligação IT</text>
+            <text x="490" y="26" font-size="17">Ligação IT + 5 dias</text>
+          </g>
+          <g>
+            <rect x="140" y="58" width="150" height="28" fill="#DDE7EC" stroke="#14232B" stroke-width="1.6"/>
+            <text x="215" y="78" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">A</text>
+            <rect x="40" y="104" width="100" height="28" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+            <text x="90" y="124" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">B</text>
+            <path d="M140,86 V96" stroke="#14232B" stroke-width="2" fill="none" marker-end="url(#it7)"/>
+            <text x="140" y="50" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">I</text>
+            <text x="140" y="150" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">T</text>
+            <text x="165" y="176" font-family="'Barlow Condensed',sans-serif" font-size="15" text-anchor="middle" fill="#465862">(a) sem defasagem</text>
+          </g>
+          <g>
+            <rect x="450" y="58" width="150" height="28" fill="#DDE7EC" stroke="#14232B" stroke-width="1.6"/>
+            <text x="525" y="78" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">A</text>
+            <rect x="420" y="112" width="120" height="28" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+            <text x="480" y="132" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="17" text-anchor="middle">B</text>
+            <path d="M450,86 V100 H540 V104" stroke="#14232B" stroke-width="2" fill="none" marker-end="url(#it7)"/>
+            <text x="492" y="98" font-family="'Barlow Condensed',sans-serif" font-weight="600" font-size="14" text-anchor="middle" fill="#9A6B08">5 dias</text>
+            <text x="450" y="50" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">I</text>
+            <text x="540" y="158" font-family="'IBM Plex Mono',monospace" font-size="12" text-anchor="middle">T</text>
+            <text x="480" y="180" font-family="'Barlow Condensed',sans-serif" font-size="15" text-anchor="middle" fill="#465862">(b) com defasagem</text>
+          </g>
+        </svg>
+        </div>
+        <figcaption>Figura 7.8 — Ligação IT (início-término)</figcaption>
+      </figure>
+
+      <h3>Em suma</h3>
+      <div class="rolagem">
+      <table class="tab-min">
+        <thead><tr><th style="width:15rem">Ligação (entre A e B)</th><th>Significado</th></tr></thead>
+        <tbody>
+          <tr><td><span class="sigla">TI</span> término-início</td><td><strong>A</strong> tem de terminar para <strong>B</strong> poder iniciar.</td></tr>
+          <tr><td><span class="sigla">II</span> início-início</td><td><strong>A</strong> tem de ter iniciado para <strong>B</strong> poder iniciar.</td></tr>
+          <tr><td><span class="sigla">TT</span> término-término</td><td><strong>A</strong> tem de ter terminado para <strong>B</strong> poder terminar.</td></tr>
+          <tr><td><span class="sigla">IT</span> início-término</td><td><strong>A</strong> tem de ter iniciado para <strong>B</strong> poder terminar.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="dica">
+        <div class="rot">Dicas para o planejador — usando as ligações</div>
+        <div class="txt">
+          <p>Dos quatro tipos, o <strong>TI</strong> é o mais utilizado — é a ligação natural entre duas atividades. Em seguida vem o <strong>II</strong>. Ligações <strong>TT</strong> e <strong>IT</strong> são muito raras e pouco aparecem nos planejamentos corriqueiros.</p>
+          <hr>
+          <p>Existem também <strong>defasagens negativas</strong>. Exemplo: TI − 2 dias, em que o começo de B acontece 2 dias antes do término de A.</p>
+          <div class="fig">
+            <svg viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ligação término-início com defasagem negativa de 2 dias: B começa 2 dias antes do término de A.">
+              <defs><marker id="n7" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#14232B"/></marker></defs>
+              <rect x="70" y="40" width="150" height="26" fill="#DDE7EC" stroke="#14232B" stroke-width="1.6"/>
+              <text x="145" y="59" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="16" text-anchor="middle">A</text>
+              <rect x="170" y="94" width="130" height="26" fill="#fff" stroke="#14232B" stroke-width="1.6"/>
+              <text x="235" y="113" font-family="'Barlow Condensed',sans-serif" font-weight="700" font-size="16" text-anchor="middle">B</text>
+              <path d="M220,66 V80 H170 V86" stroke="#14232B" stroke-width="2" fill="none" marker-end="url(#n7)"/>
+              <text x="195" y="75" font-family="'Barlow Condensed',sans-serif" font-weight="600" font-size="13" text-anchor="middle" fill="#9A6B08">2 dias</text>
+              <text x="220" y="32" font-family="'IBM Plex Mono',monospace" font-size="11" text-anchor="middle">T</text>
+              <text x="170" y="138" font-family="'IBM Plex Mono',monospace" font-size="11" text-anchor="middle">I</text>
+            </svg>
+          </div>
+          <hr>
+          <p>O uso excessivo de ligações II, TT e IT "trava" a rede, por impor muita restrição.</p>
+          <p>Quanto mais detalhada a EAP, menor a necessidade de usar defasagens — os pacotes de trabalho ficam menores e mais sequenciais entre si (TI). Exemplo: para um pavimento, alvenaria e chapisco são II + n dias; porém, se o planejador desmembrasse a alvenaria em paredes P1, P2 etc., o chapisco seria programado para iniciar depois de uma delas, com vínculo TI e não mais II.</p>
+          <hr>
+          <p>Por influência dos softwares estrangeiros, siglas inglesas também são empregadas:</p>
+          <ul>
+            <li>TI = <strong>FS</strong> (<em>finish-start</em>)</li>
+            <li>II = <strong>SS</strong> (<em>start-start</em>)</li>
+            <li>IT = <strong>SF</strong> (<em>start-finish</em>)</li>
+            <li>TT = <strong>FF</strong> (<em>finish-finish</em>)</li>
+          </ul>
+          <p>O <strong>método das flechas (ADM)</strong> só admite ligações TI. O <strong>método dos blocos (PDM)</strong> admite todos os tipos de ligação.</p>
+        </div>
+      </div>
+      <p class="adiante"><b>ADIANTE NO LIVRO</b>O Capítulo 8 monta o diagrama de rede a partir desta precedência, nos dois métodos.</p>
+    </section>
+
+    <section id="leitura">
+      <div class="leitura">
+        <h2>Como definimos precedência aqui</h2>
+        <p class="sub">Leitura da nossa equipe</p>
+        <p>Precedência é decisão de <strong>método construtivo</strong>, não de software. O quadro de sequenciação é o plano de ataque da obra escrito em forma de dependência — e é por isso que ele não pode nascer sozinho no escritório. A pergunta que resolve 90% dos casos é sempre a mesma: <em>de quem esta atividade depende?</em></p>
+        <p>Quando a obra aperta e alguém pede para "acelerar o cronograma", a primeira coisa a fazer é separar dependência mandatória de preferencial. A mandatória é física: não se negocia. A preferencial foi escolha nossa — e escolha pode ser revista, em conjunto com a produção, como na reunião tratada no <a href="cap01-importancia-do-planejamento.html#doutrina">Capítulo 1</a>.</p>
+        <ul class="regras">
+          <li><b>Quadro de sequenciação antes do software</b><span>A sequência é definida e validada no papel, com produção e suprimentos. O software recebe a lógica pronta; ele não é o lugar de descobri-la.</span></li>
+          <li><b>Só predecessora imediata</b><span>Nada de amarrar C em A quando C já depende de B. Ligação redundante não informa nada e polui a rede.</span></li>
+          <li><b>Cada ligação é classificada</b><span>Mandatória (física, contratual ou externa) ou preferencial. Sem essa marcação, ninguém sabe depois o que pode ser renegociado para ganhar prazo.</span></li>
+          <li><b>Defasagem tem justificativa</b><span>Cura de concreto, prazo de entrega, liberação de área. Defasagem sem motivo registrado é gordura escondida no cronograma.</span></li>
+          <li><b>TI por padrão</b><span>II só quando a sobreposição é real e conhecida. TT e IT, praticamente nunca. Rede cheia de ligação exótica trava e ninguém consegue replanejar depois.</span></li>
+          <li><b>Caça às atividades "boiando"</b><span>Antes de fechar a rede, listar as atividades sem predecessora e sem sucessora e conferir uma a uma se são mesmo início ou fim de obra.</span></li>
+          <li><b>Circularidade é sintoma</b><span>Quando aparece um loop, quase sempre o problema não é a rede: é o projeto ou o canteiro. Investigue a causa antes de simplesmente apagar a ligação.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="pratica">
+      <div class="titulo"><span class="num">7.8</span><h2>O que vale para a nossa equipe</h2></div>
+      <p>Verificação rápida antes de transformar a precedência em rede:</p>
+      <div class="checklist">
+        <ul>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>Existe quadro de sequenciação escrito, com código, atividade e predecessoras.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>A sequência foi validada com quem vai executar, e não montada só pelo planejamento.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>Todas as predecessoras registradas são imediatas — nenhuma ligação redundante.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>Cada ligação está classificada como mandatória ou preferencial.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>As dependências externas (fornecedor, licença, desapropriação) estão na rede, e não na cabeça de alguém.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>Toda defasagem tem motivo técnico registrado.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>As atividades sem predecessora são realmente iniciais; as sem sucessora, realmente finais.</span></li>
+          <li><span class="caixa-v" aria-hidden="true"></span><span>A rede não acusa circularidade — e, se acusou, a causa foi investigada antes da correção.</span></li>
+        </ul>
+      </div>
+      <p class="nota-fonte">Material interno de treinamento, elaborado pela equipe a partir da estrutura do Capítulo 7 de <em>Planejamento e Controle de Obras</em>, de Aldo Dórea Mattos. O texto é redação própria, com comentários e rotinas adaptados à nossa realidade; as figuras foram redesenhadas a partir dos diagramas do autor e o estudo de caso do hospital é adaptado de O'Brien e Plotnik (2005), citado pelo autor. Para o conteúdo completo, consulte a obra.</p>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div>
+    <span>Apostila interna — Capítulo 7</span>
+    <span><a href="cap06-duracao-das-atividades.html">Capítulo 6 — Duração das atividades</a></span>
+  </div>
+</footer>
+</body>
+</html>
