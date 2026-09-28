@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lean Office — Anotações da consultoria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#F7F9F4;
+  --surface:#FFFFFF;
+  --ink:#1B2430;
+  --muted:#5A6573;
+  --line:#DCE3D6;
+  --navy:#1F3A5F;
+  --water:#3B82B8;
+  --water-soft:#CFE3F2;
+  --g1:#7FA82E;
+  --g2:#A9CB4F;
+  --g3:#CFE3A1;
+  --tank:#E6EBEF;
+  --tank-stroke:#8C99A6;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#141A21;--surface:#1C242E;--ink:#E7ECF1;--muted:#A3AEBB;--line:#2E3946;
+    --navy:#9EC2EA;--water:#4F9AD3;--water-soft:#23405A;
+    --g1:#8DB83A;--g2:#6E9430;--g3:#4C6624;--tank:#26313D;--tank-stroke:#6F7D8B;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141A21;--surface:#1C242E;--ink:#E7ECF1;--muted:#A3AEBB;--line:#2E3946;
+  --navy:#9EC2EA;--water:#4F9AD3;--water-soft:#23405A;
+  --g1:#8DB83A;--g2:#6E9430;--g3:#4C6624;--tank:#26313D;--tank-stroke:#6F7D8B;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Source Sans 3",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:1.0625rem;line-height:1.6}
+h1,h2,h3{font-family:"Outfit","Segoe UI",system-ui,sans-serif;line-height:1.2;margin:0}
+h1{font-size:clamp(2rem,5vw,2.9rem);font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.6rem;font-weight:600;margin-bottom:.9rem}
+h3{font-size:1.15rem;font-weight:600;margin-bottom:.4rem}
+p{margin:0 0 .9rem}
+.wrap{max-width:960px;margin:0 auto;padding:0 1.25rem}
+header{padding:3.5rem 0 2.5rem;border-bottom:1px solid var(--line)}
+header p{color:var(--muted);max-width:60ch;margin-top:.8rem}
+section{padding:2.75rem 0;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+.lead{color:var(--muted);max-width:65ch}
+.note{border-left:3px solid var(--water);padding:.2rem 0 .2rem 1rem;color:var(--muted);font-size:.97rem;max-width:65ch}
+.fig{overflow-x:auto;margin:1.5rem 0}
+.fig svg{display:block;max-width:100%;height:auto;margin:0 auto}
+
+/* Pirâmide */
+.levels{display:grid;gap:0;margin-top:1.5rem}
+.level{display:grid;grid-template-columns:minmax(160px,260px) 1fr;gap:1.5rem;align-items:center;padding:1.1rem 0;border-top:1px dashed var(--line)}
+.level:first-child{border-top:none}
+.level ul{margin:0;padding-left:1.1rem}
+.level .who{font-size:.95rem;color:var(--muted)}
+.tier{font-family:"Outfit",sans-serif;font-weight:600;font-size:1.15rem;padding:.55rem .9rem;border-radius:4px;color:#17240A}
+.t1{background:var(--g1)} .t2{background:var(--g2)} .t3{background:var(--g3)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tier{color:#F1F6E6}}
+:root[data-theme="dark"] .tier{color:#F1F6E6}
+
+/* Glossário */
+.terms{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.term{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.3rem 1.4rem}
+.term .full{color:var(--muted);font-size:.95rem;margin-bottom:.8rem}
+.sipoc-letters{display:grid;grid-template-columns:2.2rem 1fr;gap:.35rem .6rem;margin:.6rem 0 0}
+.sipoc-letters b{font-family:"Outfit",sans-serif;font-size:1.25rem;color:var(--water);line-height:1.3}
+.sipoc-letters span{font-size:.97rem}
+
+/* SIPOC do MPS */
+.sipoc{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:.5rem;min-width:780px}
+.col{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1rem;min-height:170px;display:flex;flex-direction:column}
+.col h3{font-size:1rem}
+.col .en{font-size:.85rem;color:var(--muted);margin-bottom:.7rem}
+.col .v{font-weight:600}
+.col .v small{display:block;font-weight:400;color:var(--muted);font-size:.9rem;margin-top:.25rem}
+.col.empty .v{font-weight:400;color:var(--muted);font-style:italic}
+.col.core{border:2px solid var(--water)}
+.scroll{overflow-x:auto;padding-bottom:.5rem}
+
+/* Caixa d'água */
+.wave{animation:drift 6s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-28px)}}
+@media (prefers-reduced-motion:reduce){.wave{animation:none}}
+.tank-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
+.tank-legend div{font-size:.97rem}
+.tank-legend b{display:block;font-family:"Outfit",sans-serif}
+
+/* Etapas VSM */
+.steps{list-style:none;margin:1rem 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:0;overflow-x:auto}
+.steps li{position:relative;padding:0 1rem 0 0;display:flex;flex-direction:column;gap:.7rem}
+.steps li::before{content:"";position:absolute;top:1.2rem;left:2.4rem;right:0;height:2px;background:var(--line)}
+.steps li:last-child::before{display:none}
+.steps .n{position:relative;z-index:1;width:2.4rem;height:2.4rem;border-radius:50%;background:var(--water);color:#fff;display:grid;place-items:center;font-family:"Outfit",sans-serif;font-weight:700}
+.steps b{display:block;font-family:"Outfit",sans-serif;margin-bottom:.2rem}
+.steps div{font-size:.97rem}
+@media (max-width:760px){
+  .steps{grid-template-columns:1fr;gap:1.1rem}
+  .steps li{flex-direction:row;padding:0}
+  .steps li::before{top:2.4rem;bottom:-1.1rem;left:1.15rem;right:auto;width:2px;height:auto}
+  .steps .n{flex:none}
+}
+/* Cronograma e papéis */
+.example{background:var(--water-soft);border-radius:6px;padding:1.1rem 1.3rem;margin:1.3rem 0;max-width:70ch}
+.ex-label{font-family:"Outfit",sans-serif;font-weight:600;color:var(--navy);margin-bottom:.3rem}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:.8rem}
+.role{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1.2rem 1.4rem}
+.role ul{margin:0;padding-left:1.1rem}
+.tag{font-size:.8rem;font-weight:600;background:var(--navy);color:var(--bg);padding:.1rem .5rem;border-radius:3px;margin-left:.4rem;vertical-align:middle}
+.flow{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-top:1rem}
+.fbox{background:var(--surface);border:2px solid var(--navy);border-radius:6px;padding:.8rem 1.2rem;font-family:"Outfit",sans-serif;font-weight:600}
+/* Quadro de entradas */
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem .7rem;margin-top:1rem}
+.dept h3{font-size:1rem;text-align:center;background:var(--navy);color:var(--bg);border-radius:4px;height:3.2rem;display:grid;place-items:center;padding:0 .3rem;margin:0 0 .6rem;line-height:1.15}
+.del small{display:block;color:var(--muted);font-size:.82rem;margin-top:.15rem}
+.del{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--g1);border-radius:4px;padding:.6rem .7rem;font-size:.93rem;margin-bottom:.5rem;line-height:1.35}
+/* Níveis: exemplos, cascata, PODC */
+.ex{margin-top:.7rem;font-size:.95rem;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:.7rem .9rem}
+.ex b{display:block;font-family:"Outfit",sans-serif;margin-bottom:.15rem}
+.cascade{display:grid;gap:.3rem;max-width:560px;margin-top:.8rem}
+.cstep{border-radius:4px;padding:.7rem 1rem;color:#17240A;font-size:.97rem}
+.cstep b{font-family:"Outfit",sans-serif;margin-right:.4rem}
+.t1c{background:var(--g1)} .t2c{background:var(--g2);margin:0 1.5rem} .t3c{background:var(--g3);margin:0 3rem}
+.carrow{text-align:center;color:var(--muted);line-height:1}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cstep{color:#F1F6E6}}
+:root[data-theme="dark"] .cstep{color:#F1F6E6}
+.podc{width:100%;border-collapse:collapse;margin-top:.8rem;font-size:.95rem}
+.podc th,.podc td{border-bottom:1px solid var(--line);padding:.65rem .7rem;text-align:left;vertical-align:top}
+.podc thead th{font-family:"Outfit",sans-serif;font-weight:600;border-bottom:2px solid var(--ink)}
+.podc tbody th{font-family:"Outfit",sans-serif;font-weight:600;white-space:nowrap}
+@media (max-width:620px){
+  .podc thead{display:none}
+  .podc tr{display:block;padding:.6rem 0;border-bottom:1px solid var(--line)}
+  .podc th,.podc td{display:block;border:none;padding:.2rem 0}
+  .podc td::before{content:attr(data-l) ": ";font-weight:600}
+  .t2c{margin:0 .75rem} .t3c{margin:0 1.5rem}
+}
+footer{padding:2rem 0 3rem;color:var(--muted);font-size:.9rem}
+@media (max-width:620px){
+  .level{grid-template-columns:1fr;gap:.6rem}
+}
+.trilha{font-family:"Source Sans 3",system-ui,sans-serif;font-size:.85rem;color:var(--muted);padding:1.4rem 0 0}
+.trilha a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
+.trilha a:hover{color:var(--navy);border-bottom-color:var(--water)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="trilha"><a href="../index.html">Portal</a> / <a href="index.html">Anotações Lean Office</a> / Anotações da consultoria</p>
+
+<header>
+  <h1>Lean Office: anotações da consultoria</h1>
+  <p>Organização dos conteúdos e termos levantados até agora, com uma breve explicação de cada conceito.</p>
+</header>
+
+<!-- 1. Níveis -->
+<section>
+  <h2>Níveis de planejamento na organização</h2>
+  <p class="lead">Planejar é identificar onde a organização está, onde quer chegar e quais ações levam até lá. Os três níveis se diferenciam pelo prazo, pela abrangência e pelo conteúdo dos planos.</p>
+  <div class="levels">
+    <div class="level">
+      <div><div class="tier t1">Estratégico</div><div class="who" style="margin-top:.4rem">Alta Administração · longo prazo</div></div>
+      <div>
+        <ul>
+          <li>Visão da empresa</li>
+          <li>Forte orientação externa</li>
+          <li>Foco no longo prazo</li>
+          <li>Objetivos gerais</li>
+          <li>Planos genéricos</li>
+        </ul>
+        <div class="ex"><b>Exemplos</b>Definir missão, visão e valores. Fazer a análise SWOT (forças, fraquezas, oportunidades e ameaças). Estabelecer diretrizes e políticas da empresa. Decidir estratégias a partir de tendências de mercado, concorrência, oferta e demanda. Adequar a organização a leis e normas.</div>
+      </div>
+    </div>
+    <div class="level">
+      <div><div class="tier t2">Tático</div><div class="who" style="margin-top:.4rem">Gerentes · médio prazo (1 a 3 anos)</div></div>
+      <div>
+        <ul>
+          <li>Visão por unidades de negócio ou departamentos</li>
+          <li>Foco no médio prazo</li>
+          <li>Definições das principais ações por departamento</li>
+        </ul>
+        <div class="ex"><b>Exemplos</b>Transformar as diretrizes estratégicas em metas de cada área. Montar o plano do Marketing, das Finanças, do RH ou do Administrativo. Dividir o trabalho em projetos e programas. Distribuir atividades e responsabilidades entre os departamentos.</div>
+      </div>
+    </div>
+    <div class="level">
+      <div><div class="tier t3">Operacional</div><div class="who" style="margin-top:.4rem">Supervisores · curto prazo</div></div>
+      <div>
+        <ul>
+          <li>Visão por tarefas rotineiras</li>
+          <li>Foco no curto prazo</li>
+          <li>Definições de objetivos e resultados bem específicos</li>
+        </ul>
+        <div class="ex"><b>Exemplos</b>Detalhar as tarefas do dia a dia. Formalizar métodos e procedimentos. Controlar estoque, produção, custos e prazos. Montar planos de ação para objetivos específicos.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2.2rem">O planejamento desce do topo para a base</h3>
+  <div class="cascade">
+    <div class="cstep t1c"><b>Estratégico</b>traça diretrizes, missão, visão e valores</div>
+    <div class="carrow" aria-hidden="true">↓</div>
+    <div class="cstep t2c"><b>Tático</b>traduz em objetivos e programas de cada área</div>
+    <div class="carrow" aria-hidden="true">↓</div>
+    <div class="cstep t3c"><b>Operacional</b>transforma em procedimentos e planos de ação</div>
+  </div>
+  <p class="lead" style="margin-top:1rem">Os níveis são integrados e dependem um do outro. Cada um respeita o que foi definido no nível acima.</p>
+
+  <h3 style="margin-top:2.2rem">As funções administrativas em cada nível</h3>
+  <p class="lead">Planejar, Organizar, Dirigir e Controlar (PODC) acontecem nos três níveis, com alcances diferentes.</p>
+  <table class="podc">
+    <thead><tr><th></th><th>Estratégico</th><th>Tático</th><th>Operacional</th></tr></thead>
+    <tbody>
+      <tr><th>Planejar</th><td data-l="Estratégico">Planos da organização como um todo, no longo prazo</td><td data-l="Tático">Plano estratégico dividido por áreas, no médio prazo</td><td data-l="Operacional">Planos de ação detalhados, no curto prazo</td></tr>
+      <tr><th>Organizar</th><td data-l="Estratégico">Estrutura da organização, políticas de pessoal e recursos globais</td><td data-l="Tático">Estrutura e recursos de cada departamento</td><td data-l="Operacional">Desenho de cargos e tarefas</td></tr>
+      <tr><th>Dirigir</th><td data-l="Estratégico">Alta administração</td><td data-l="Tático">Gerência intermediária</td><td data-l="Operacional">Supervisores e coordenadores que lideram as equipes</td></tr>
+      <tr><th>Controlar</th><td data-l="Estratégico">Controle amplo, de toda a organização</td><td data-l="Tático">Controle por departamento ou unidade</td><td data-l="Operacional">Controle do desempenho individual</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 2. Termos -->
+<section>
+  <h2>Termos importantes</h2>
+  <div class="terms">
+    <div class="term">
+      <h3>SIPOC</h3>
+      <div class="full">Suppliers, Inputs, Process, Outputs, Customers</div>
+      <p>Ferramenta que mapeia um processo de ponta a ponta numa visão macro: quem fornece, o que entra, o que acontece, o que sai e quem recebe. É muito usada no início de projetos Lean para alinhar os limites do processo antes de detalhá-lo.</p>
+      <div class="sipoc-letters">
+        <b>S</b><span><strong>Fornecedores</strong>: quem entrega algo para o processo acontecer.</span>
+        <b>I</b><span><strong>Entradas</strong>: informações, materiais ou dados recebidos.</span>
+        <b>P</b><span><strong>Processo</strong>: as etapas principais que transformam as entradas.</span>
+        <b>O</b><span><strong>Saídas</strong>: o que o processo entrega.</span>
+        <b>C</b><span><strong>Clientes</strong>: quem recebe e usa as saídas.</span>
+      </div>
+    </div>
+    <div class="term">
+      <h3>MPS</h3>
+      <div class="full">Master Production Schedule · Plano Mestre de Produção</div>
+      <p>Plano que define o que será produzido, em que quantidade e quando. Ele traduz a estratégia e a demanda em um cronograma concreto de produção, servindo de referência para as demais áreas se organizarem.</p>
+    </div>
+    <div class="term">
+      <h3>Lean Office</h3>
+      <div class="full">Lean aplicado a processos administrativos</div>
+      <p>Aplicação dos princípios do Lean (eliminar desperdícios e fazer o trabalho fluir) em áreas administrativas e de informação, em vez da linha de produção física.</p>
+    </div>
+    <div class="term">
+      <h3>PCP</h3>
+      <div class="full">Planejamento e Controle da Produção</div>
+      <p>Nome da área de Planejamento. É a área que planeja o que será produzido e quando, e depois acompanha se a execução está seguindo o que foi planejado.</p>
+    </div>
+    <div class="term">
+      <h3>Kickoff</h3>
+      <div class="full">Reunião de início</div>
+      <p>Reunião que dá a largada de um projeto ou obra, alinhando escopo, prazos e responsáveis entre as áreas envolvidas.</p>
+    </div>
+    <div class="term">
+      <h3>RI</h3>
+      <div class="full">Registro imobiliário</div>
+      <p>Entregável do DEIM: registro imobiliário emitido.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VSM -->
+<section>
+  <h2>VSM: Mapeamento do Fluxo de Valor</h2>
+  <p class="lead">O VSM (Value Stream Mapping) é uma ferramenta visual usada para desenhar, analisar e melhorar todas as etapas necessárias para entregar um produto ou serviço ao cliente.</p>
+
+  <h3 style="margin-top:1.8rem">Para que serve no gerenciamento de projetos</h3>
+  <div class="terms" style="margin-top:.8rem">
+    <div class="term"><h3>Visualizar o processo</h3><p style="margin:0">Mostra o caminho completo de materiais e informações, desde o pedido inicial até a entrega final.</p></div>
+    <div class="term"><h3>Encontrar desperdícios</h3><p style="margin:0">Ajuda a achar gargalos, esperas longas e etapas que não trazem valor real para o cliente.</p></div>
+    <div class="term"><h3>Planejar melhorias</h3><p style="margin:0">Serve de base para criar um estado futuro mais rápido, barato e eficiente.</p></div>
+  </div>
+
+  <h3 style="margin-top:2.2rem">Etapas principais do VSM</h3>
+  <ol class="steps">
+    <li><span class="n">1</span><div><b>Mapear o estado atual</b>Desenhar como o processo funciona hoje na prática.</div></li>
+    <li><span class="n">2</span><div><b>Coletar dados</b>Medir tempos de ciclo, filas e estoques de cada fase.</div></li>
+    <li><span class="n">3</span><div><b>Analisar falhas</b>Identificar onde o tempo é perdido e onde estão os bloqueios.</div></li>
+    <li><span class="n">4</span><div><b>Criar o estado futuro</b>Planejar um fluxo otimizado sem os problemas anteriores.</div></li>
+    <li><span class="n">5</span><div><b>Implementar as mudanças</b>Colocar o novo plano em prática e monitorar os ganhos.</div></li>
+  </ol>
+</section>
+
+<!-- 3. Caixa d'água -->
+<section>
+  <h2>O Planejamento é o dono do estoque</h2>
+  <p class="lead">É como uma caixa d’água. A água representa o número de apartamentos e a demanda. O Planejamento precisa equilibrar o Comercial e a Produção.</p>
+
+  <div class="fig">
+  <svg viewBox="0 0 760 430" width="760" role="img" aria-label="Ilustração de uma caixa d'água: a Produção abastece, o Comercial consome e o Planejamento controla o nível.">
+    <defs>
+      <clipPath id="tankClip"><rect x="250" y="80" width="260" height="250" rx="14"/></clipPath>
+      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--water)"/></marker>
+    </defs>
+
+    <!-- suporte -->
+    <line x1="280" y1="330" x2="265" y2="400" stroke="var(--tank-stroke)" stroke-width="5"/>
+    <line x1="480" y1="330" x2="495" y2="400" stroke="var(--tank-stroke)" stroke-width="5"/>
+    <line x1="272" y1="370" x2="488" y2="370" stroke="var(--tank-stroke)" stroke-width="3"/>
+    <line x1="230" y1="400" x2="530" y2="400" stroke="var(--line)" stroke-width="2"/>
+
+    <!-- tanque -->
+    <rect x="250" y="80" width="260" height="250" rx="14" fill="var(--tank)" stroke="var(--tank-stroke)" stroke-width="3"/>
+    <g clip-path="url(#tankClip)">
+      <rect x="240" y="185" width="290" height="160" fill="var(--water)" opacity=".85"/>
+      <path class="wave" d="M230 185 q14 -9 28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 t28 0 v20 h-310z" fill="var(--water)" opacity=".85"/>
+    </g>
+    <!-- régua de nível -->
+    <g stroke="var(--tank-stroke)" stroke-width="2">
+      <line x1="522" y1="100" x2="522" y2="315"/>
+      <line x1="516" y1="120" x2="528" y2="120"/>
+      <line x1="516" y1="190" x2="528" y2="190"/>
+      <line x1="516" y1="260" x2="528" y2="260"/>
+    </g>
+    <text x="534" y="124" font-size="12" fill="var(--muted)" font-family="Source Sans 3, sans-serif">excesso</text>
+    <text x="534" y="194" font-size="12" fill="var(--muted)" font-family="Source Sans 3, sans-serif">equilíbrio</text>
+    <text x="534" y="264" font-size="12" fill="var(--muted)" font-family="Source Sans 3, sans-serif">falta</text>
+
+    <text x="380" y="250" text-anchor="middle" font-size="17" font-weight="600" fill="#fff" font-family="Outfit, sans-serif">Estoque</text>
+    <text x="380" y="272" text-anchor="middle" font-size="13.5" fill="#fff" font-family="Source Sans 3, sans-serif">nº de apartamentos e demanda</text>
+
+    <!-- tampa / Planejamento -->
+    <rect x="300" y="40" width="160" height="40" rx="8" fill="var(--navy)"/>
+    <text x="380" y="66" text-anchor="middle" font-size="16" font-weight="600" fill="var(--bg)" font-family="Outfit, sans-serif">Planejamento</text>
+    <text x="380" y="26" text-anchor="middle" font-size="13" fill="var(--muted)" font-family="Source Sans 3, sans-serif">dono do estoque, controla o nível</text>
+
+    <!-- entrada: Produção -->
+    <path d="M40 120 H250" stroke="var(--tank-stroke)" stroke-width="12" fill="none"/>
+    <path d="M60 120 H236" stroke="var(--water)" stroke-width="4" fill="none" marker-end="url(#arr)"/>
+    <text x="40" y="100" font-size="16" font-weight="600" fill="var(--ink)" font-family="Outfit, sans-serif">Produção</text>
+    <text x="40" y="150" font-size="13" fill="var(--muted)" font-family="Source Sans 3, sans-serif">abastece a caixa</text>
+
+    <!-- saída: Comercial -->
+    <path d="M510 310 H720" stroke="var(--tank-stroke)" stroke-width="12" fill="none"/>
+    <path d="M524 310 H708" stroke="var(--water)" stroke-width="4" fill="none" marker-end="url(#arr)"/>
+    <circle cx="610" cy="310" r="11" fill="var(--surface)" stroke="var(--tank-stroke)" stroke-width="3"/>
+    <text x="720" y="290" text-anchor="end" font-size="16" font-weight="600" fill="var(--ink)" font-family="Outfit, sans-serif">Comercial</text>
+    <text x="720" y="340" text-anchor="end" font-size="13" fill="var(--muted)" font-family="Source Sans 3, sans-serif">consome a caixa</text>
+  </svg>
+  </div>
+
+  <div class="tank-legend">
+    <div><b>Água</b>Número de apartamentos e demanda.</div>
+    <div><b>Planejamento</b>Dono do estoque. Mantém o nível equilibrado.</div>
+    <div><b>Produção e Comercial</b>Os dois lados que o Planejamento precisa equilibrar.</div>
+  </div>
+  <p class="note" style="margin-top:1.3rem">Na ilustração, a Produção aparece como entrada e o Comercial como saída da caixa, como forma visual de representar o equilíbrio descrito na anotação.</p>
+</section>
+
+<!-- Cronograma e papéis -->
+<section>
+  <h2>O cronograma aprovado precisa ser seguido</h2>
+  <p class="lead">Na opinião da consultoria, para o Lean, o fluxo definido e o cronograma aprovado precisam ser seguidos independentemente do financiador, seja a Caixa ou a AGEHAB.</p>
+
+  <div class="example">
+    <div class="ex-label">Exemplo</div>
+    <p style="margin:0">Se está especificado que a obra vai começar no dia X, ela precisa começar no dia X, independentemente do caixa ou do valor que a AGEHAB ou o banco (Caixa) repassou.</p>
+  </div>
+  <p class="note">AGEHAB é a Agência Goiana de Habitação. Caixa, aqui, refere-se à Caixa Econômica Federal, banco financiador. Os dois aparecem como fontes de recurso que não devem ditar a data de execução.</p>
+
+  <h3 style="margin-top:2.2rem">Quem cuida de quê</h3>
+  <div class="roles">
+    <div class="role">
+      <h3>Planejamento <span class="tag">PCP</span></h3>
+      <ul>
+        <li>Faz o planejamento de produto</li>
+        <li>Está preocupado com as entregas</li>
+        <li>Hoje, é quem está fazendo o kickoff</li>
+      </ul>
+    </div>
+    <div class="role">
+      <h3>Controladoria</h3>
+      <ul>
+        <li>Controla o dinheiro</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2.2rem">Do planejamento ao controle</h3>
+  <p class="lead">O planejamento de produto se transforma no controle. É o que dá sentido ao nome PCP: primeiro se planeja, depois se controla com base no que foi planejado.</p>
+  <div class="flow">
+    <div class="fbox">Planejamento de produto</div>
+    <svg viewBox="0 0 60 20" width="60" height="20" aria-hidden="true"><path d="M2 10H50" stroke="var(--water)" stroke-width="3"/><path d="M46 3L56 10L46 17z" fill="var(--water)"/></svg>
+    <div class="fbox">Controle</div>
+  </div>
+</section>
+
+<!-- Entradas do Planejamento -->
+<section>
+  <h2>Entradas do Planejamento</h2>
+  <p class="lead">Tudo o que está abaixo são entradas que precisam acontecer no Planejamento. Cada departamento é responsável pelos seus entregáveis.</p>
+  <div class="board">
+      <div class="dept"><h3>NNV</h3><div class="del">Terreno comprado</div></div>
+      <div class="dept"><h3>DEIM</h3><div class="del">RI emitido<small>Registro imobiliário</small></div><div class="del">LI emitida</div></div>
+      <div class="dept"><h3>Marketing</h3><div class="del">Material de venda</div><div class="del">Evento de lançamento</div></div>
+      <div class="dept"><h3>Comercial</h3><div class="del">Plano de venda atendido</div></div>
+      <div class="dept"><h3>Crédito</h3><div class="del">Contrato CEF assinado</div><div class="del">Contrato de financiamento assinado</div><div class="del">Contrato de financiamento registrado</div></div>
+      <div class="dept"><h3>Projeto executivo</h3><div class="del">Projeto executivo disponibilizado</div></div>
+      <div class="dept"><h3>Orçamento</h3><div class="del">Orçamento executivo disponibilizado</div></div>
+      <div class="dept"><h3>Obra</h3><div class="del">Obra finalizada</div></div>
+      <div class="dept"><h3>Diretoria</h3><div class="del">Diretrizes de planejamento</div></div>
+  </div>
+  <p class="note" style="margin-top:1.3rem">CEF é a Caixa Econômica Federal. A Diretoria aparece aqui como fornecedora (diretrizes de planejamento) e também é a cliente do Planejamento.</p>
+</section>
+
+<!-- 4. SIPOC do MPS -->
+<section>
+  <h2>O MPS visto como um SIPOC</h2>
+  <p class="lead">O cliente do Planejamento é a Diretoria, com foco financeiro. Todos os departamentos são fornecedores do MPS. As saídas ainda não foram levantadas.</p>
+  <div class="scroll">
+    <div class="sipoc">
+      <div class="col"><h3>S</h3><div class="en">Suppliers · Fornecedores</div><div class="v">Todos os departamentos<small>NNV, DEIM, Marketing, Comercial, Crédito, Projeto executivo, Orçamento, Obra e Diretoria</small></div></div>
+      <div class="col"><h3>I</h3><div class="en">Inputs · Entradas</div><div class="v">Entregáveis dos departamentos<small>Terreno comprado, RI e LI emitidos, material de venda, evento de lançamento, plano de venda atendido, contratos (CEF e financiamento), projeto e orçamento executivos, obra finalizada, diretrizes de planejamento</small></div></div>
+      <div class="col core"><h3>P</h3><div class="en">Process · Processo</div><div class="v">MPS<small>Plano Mestre de Produção, conduzido pelo Planejamento</small></div></div>
+      <div class="col empty"><h3>O</h3><div class="en">Outputs · Saídas</div><div class="v">A levantar</div></div>
+      <div class="col"><h3>C</h3><div class="en">Customers · Clientes</div><div class="v">Diretoria<small>Foco financeiro</small></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>Documento em construção. Novos conteúdos serão adicionados conforme a consultoria avança.</footer>
+</div>
+</body>
+</html>
