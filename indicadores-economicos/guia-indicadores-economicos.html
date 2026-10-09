@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Indicadores Econômicos e Construção Civil | Apostila interna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/base.css">
+<style>
+:root{--marca-esc:#9A6B08}
+.carimbo h1{font-size:clamp(2.2rem,5.6vw,3.8rem)}
+h4{font-size:1rem;margin:0 0 .5em;font-family:"Barlow Condensed",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--tinta-2)}
+
+/* ---------- categorias ---------- */
+.inf{--c:#B3261E;--cbg:#FBECEA}
+.jur{--c:#2B5F7E;--cbg:#E8EFF9}
+.atv{--c:#2E7D5B;--cbg:#E5F3EC}
+.imo{--c:#6B4A8A;--cbg:#F1EAF8}
+
+/* ---------- intro ---------- */
+.legenda-grupos{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.2rem 0 0}
+.legenda-grupos span{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:.85rem;padding:.3rem .8rem;border:1px solid var(--linha);background:var(--branco)}
+.legenda-grupos i{display:inline-block;width:.55rem;height:.55rem;border-radius:50%;margin-right:.4rem;vertical-align:middle;background:var(--c)}
+
+/* ---------- cabecalho de secao ---------- */
+.sec-head{display:flex;gap:1rem;align-items:baseline;border-top:2px solid var(--tinta);padding-top:.8rem;margin-bottom:1.6rem;flex-wrap:wrap}
+.sec-num{font-family:"IBM Plex Mono",monospace;font-size:1.6rem;font-weight:500;color:var(--marca);line-height:1}
+.sec-head h2{font-size:clamp(1.7rem,4vw,2.5rem);margin:0;font-family:"Barlow Condensed",sans-serif;font-weight:700}
+.sec-head p{margin:.3rem 0 0;color:var(--tinta-2);font-size:1rem}
+.lead{font-size:1.08rem;color:var(--tinta-2);max-width:var(--max)}
+
+/* ---------- cartao de indicador ---------- */
+.ind{background:var(--branco);border:1px solid var(--linha);border-top:4px solid var(--c);margin:1.6rem 0;overflow:hidden;scroll-margin-top:1.5rem}
+.ind-head{padding:1.3rem 1.5rem .3rem;display:flex;gap:.9rem;align-items:flex-start;flex-wrap:wrap}
+.ind-head .badge{background:var(--cbg);color:var(--c);font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.72rem;padding:.2rem .6rem;letter-spacing:.05em}
+.ind-head h3{margin:0;flex:1;min-width:200px;font-family:"Barlow Condensed",sans-serif;font-size:1.3rem;font-weight:700}
+.ind-body{padding:.3rem 1.5rem 1.4rem}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.6rem;margin:.8rem 0 1.1rem}
+.fact{background:var(--papel);padding:.6rem .8rem}
+.fact b{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--tinta-2);margin-bottom:.15rem;font-weight:600;font-family:"IBM Plex Mono",monospace}
+.fact span{font-size:.93rem}
+.fact.hl{background:var(--cbg)}
+.fact.hl b{color:var(--c)}
+.calc{border-left:3px solid var(--c);padding:.2rem 0 .2rem 1.1rem;margin-top:.7rem}
+.calc-title{font-weight:700;color:var(--c);font-size:.82rem;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.6rem;font-family:"Barlow Condensed",sans-serif}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;position:relative;padding-left:2.3rem;margin-bottom:.7rem;font-size:.96rem}
+.steps li::before{content:counter(s);position:absolute;left:0;top:.05rem;width:1.55rem;height:1.55rem;border-radius:50%;background:var(--cbg);color:var(--c);font-weight:700;font-size:.78rem;display:grid;place-items:center;font-family:"IBM Plex Mono",monospace}
+
+/* ---------- formula ---------- */
+.formula{background:var(--papel);border:1px dashed var(--linha);padding:.9rem 1.1rem;margin:.9rem 0;text-align:center;font-family:"IBM Plex Mono",monospace;font-size:1.02rem;overflow-x:auto;white-space:nowrap}
+.formula sup{font-size:.7em}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px}
+.frac>span:first-child{border-bottom:1px solid currentColor;padding:0 4px}
+.frac>span:last-child{padding:0 4px}
+.vars{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.4rem 1rem;font-size:.92rem;margin:.4rem 0 .6rem}
+.vars div b{font-family:"Barlow Condensed",sans-serif;color:var(--c);margin-right:.4rem;font-weight:700}
+
+/* ---------- destaques ---------- */
+.note{padding:.9rem 1.1rem;margin:.9rem 0;font-size:.95rem;background:var(--papel)}
+.note.warn{background:#FBF3E1;border-left:4px solid var(--marca-esc)}
+.note.key{background:var(--cbg,var(--papel));border-left:4px solid var(--c,var(--marca))}
+.note strong:first-child{display:block;margin-bottom:.2rem;font-family:"Barlow Condensed",sans-serif}
+
+/* ---------- barra de pesos ---------- */
+.wbar{display:flex;height:2.8rem;overflow:hidden;margin:.9rem 0 .4rem;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:.9rem}
+.wbar div{display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:0 .3rem}
+.wlegend{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.7rem;margin-top:.8rem}
+.wlegend div{background:var(--papel);border:1px solid var(--linha);padding:.7rem .9rem;font-size:.92rem}
+.wlegend b{display:block;font-family:"Barlow Condensed",sans-serif}
+
+/* ---------- cronograma de coleta ---------- */
+.tl{background:var(--branco);border:1px solid var(--linha);padding:1.2rem 1.4rem;margin:1.2rem 0}
+.tl-scale{display:grid;grid-template-columns:110px 1fr;gap:.7rem;font-size:.78rem;color:var(--tinta-2);margin-bottom:.4rem}
+.tl-months{display:grid;grid-template-columns:1fr 1fr;text-align:center;border-bottom:1px solid var(--linha);padding-bottom:.3rem}
+.tl-months div:first-child{border-right:2px solid var(--tinta-2)}
+.tl-row{display:grid;grid-template-columns:110px 1fr;gap:.7rem;align-items:center;margin:.55rem 0}
+.tl-row .lbl{font-weight:700;font-size:.9rem;font-family:"Barlow Condensed",sans-serif}
+.tl-track{position:relative;height:1.8rem;background:repeating-linear-gradient(90deg,var(--papel) 0 calc(100%/6 - 1px),var(--linha) calc(100%/6 - 1px) calc(100%/6));border-radius:3px}
+.tl-track::after{content:"";position:absolute;left:50%;top:-4px;bottom:-4px;width:2px;background:var(--tinta-2)}
+.tl-bar{position:absolute;top:3px;bottom:3px;color:#fff;font-size:.75rem;display:flex;align-items:center;justify-content:space-between;padding:0 .5rem;font-weight:600;white-space:nowrap;font-family:"IBM Plex Mono",monospace;border-radius:2px}
+.tl-ticks{display:grid;grid-template-columns:110px 1fr;gap:.7rem;font-size:.72rem;color:var(--tinta-2)}
+.tl-ticks .t{position:relative;height:1rem}
+.tl-ticks .t span{position:absolute;transform:translateX(-50%)}
+
+/* ---------- tabelas ---------- */
+.tbl-wrap{overflow-x:auto;margin:1.2rem 0}
+table{width:100%;border-collapse:collapse;background:var(--branco);border:1px solid var(--tinta);margin:0;font-size:.95rem;min-width:620px}
+th{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.02rem;text-align:left;padding:.5rem .7rem;border-bottom:2px solid var(--tinta);background:#F6F7F7;vertical-align:bottom}
+td{padding:.5rem .7rem;border-bottom:1px solid var(--linha);font-size:.92rem;vertical-align:top}
+tr:last-child td{border-bottom:0}
+td .dot{display:inline-block;width:.5rem;height:.5rem;border-radius:50%;margin-right:.5rem;background:var(--c)}
+
+/* ---------- grades e cartoes ---------- */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1.1rem 0}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:1.1rem 0}
+.card{background:var(--branco);border:1px solid var(--linha);padding:1.1rem 1.3rem}
+.card h4{margin-top:0}
+.actor{border-top:4px solid var(--c)}
+.actor .who{font-family:"Barlow Condensed",sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:.1rem}
+.actor .what{color:var(--c);font-weight:600;font-size:.88rem;margin-bottom:.6rem}
+
+/* ---------- cadeia e fluxo ---------- */
+.chain{display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:1rem 0}
+.chain .step{background:var(--cbg);border:1px solid var(--linha);padding:.6rem .9rem;font-size:.9rem;flex:1 1 150px;display:flex;flex-direction:column;justify-content:center}
+.chain .step b{display:block;color:var(--c);font-size:.92rem;font-family:"Barlow Condensed",sans-serif}
+.chain .arr{display:flex;align-items:center;padding:0 .4rem;color:var(--tinta-2);font-size:1.3rem}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:.6rem;align-items:center;margin:.6rem 0}
+.flow .box{background:var(--branco);border:2px solid var(--c);padding:.8rem;text-align:center;font-weight:600;font-size:.92rem;font-family:"Barlow Condensed",sans-serif}
+.flow .ar{color:var(--tinta-2);font-size:1.4rem;text-align:center}
+.flow-down{text-align:left;padding-left:12%;color:var(--tinta-2);font-size:1.4rem;margin:-2px 0}
+
+/* ---------- exemplos ---------- */
+.ex{background:var(--branco);border:1px solid var(--linha);border-left:6px solid var(--azul);margin:1.8rem 0}
+.ex-head{background:var(--papel);padding:1rem 1.4rem;display:flex;gap:.8rem;align-items:center;flex-wrap:wrap}
+.ex-head .n{background:var(--azul);color:#fff;font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:.78rem;padding:.2rem .6rem}
+.ex-head h3{margin:0;flex:1;font-size:1.15rem;font-family:"Barlow Condensed",sans-serif;font-weight:700;min-width:220px}
+.ex-body{padding:1.1rem 1.4rem 1.3rem}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.9rem}
+.chip{font-family:"Barlow Condensed",sans-serif;font-size:.78rem;font-weight:600;padding:.2rem .7rem;background:var(--cbg);color:var(--c)}
+.impact{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.7rem;margin:1rem 0}
+.impact div{padding:.8rem 1rem;background:var(--papel);border-top:3px solid var(--c)}
+.impact b{display:block;color:var(--c);margin-bottom:.2rem;font-family:"Barlow Condensed",sans-serif}
+ol.seq{margin:.5rem 0 .8rem;padding-left:1.4rem}
+ol.seq li{margin-bottom:.4rem}
+
+/* ---------- calculadoras ---------- */
+.tool{background:var(--branco);border:1px solid var(--linha);padding:1.1rem 1.3rem;margin:1rem 0}
+.tool-title{font-family:"Barlow Condensed",sans-serif;font-weight:700;margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem}
+.tool-title::before{content:"";width:.6rem;height:.6rem;background:var(--c,var(--marca))}
+.tool label{display:block;font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.06em;color:var(--tinta-2);margin-bottom:.25rem}
+.tool input{width:100%;padding:.5rem .6rem;border:1px solid var(--linha);background:var(--papel);color:var(--tinta);font:inherit;font-family:"Source Serif 4",Georgia,serif}
+.tool .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.7rem;margin-bottom:.7rem}
+.tool .out{background:var(--cbg,var(--papel));padding:.7rem .9rem;font-size:.95rem}
+.tool .out strong{font-size:1.15rem;color:var(--c,var(--marca-esc))}
+
+/* ---------- revisao (accordion) ---------- */
+details.qa{background:var(--branco);border:1px solid var(--linha);margin:.6rem 0;padding:0 1.2rem}
+details.qa summary{cursor:pointer;padding:.9rem 0;font-weight:700;font-family:"Barlow Condensed",sans-serif;font-size:1.05rem;list-style:none;display:flex;gap:.6rem}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa summary::before{content:"+";color:var(--marca);font-weight:700;width:.9rem}
+details.qa[open] summary::before{content:"–"}
+details.qa .a{padding:0 0 1rem 1.5rem;color:var(--tinta-2);font-size:.97rem}
+
+/* ---------- pergunta final ---------- */
+.question{background:var(--tinta);color:#EDF0F1;padding:clamp(1.4rem,4vw,2.6rem);border-left:14px solid var(--marca)}
+.question h3{color:var(--marca);font-family:"Barlow Condensed",sans-serif;margin:0 0 .4rem}
+.question p{color:#D5DCDF;font-size:1.1rem;margin:0;max-width:64ch}
+
+@media (max-width:900px){
+  .sub{display:none}
+  .ind-head,.ind-body{padding-left:1.1rem;padding-right:1.1rem}
+  .flow{grid-template-columns:1fr}
+  .flow .ar{transform:rotate(90deg)}
+  .tl-scale,.tl-row,.tl-ticks{grid-template-columns:70px 1fr}
+  .tl-bar span.e{display:none}
+  .chain .arr{width:100%;justify-content:center;transform:rotate(90deg);padding:2px 0}
+}
+@media print{
+  body{font-size:10.5pt}
+  .tool{display:none}
+  .tbl-wrap{overflow:visible}
+  table{min-width:0}
+  .ind,.ex,.card{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Ir para o conteúdo</a>
+
+<p class="trilha"><a href="../index.html">Portal</a> / <a href="index.html">Indicadores econômicos</a> / Guia de indicadores</p>
+
+<header class="carimbo-wrap">
+  <div class="carimbo">
+    <div class="campo-principal">
+      <p class="obra">MATERIAL INTERNO / EQUIPE DE PLANEJAMENTO E CONTROLE DE OBRAS</p>
+      <h1><span class="cap">GUIA</span>Indicadores econômicos e construção civil</h1>
+      <p class="chamada">IPCA, Selic, CDI, TR, PIB, câmbio, IGP e INCC — o que cada indicador mede, quem calcula, e como chega até o incorporador, o construtor e o cliente.</p>
+    </div>
+    <div class="meta">
+      <div><span class="r">ASSUNTO</span><span class="v">Economia aplicada à construção</span></div>
+      <div><span class="r">DOCUMENTOS</span><span class="v">Guia de indicadores</span></div>
+      <div><span class="r">BASE</span><span class="v">Aula — Indicadores Econômicos</span></div>
+      <div><span class="r">USO</span><span class="v">Treinamento interno</span></div>
+    </div>
+  </div>
+  <div class="fita"><i></i><i></i><i></i><i></i></div>
+</header>
+
+<div class="corpo">
+  <nav class="sumario" aria-label="Sumário do guia">
+    <p>Neste guia</p>
+    <ol>
+      <li><a href="#intro">Introdução</a></li>
+      <li><a href="#inflacao"><span>1</span>Índices de preços</a></li>
+      <li class="sub"><a href="#ipca">IPCA</a></li>
+      <li class="sub"><a href="#ipca15">IPCA-15</a></li>
+      <li class="sub"><a href="#inpc">INPC</a></li>
+      <li class="sub"><a href="#igp">Família IGP</a></li>
+      <li class="sub"><a href="#incc">INCC</a></li>
+      <li class="sub"><a href="#calendario">Calendário de coleta</a></li>
+      <li><a href="#juros"><span>2</span>Juros e renda fixa</a></li>
+      <li class="sub"><a href="#selic">Selic</a></li>
+      <li class="sub"><a href="#cdi">CDI</a></li>
+      <li class="sub"><a href="#tr">TR</a></li>
+      <li><a href="#atividade"><span>3</span>Atividade e mercado</a></li>
+      <li class="sub"><a href="#pib">PIB</a></li>
+      <li class="sub"><a href="#ptax">Câmbio (PTAX)</a></li>
+      <li class="sub"><a href="#ibov">Ibovespa e IFIX</a></li>
+      <li><a href="#resumo">Quadro-resumo</a></li>
+      <li><a href="#dia-a-dia"><span>4</span>No seu bolso</a></li>
+      <li><a href="#imobiliario"><span>5</span>Mercado imobiliário</a></li>
+      <li><a href="#participantes"><span>6</span>Os três participantes</a></li>
+      <li><a href="#exemplos"><span>7</span>Exemplos práticos</a></li>
+      <li><a href="#riscos"><span>8</span>Riscos do comprador</a></li>
+      <li><a href="#revisao">Revisão</a></li>
+    </ol>
+  </nav>
+
+  <main id="conteudo">
+
+    <section id="intro">
+      <p class="intro capitular">A construção civil não depende apenas do custo de construir um imóvel. Ela também depende do <strong>custo do dinheiro</strong>, da <strong>inflação</strong>, da <strong>renda das famílias</strong> e da <strong>capacidade de financiar a compra</strong>. Essas variáveis afetam cada participante — incorporador, construtor e cliente — de maneira diferente.</p>
+      <div class="legenda-grupos">
+        <span class="inf"><i></i>Inflação</span>
+        <span class="jur"><i></i>Juros e renda fixa</span>
+        <span class="atv"><i></i>Atividade e mercado</span>
+        <span class="imo"><i></i>Mercado imobiliário</span>
+      </div>
+    </section>
+
+    <!-- 1 INFLAÇÃO -->
+    <section class="block" id="inflacao">
+      <div class="sec-head"><span class="sec-num">1</span><div><h2>Os termômetros da inflação</h2><p>Índices de preços</p></div></div>
+      <p class="lead">A inflação mede a <strong>variação de preços de uma "cesta" de produtos e serviços</strong> ao longo do tempo. Cada índice monta essa cesta de um jeito, para um público diferente e em uma janela de datas diferente — e é isso que vamos destrinchar.</p>
+
+      <!-- IPCA -->
+      <article class="ind inf" id="ipca">
+        <div class="ind-head"><span class="badge">A · INFLAÇÃO OFICIAL</span><h3>IPCA — Índice de Preços ao Consumidor Amplo</h3></div>
+        <div class="ind-body">
+          <p>É a <strong>inflação oficial do Brasil</strong>, usada pelo Banco Central no Regime de Metas de Inflação.</p>
+          <div class="facts">
+            <div class="fact"><b>Quem calcula</b><span>IBGE</span></div>
+            <div class="fact"><b>Frequência</b><span>Mensal</span></div>
+            <div class="fact"><b>Público-alvo</b><span>Famílias com rendimento de 1 a 40 salários mínimos, em regiões metropolitanas</span></div>
+            <div class="fact hl"><b>Período de coleta</b><span>Do dia 01 ao dia 30/31 do mês de referência</span></div>
+          </div>
+          <div class="calc">
+            <div class="calc-title">🔬 Como é calculado</div>
+            <ol class="steps">
+              <li><strong>Pesquisa de Orçamento Familiar (POF).</strong> O IBGE faz uma grande pesquisa periódica entrevistando milhares de famílias para entender no que elas gastam o dinheiro. Disso nasce uma cesta ponderada de cerca de <strong>400 itens</strong>, divididos em <strong>9 grupos</strong> (Alimentação, Habitação, Transportes, Saúde, Vestuário etc.).</li>
+              <li><strong>Coleta de preços.</strong> Pesquisadores do IBGE vão a supermercados, farmácias, postos de combustível, escolas e prestadores de serviços em <strong>16 regiões metropolitanas</strong> do país.</li>
+              <li><strong>Média ponderada.</strong> Não basta somar o preço do feijão e da televisão: cada item tem um <strong>peso proporcional ao gasto médio das famílias</strong>.</li>
+              <li><strong>Fórmula.</strong> Usa-se uma variação da <strong>fórmula de Laspeyres</strong>, que compara o custo da <em>mesma</em> cesta de bens entre o mês atual e o mês anterior.</li>
+            </ol>
+          </div>
+          <div class="tool inf">
+            <div class="tool-title">Experimente: por que o peso importa</div>
+            <p style="font-size:.92rem;color:var(--tinta-2)">Exemplo do material: gasolina pesa 6% no orçamento e fósforo pesa 0,01%. A contribuição de cada item para o índice ≈ <em>peso × variação do preço</em>.</p>
+            <div class="row">
+              <div><label for="pesoA">Peso da gasolina (%)</label><input id="pesoA" type="number" step="0.01" value="6"></div>
+              <div><label for="pesoB">Peso do fósforo (%)</label><input id="pesoB" type="number" step="0.01" value="0.01"></div>
+              <div><label for="altaP">Alta de preço de cada um (%)</label><input id="altaP" type="number" step="0.1" value="10"></div>
+            </div>
+            <div class="out" id="pesoOut"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- IPCA-15 -->
+      <article class="ind inf" id="ipca15">
+        <div class="ind-head"><span class="badge">B · PRÉVIA</span><h3>IPCA-15 — A prévia do IPCA</h3></div>
+        <div class="ind-body">
+          <p>Funciona exatamente como uma <strong>prévia do IPCA</strong>.</p>
+          <div class="facts">
+            <div class="fact"><b>Quem calcula</b><span>IBGE</span></div>
+            <div class="fact"><b>Frequência</b><span>Mensal</span></div>
+            <div class="fact hl"><b>Período de coleta</b><span>Do dia 16 do mês anterior ao dia 15 do mês atual</span></div>
+          </div>
+          <div class="calc">
+            <div class="calc-title">🔬 Como é calculado</div>
+            <p>A metodologia, os pesos da cesta e os locais de coleta são <strong>rigorosamente idênticos aos do IPCA</strong>. A única diferença é a <strong>janela temporal</strong>. Ele serve para que o mercado e o governo antecipem tendências de preço antes do fechamento oficial do mês.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- INPC -->
+      <article class="ind inf" id="inpc">
+        <div class="ind-head"><span class="badge">C · MENOR RENDA</span><h3>INPC — Índice Nacional de Preços ao Consumidor</h3></div>
+        <div class="ind-body">
+          <p>Inflação voltada para a <strong>população de menor renda</strong>. Muito usado em <strong>negociações sindicais</strong> e no <strong>reajuste do salário mínimo</strong>.</p>
+          <div class="facts">
+            <div class="fact"><b>Quem calcula</b><span>IBGE</span></div>
+            <div class="fact"><b>Frequência</b><span>Mensal</span></div>
+            <div class="fact"><b>Público-alvo</b><span>Famílias com rendimento de 1 a 5 salários mínimos, com chefe de família assalariado</span></div>
+            <div class="fact hl"><b>Período de coleta</b><span>Do dia 01 ao dia 30/31 do mês</span></div>
+          </div>
+          <div class="calc">
+            <div class="calc-title">🔬 Como é calculado</div>
+            <p>Usa a <strong>mesma estrutura do IPCA</strong>, mas os <strong>pesos dos itens mudam</strong>. Para uma família de 1 a 5 salários mínimos, Alimentação e Transporte Público comprometem uma parcela muito maior da renda do que em famílias de alta renda. Por isso, variações no preço do arroz, do feijão ou da passagem de ônibus pesam consideravelmente mais no INPC do que no IPCA.</p>
+          </div>
+          <div class="note key"><strong>IPCA × INPC em uma frase</strong>Mesma estrutura, mesma janela de coleta (dia 01 ao fim do mês), públicos diferentes → pesos diferentes → resultados que podem divergir.</div>
+        </div>
+      </article>
+
+      <!-- IGP -->
+      <article class="ind inf" id="igp">
+        <div class="ind-head"><span class="badge">D · CADEIA PRODUTIVA</span><h3>A família IGP — IGP-M, IGP-DI e IGP-10</h3></div>
+        <div class="ind-body">
+          <p>Índices Gerais de Preços que medem a inflação em <strong>diferentes etapas da cadeia produtiva</strong>. Ao contrário do IPCA, que olha apenas para o consumidor na ponta final, o IGP é uma combinação ponderada de três outros índices.</p>
+          <div class="facts">
+            <div class="fact"><b>Quem calcula</b><span>Fundação Getulio Vargas (FGV)</span></div>
+            <div class="fact"><b>Frequência</b><span>Mensal</span></div>
+          </div>
+          <div class="calc">
+            <div class="calc-title">🔬 Como é calculado — a regra dos 60 / 30 / 10</div>
+            <div class="formula">IGP = (0,60 × IPA) + (0,30 × IPC) + (0,10 × INCC)</div>
+            <div class="wbar" role="img" aria-label="Composição do IGP: 60% IPA, 30% IPC, 10% INCC">
+              <div style="width:60%;background:#8C3A2E">IPA · 60%</div>
+              <div style="width:30%;background:#C07A3A">IPC · 30%</div>
+              <div style="width:10%;background:#6B5338">10%</div>
+            </div>
+            <div class="wlegend">
+              <div><b>IPA — Preços ao Produtor Amplo (60%)</b>Variação dos preços no <strong>atacado</strong>: matérias-primas agrícolas e industriais, como soja, minério de ferro, milho e aço.</div>
+              <div><b>IPC — Preços ao Consumidor (30%)</b>Variação do custo de vida das famílias de <strong>1 a 33 salários mínimos</strong>.</div>
+              <div><b>INCC — Custo da Construção (10%)</b>Custos de materiais, serviços e mão de obra da <strong>construção civil</strong>.</div>
+            </div>
+          </div>
+          <div class="tool inf">
+            <div class="tool-title">Calculadora do IGP</div>
+            <div class="row">
+              <div><label for="ipa">IPA no mês (%)</label><input id="ipa" type="number" step="0.01" value="1.00"></div>
+              <div><label for="ipc">IPC no mês (%)</label><input id="ipc" type="number" step="0.01" value="0.40"></div>
+              <div><label for="incc">INCC no mês (%)</label><input id="incc" type="number" step="0.01" value="0.30"></div>
+            </div>
+            <div class="out" id="igpOut"></div>
+            <p style="font-size:.82rem;color:var(--tinta-2);margin:8px 0 0">Valores de entrada meramente ilustrativos — não são dados reais.</p>
+          </div>
+          <h4>O que muda entre os tipos de IGP?</h4>
+          <p>A <strong>única diferença</strong> é o período de coleta de dados dentro do mês:</p>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Índice</th><th>Significado</th><th>Período de coleta</th><th>Observação</th></tr></thead>
+              <tbody>
+                <tr><td><strong>IGP-M</strong></td><td>Mercado</td><td>Dia 21 do mês anterior → dia 20 do mês atual</td><td>—</td></tr>
+                <tr><td><strong>IGP-DI</strong></td><td>Disponibilidade Interna</td><td>Dia 01 → último dia do mês de referência</td><td>—</td></tr>
+                <tr><td><strong>IGP-10</strong></td><td>—</td><td>Dia 11 do mês anterior → dia 10 do mês atual</td><td>Criado para contratos cujo reajuste e vencimento ocorrem no meio do mês</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+
+      <!-- INCC -->
+      <article class="ind inf" id="incc">
+        <div class="ind-head"><span class="badge">E · CONSTRUÇÃO</span><h3>INCC — Índice Nacional de Custo da Construção</h3></div>
+        <div class="ind-body">
+          <p>Mede a variação dos <strong>custos da construção habitacional</strong>. Atenção: ele é calculado sozinho <em>e</em> também entra com peso de 10% em cada IGP.</p>
+          <div class="facts">
+            <div class="fact"><b>Quem calcula</b><span>FGV</span></div>
+            <div class="fact"><b>Frequência</b><span>Mensal</span></div>
+            <div class="fact"><b>Abrangência</b><span>Orçamentos coletados em 7 grandes capitais brasileiras</span></div>
+          </div>
+          <div class="calc">
+            <div class="calc-title">🔬 Como é calculado</div>
+            <p>A FGV divide os custos em dois grandes grupos, com pesos aproximados:</p>
+            <div class="wbar" role="img" aria-label="Composição do INCC: cerca de 50% materiais, equipamentos e serviços e 50% mão de obra">
+              <div style="width:50%;background:#6B5338">Materiais, equip. e serviços ≈ 50%</div>
+              <div style="width:50%;background:#8C3A2E">Mão de obra ≈ 50%</div>
+            </div>
+            <div class="wlegend">
+              <div><b>Materiais, Equipamentos e Serviços</b>Cimento, aço, tijolos, tintas, locação de guindastes, tubulação de PVC etc.</div>
+              <div><b>Mão de Obra</b>Salários, encargos e acordos coletivos de pedreiros, serventes, carpinteiros e engenheiros.</div>
+            </div>
+            <p style="margin-top:12px">A ponderação reflete o custo real para se erguer uma <strong>estrutura residencial padrão</strong>.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- CALENDÁRIO -->
+      <div class="tl" id="calendario">
+        <h3>📅 Calendário de coleta: quem olha para quais dias</h3>
+        <p style="color:var(--tinta-2);font-size:.95rem">Cada barra mostra a janela de coleta de preços. A linha vertical separa o <strong>mês anterior</strong> do <strong>mês de referência</strong>.</p>
+        <div class="tl-scale"><div></div><div class="tl-months"><div>Mês anterior</div><div>Mês de referência</div></div></div>
+        <div class="tl-row"><div class="lbl">IPCA</div><div class="tl-track"><div class="tl-bar" style="left:50%;width:50%;background:var(--inf)"><span>01</span><span class="e">30/31</span></div></div></div>
+        <div class="tl-row"><div class="lbl">INPC</div><div class="tl-track"><div class="tl-bar" style="left:50%;width:50%;background:var(--inf)"><span>01</span><span class="e">30/31</span></div></div></div>
+        <div class="tl-row"><div class="lbl">IPCA-15</div><div class="tl-track"><div class="tl-bar" style="left:25%;width:50%;background:#C07A3A"><span>16</span><span class="e">15</span></div></div></div>
+        <div class="tl-row"><div class="lbl">IGP-10</div><div class="tl-track"><div class="tl-bar" style="left:16.67%;width:50%;background:#6B5338"><span>11</span><span class="e">10</span></div></div></div>
+        <div class="tl-row"><div class="lbl">IGP-M</div><div class="tl-track"><div class="tl-bar" style="left:33.33%;width:50%;background:#8C3A2E"><span>21</span><span class="e">20</span></div></div></div>
+        <div class="tl-row"><div class="lbl">IGP-DI</div><div class="tl-track"><div class="tl-bar" style="left:50%;width:50%;background:#8C3A2E"><span>01</span><span class="e">último dia</span></div></div></div>
+        <div class="tl-ticks"><div></div><div class="t"><span style="left:0%">1</span><span style="left:16.67%">11</span><span style="left:25%">16</span><span style="left:33.33%">21</span><span style="left:50%">1</span><span style="left:66.67%">10/11</span><span style="left:75%">15/16</span><span style="left:83.33%">20/21</span><span style="left:100%">fim</span></div></div>
+        <div class="note" style="margin-top:16px"><strong>Leitura rápida</strong>Todos cobrem cerca de um mês de preços. O que muda é <em>onde a janela começa</em>: IGP-10 (dia 11), IPCA-15 (dia 16), IGP-M (dia 21) ou o mês cheio (IPCA, INPC, IGP-DI).</div>
+      </div>
+    </section>
+
+    <!-- 2 JUROS -->
+    <section class="block" id="juros">
+      <div class="sec-head"><span class="sec-num">2</span><div><h2>As alavancas de juros e renda fixa</h2><p>Política monetária: como os juros são arbitrados e calculados</p></div></div>
+
+      <article class="ind jur" id="selic">
+        <div class="ind-head"><span class="badge">A · JUROS BÁSICOS</span><h3>Taxa Selic — Selic Meta × Selic Over</h3></div>
+        <div class="ind-body">
+          <p>A <strong>taxa básica de juros</strong> da economia brasileira.</p>
+          <div class="facts">
+            <div class="fact"><b>Quem define</b><span>Copom — Comitê de Política Monetária do Banco Central</span></div>
+            <div class="fact hl"><b>Frequência</b><span>Reuniões a cada 45 dias para fixar a Selic Meta</span></div>
+          </div>
+          <div class="grid2">
+            <div class="card" style="background:var(--papel)">
+              <h4 style="color:var(--jur)">Selic Meta</h4>
+              <p style="margin:0">É uma <strong>decisão administrativa</strong> do Banco Central, baseada em projeções macroeconômicas de inflação, câmbio e crescimento.</p>
+            </div>
+            <div class="card" style="background:var(--papel)">
+              <h4 style="color:var(--jur)">Selic Over (efetiva)</h4>
+              <p style="margin:0">É a <strong>taxa real praticada no mercado</strong>. Todos os dias, os bancos emprestam dinheiro entre si dando títulos públicos como garantia.</p>
+            </div>
+          </div>
+          <div class="calc">
+            <div class="calc-title">🔬 Como é calculada</div>
+            <ol class="steps">
+              <li>Os bancos fazem, todos os dias, empréstimos <strong>overnight (de 1 dia)</strong> entre si, com <strong>títulos públicos como garantia</strong>, registrados no sistema SELIC (Sistema Especial de Liquidação e Custódia).</li>
+              <li>O Banco Central calcula a <strong>média ponderada</strong> de todas essas operações → essa é a <strong>Selic Over</strong>.</li>
+              <li>O Banco Central opera diariamente <strong>comprando e vendendo títulos</strong> para que a Selic Over fique praticamente colada na Selic Meta.</li>
+              <li><strong>Capitalização:</strong> a taxa anual é convertida em taxa diária útil, considerando um ano de <strong>252 dias úteis</strong>, por juros compostos:</li>
+            </ol>
+            <div class="formula">Taxa diária = (1 + Selic anual)<sup>1/252</sup> − 1</div>
+          </div>
+          <div class="tool jur">
+            <div class="tool-title">Calculadora: taxa anual → taxa diária útil</div>
+            <div class="row">
+              <div><label for="selicA">Taxa anual (%)</label><input id="selicA" type="number" step="0.01" value="13"></div>
+            </div>
+            <div class="out" id="selicOut"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="ind jur" id="cdi">
+        <div class="ind-head"><span class="badge">B · INTERBANCÁRIO</span><h3>CDI — Certificado de Depósito Interbancário</h3></div>
+        <div class="ind-body">
+          <p>Taxa dos empréstimos entre bancos privados <strong>sem garantia de títulos públicos</strong> (essa é a diferença em relação à Selic Over).</p>
+          <div class="facts">
+            <div class="fact"><b>Quem calcula</b><span>B3</span></div>
+            <div class="fact hl"><b>Frequência</b><span>Calculada e divulgada diariamente</span></div>
+            <div class="fact"><b>Relação com a Selic</b><span>Historicamente, cerca de 0,10 ponto percentual abaixo da Selic</span></div>
+          </div>
+          <div class="calc">
+            <div class="calc-title">🔬 Como é calculado</div>
+            <ol class="steps">
+              <li>Por exigência do Banco Central, <strong>nenhum banco pode fechar o dia com caixa negativo</strong>.</li>
+              <li>Bancos com sobra de caixa emprestam aos bancos com falta de caixa por apenas <strong>1 dia útil</strong>.</li>
+              <li>A B3 registra o volume total e as taxas cobradas nessas operações e calcula a <strong>média ponderada diária</strong> — a taxa DI.</li>
+            </ol>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th></th><th>Selic Over</th><th>CDI</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Garantia</strong></td><td>Títulos públicos</td><td>Sem garantia de títulos públicos</td></tr>
+                <tr><td><strong>Quem calcula</strong></td><td>Banco Central</td><td>B3</td></tr>
+                <tr><td><strong>Prazo das operações</strong></td><td>Overnight (1 dia)</td><td>1 dia útil</td></tr>
+                <tr><td><strong>Cálculo</strong></td><td>Média ponderada das operações</td><td>Média ponderada diária (taxa DI)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+
+      <article class="ind jur" id="tr">
+        <div class="ind-head"><span class="badge">C · POUPANÇA E FGTS</span><h3>TR — Taxa Referencial</h3></div>
+        <div class="ind-body">
+          <p>Usada na correção da <strong>caderneta de poupança</strong>, do <strong>saldo do FGTS</strong> e de <strong>financiamentos imobiliários no âmbito do SFH</strong>.</p>
+          <div class="facts">
+            <div class="fact"><b>Quem calcula</b><span>Banco Central</span></div>
+            <div class="fact hl"><b>Frequência</b><span>Calculada diariamente</span></div>
+          </div>
+          <div class="calc">
+            <div class="calc-title">🔬 Como é calculada</div>
+            <ol class="steps">
+              <li>O Banco Central calcula a <strong>TBF (Taxa Básica Financeira)</strong>: a média ponderada dos rendimentos dos CDBs de prazos fixos prefixados emitidos pelos maiores bancos do país.</li>
+              <li>Em seguida, aplica um <strong>fator redutor R</strong>:</li>
+            </ol>
+            <div class="formula">TR = 100 × [ <span class="frac"><span>1 + TBF</span><span>R</span></span> − 1 ]</div>
+            <p>A fórmula do fator R depende de uma constante e do nível da própria TBF. Quando a taxa de juros básica está muito baixa, a fórmula faz a <strong>TR zerar</strong> — como ocorreu em diversos momentos nos últimos anos.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- 3 ATIVIDADE -->
+    <section class="block" id="atividade">
+      <div class="sec-head"><span class="sec-num">3</span><div><h2>Os radares de atividade econômica e mercado</h2><p>PIB, câmbio e índices da bolsa</p></div></div>
+
+      <article class="ind atv" id="pib">
+        <div class="ind-head"><span class="badge">A · PRODUÇÃO</span><h3>PIB — Produto Interno Bruto</h3></div>
+        <div class="ind-body">
+          <p>A soma de todos os <strong>bens e serviços finais</strong> produzidos no país.</p>
+          <div class="facts">
+            <div class="fact"><b>Quem calcula</b><span>IBGE</span></div>
+            <div class="fact hl"><b>Frequência</b><span>Divulgado trimestral e anualmente</span></div>
+          </div>
+          <div class="calc">
+            <div class="calc-title">🔬 Como é calculado — três óticas equivalentes</div>
+            <p>O IBGE usa três óticas que, numericamente, chegam ao mesmo valor:</p>
+            <div class="grid3">
+              <div class="card" style="background:var(--papel)"><h4 style="color:var(--atv)">1. Oferta / Produção</h4>Valor adicionado da Agropecuária + Indústria + Serviços + Impostos líquidos de subvenções.</div>
+              <div class="card" style="background:var(--papel)"><h4 style="color:var(--atv)">2. Demanda / Despesa</h4><div class="formula" style="margin:6px 0;font-size:1.05rem;background:var(--branco)">PIB = C + I + G + (X − M)</div></div>
+              <div class="card" style="background:var(--papel)"><h4 style="color:var(--atv)">3. Renda</h4>Soma de todos os Salários + Lucros das empresas + Juros + Aluguéis recebidos na economia.</div>
+            </div>
+            <div class="vars">
+              <div><b>C</b>Consumo das famílias</div>
+              <div><b>I</b>Investimentos das empresas (Formação Bruta de Capital Fixo)</div>
+              <div><b>G</b>Gastos do governo</div>
+              <div><b>X</b>Exportações</div>
+              <div><b>M</b>Importações</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="ind atv" id="ptax">
+        <div class="ind-head"><span class="badge">B · CÂMBIO</span><h3>Taxa de Câmbio (Dólar / Euro) — a PTAX</h3></div>
+        <div class="ind-body">
+          <p>O <strong>preço relativo entre duas moedas</strong> (ex.: quantos reais custa 1 dólar).</p>
+          <div class="facts">
+            <div class="fact"><b>Quem calcula</b><span>Banco Central</span></div>
+            <div class="fact hl"><b>Frequência</b><span>Apurada e divulgada diariamente</span></div>
+          </div>
+          <div class="calc">
+            <div class="calc-title">🔬 Como é calculada</div>
+            <div class="chain atv">
+              <div class="step"><b>Janela 1</b>consulta</div><div class="arr">→</div>
+              <div class="step"><b>Janela 2</b>consulta</div><div class="arr">→</div>
+              <div class="step"><b>Janela 3</b>consulta</div><div class="arr">→</div>
+              <div class="step"><b>Janela 4</b>consulta</div><div class="arr">→</div>
+              <div class="step" style="background:var(--atv);color:#fff"><b style="color:#fff">PTAX do dia</b>média das 4 janelas</div>
+            </div>
+            <ol class="steps">
+              <li>Ao longo do dia, o Banco Central faz <strong>4 janelas de consulta automatizada</strong> aos negociadores de câmbio dos principais bancos.</li>
+              <li>Em cada janela, capta as taxas médias de <strong>compra e venda</strong> do mercado interbancário e calcula a <strong>média aritmética</strong> das cotações.</li>
+              <li>A <strong>média final das 4 janelas</strong> torna-se a PTAX oficial do dia.</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+
+      <article class="ind atv" id="ibov">
+        <div class="ind-head"><span class="badge">C · BOLSA</span><h3>Ibovespa e IFIX — índices de ações e fundos imobiliários</h3></div>
+        <div class="ind-body">
+          <p><strong>Carteiras teóricas</strong> mantidas pela B3 para medir o desempenho do mercado acionário e do imobiliário.</p>
+          <div class="facts">
+            <div class="fact"><b>Quem calcula</b><span>B3</span></div>
+            <div class="fact hl"><b>Frequência</b><span>Tempo real, a cada segundo do pregão</span></div>
+            <div class="fact"><b>Tipo</b><span>Índices de retorno total, ajustados por proventos (dividendos e JCP)</span></div>
+          </div>
+          <div class="grid2">
+            <div class="card" style="background:var(--papel)"><h4 style="color:var(--atv)">Ibovespa</h4>Carteira ponderada pelas <strong>ações mais negociadas</strong> da B3 que atendem a critérios rigorosos de liquidez e presença em pregão. O peso de cada empresa depende do <strong>valor de mercado das ações em circulação (free float)</strong>.</div>
+            <div class="card" style="background:var(--papel)"><h4 style="color:var(--atv)">IFIX</h4>Funciona do mesmo modo, mas seleciona os <strong>Fundos de Investimento Imobiliário (FIIs)</strong> mais negociados e líquidos do mercado brasileiro.</div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- RESUMO -->
+    <section class="block" id="resumo">
+      <div class="sec-head"><span class="sec-num">≡</span><div><h2>Quadro-resumo</h2><p>Todos os indicadores em uma tabela</p></div></div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Indicador</th><th>Quem calcula</th><th>Frequência</th><th>Período / base de cálculo</th><th>Uso de destaque</th></tr></thead>
+          <tbody>
+            <tr class="inf"><td><span class="dot"></span><strong>IPCA</strong></td><td>IBGE</td><td>Mensal</td><td>Dia 01 ao 30/31 do mês</td><td>Inflação oficial; metas de inflação</td></tr>
+            <tr class="inf"><td><span class="dot"></span><strong>IPCA-15</strong></td><td>IBGE</td><td>Mensal</td><td>Dia 16 do mês anterior ao 15 do atual</td><td>Prévia do IPCA</td></tr>
+            <tr class="inf"><td><span class="dot"></span><strong>INPC</strong></td><td>IBGE</td><td>Mensal</td><td>Dia 01 ao 30/31 do mês</td><td>Negociações sindicais; salário mínimo</td></tr>
+            <tr class="inf"><td><span class="dot"></span><strong>IGP-M</strong></td><td>FGV</td><td>Mensal</td><td>Dia 21 do mês anterior ao 20 do atual</td><td>Contratos (historicamente, aluguéis)</td></tr>
+            <tr class="inf"><td><span class="dot"></span><strong>IGP-DI</strong></td><td>FGV</td><td>Mensal</td><td>Dia 01 ao último dia do mês</td><td>—</td></tr>
+            <tr class="inf"><td><span class="dot"></span><strong>IGP-10</strong></td><td>FGV</td><td>Mensal</td><td>Dia 11 do mês anterior ao 10 do atual</td><td>Contratos com vencimento no meio do mês</td></tr>
+            <tr class="inf"><td><span class="dot"></span><strong>INCC</strong></td><td>FGV</td><td>Mensal</td><td>Orçamentos em 7 capitais</td><td>Reajuste de parcelas de imóvel na planta</td></tr>
+            <tr class="jur"><td><span class="dot"></span><strong>Selic Meta</strong></td><td>Copom / BC</td><td>A cada 45 dias</td><td>Decisão administrativa</td><td>Juros básicos da economia</td></tr>
+            <tr class="jur"><td><span class="dot"></span><strong>Selic Over</strong></td><td>Banco Central</td><td>Diária</td><td>Média ponderada das operações overnight com títulos públicos</td><td>Taxa efetiva de mercado</td></tr>
+            <tr class="jur"><td><span class="dot"></span><strong>CDI</strong></td><td>B3</td><td>Diária</td><td>Média ponderada dos empréstimos interbancários de 1 dia útil</td><td>Referência da renda fixa</td></tr>
+            <tr class="jur"><td><span class="dot"></span><strong>TR</strong></td><td>Banco Central</td><td>Diária</td><td>TBF com fator redutor R</td><td>Poupança, FGTS, financiamentos do SFH</td></tr>
+            <tr class="atv"><td><span class="dot"></span><strong>PIB</strong></td><td>IBGE</td><td>Trimestral e anual</td><td>Óticas da oferta, demanda e renda</td><td>Atividade econômica</td></tr>
+            <tr class="atv"><td><span class="dot"></span><strong>PTAX</strong></td><td>Banco Central</td><td>Diária</td><td>Média de 4 janelas de consulta</td><td>Câmbio oficial</td></tr>
+            <tr class="atv"><td><span class="dot"></span><strong>Ibovespa / IFIX</strong></td><td>B3</td><td>Tempo real</td><td>Carteiras teóricas ponderadas</td><td>Ações / fundos imobiliários</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4 DIA A DIA -->
+    <section class="block" id="dia-a-dia">
+      <div class="sec-head"><span class="sec-num">4</span><div><h2>Como os indicadores afetam o seu bolso</h2><p>Exemplos práticos do dia a dia</p></div></div>
+
+      <div class="ex">
+        <div class="ex-head"><span class="n">Exemplo A</span><h3>O aumento de preço do pãozinho</h3></div>
+        <div class="ex-body">
+          <div class="chain inf">
+            <div class="step"><b>Câmbio ↑</b>Dólar sobe por incertezas globais</div><div class="arr">→</div>
+            <div class="step"><b>IPA ↑ → IGP-M ↑</b>Trigo importado encarece na indústria</div><div class="arr">→</div>
+            <div class="step"><b>IPCA e INPC ↑</b>Padaria repassa a alta; grupo Alimentação sobe</div><div class="arr">→</div>
+            <div class="step"><b>Selic ↑</b>BC eleva os juros para conter a alta generalizada</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex">
+        <div class="ex-head"><span class="n">Exemplo B</span><h3>A escolha entre empreender ou investir</h3></div>
+        <div class="ex-body">
+          <div class="chain jur">
+            <div class="step"><b>Selic e CDI a 13% a.a.</b>Renda fixa pública rende muito, sem risco</div><div class="arr">→</div>
+            <div class="step"><b>Menos disposição para crédito</b>Empresários evitam empréstimos para fábricas e lojas</div><div class="arr">→</div>
+            <div class="step"><b>PIB: investimento (I) ↓</b>Cai a Formação Bruta de Capital Fixo</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 IMOBILIÁRIO -->
+    <section class="block" id="imobiliario">
+      <div class="sec-head"><span class="sec-num">5</span><div><h2>Associação ao mercado imobiliário e à engenharia civil</h2><p>Como o ecossistema financeiro chega ao canteiro e ao comprador</p></div></div>
+
+      <div class="card imo" style="--c:var(--imo)">
+        <div class="flow">
+          <div class="box">IGP-M / INCC<br><small style="font-weight:400;color:var(--tinta-2)">Inflação</small></div><div class="ar">→</div>
+          <div class="box">Custos da obra<br><small style="font-weight:400;color:var(--tinta-2)">e insumos</small></div><div class="ar">→</div>
+          <div class="box">Saldo devedor do<br>cliente na planta</div>
+        </div>
+        <div class="flow-down">↓</div>
+        <div class="flow">
+          <div class="box">Alta do IPCA<br><small style="font-weight:400;color:var(--tinta-2)">Inflação geral</small></div><div class="ar">→</div>
+          <div class="box">Alta da Selic<br><small style="font-weight:400;color:var(--tinta-2)">Custo do crédito</small></div><div class="ar">→</div>
+          <div class="box">Financiamento<br>imobiliário caro</div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card actor imo">
+          <div class="who">🏗️ Fase de obras</div><div class="what">INCC e IGP-M</div>
+          <p>O construtor compra aço, cimento, pisos e contrata mão de obra — essas variações alimentam o INCC.</p>
+          <p style="margin:0">Na compra <strong>na planta</strong>, as parcelas da construção não têm juros, mas são <strong>reajustadas mês a mês pelo INCC</strong>. Se o INCC sobe 1,5% em um mês, a parcela é corrigida no mesmo percentual.</p>
+        </div>
+        <div class="card actor imo">
+          <div class="who">📄 Aluguel e contratos</div><div class="what">IGP-M × IPCA</div>
+          <p style="margin:0">60% do IGP-M vem do atacado (commodities e insumos em dólar). Em anos de dólar muito alto, o IGP-M chegou a <strong>mais de 30% ao ano</strong>, enquanto os salários (medidos pelo INPC) subiram muito menos. Isso inviabilizou reajustes de aluguéis e levou o mercado a <strong>substituir o IGP-M pelo IPCA</strong> nas revisões contratuais.</p>
+        </div>
+        <div class="card actor imo">
+          <div class="who">🔑 Compra do imóvel pronto</div><div class="what">Selic, TR e financiamento</div>
+          <p>Ao receber as chaves, o comprador geralmente quita o saldo devedor com um financiamento bancário de <strong>20 a 35 anos</strong>.</p>
+          <p style="margin:0">Com Selic alta, a captação dos bancos encarece e as taxas do crédito imobiliário sobem de <strong>7% a.a. para 11% ou 12% a.a. + TR</strong>. Com a mesma renda, a família aprova um empréstimo menor — e as vendas das construtoras esfriam.</p>
+        </div>
+        <div class="card actor imo">
+          <div class="who">📈 Fundos imobiliários</div><div class="what">IFIX × CDI</div>
+          <p style="margin:0">Investidores comparam os dividendos dos FIIs com o CDI. Com Selic/CDI muito alta, vendem cotas para migrar para a renda fixa garantida pelo governo, <strong>derrubando o IFIX</strong> e dificultando a captação para novos lançamentos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 PARTICIPANTES -->
+    <section class="block" id="participantes">
+      <div class="sec-head"><span class="sec-num">6</span><div><h2>Os três participantes</h2><p>As mesmas variáveis afetam cada um de forma diferente</p></div></div>
+      <div class="grid3">
+        <div class="card actor jur"><div class="who">Incorporador</div><div class="what">Viabilidade econômica e comercial</div>Precisa considerar os custos da obra, a capacidade de vender as unidades e as condições de financiamento dos compradores. Custos maiores pressionam o resultado; juros elevados podem reduzir a demanda.</div>
+        <div class="card actor inf"><div class="who">Construtor</div><div class="what">Orçamento, insumos e execução</div>O INCC acompanha variações nos custos de materiais, serviços e mão de obra, que podem afetar o orçamento previsto e o custo de executar a obra.</div>
+        <div class="card actor imo"><div class="who">Cliente <small style="font-size:.7rem;color:var(--imo);font-family:'IBM Plex Mono',monospace">● foco principal</small></div><div class="what">Preço, parcelas e capacidade de compra</div>Pode enfrentar reajustes durante a construção e, depois, encontrar condições de financiamento diferentes das que esperava quando comprou o imóvel.</div>
+      </div>
+    </section>
+
+    <!-- 7 EXEMPLOS -->
+    <section class="block" id="exemplos">
+      <div class="sec-head"><span class="sec-num">7</span><div><h2>Exemplos práticos aplicados</h2><p>Cenários ilustrativos — não são previsões</p></div></div>
+      <div class="note warn"><strong>Atenção</strong>Os cenários abaixo são ilustrativos. Não representam previsões nem afirmam que esses efeitos ocorrerão necessariamente em todos os empreendimentos.</div>
+
+      <!-- EX 1 -->
+      <div class="ex">
+        <div class="ex-head"><span class="n">1</span><h3>O cliente compra na planta, mas o valor das parcelas aumenta</h3></div>
+        <div class="ex-body">
+          <div class="chips"><span class="chip inf">INCC</span></div>
+          <p>Um cliente compra um apartamento na planta e organiza o orçamento familiar considerando o valor inicial das parcelas. Essas parcelas podem ser reajustadas mensalmente pelo INCC.</p>
+          <div class="chain inf">
+            <div class="step"><b>Custos da construção variam</b>Materiais, serviços e mão de obra</div><div class="arr">→</div>
+            <div class="step"><b>INCC varia</b>O índice acompanha esses custos</div><div class="arr">→</div>
+            <div class="step"><b>Parcelas reajustadas</b>Conforme previsto no contrato</div><div class="arr">→</div>
+            <div class="step"><b>Pressão no orçamento</b>Possível aperto da família</div>
+          </div>
+          <div class="impact">
+            <div class="jur"><b>Incorporador</b>O reajuste contratual pode ajudar a atualizar os valores recebidos durante a obra em relação à variação dos custos.</div>
+            <div class="inf"><b>Construtor</b>A evolução dos custos afeta o orçamento e o acompanhamento financeiro da execução.</div>
+            <div class="imo"><b>Cliente</b>Precisa ter fôlego financeiro para absorver os reajustes; com orçamento muito comprometido, pode ter dificuldade de manter os pagamentos.</div>
+          </div>
+          <div class="note warn"><strong>Limite da análise</strong>Não se pode concluir que todo aumento do INCC será igual ao aumento efetivo do custo de cada empreendimento. O índice é uma medida de custos, não a contabilidade específica de cada obra.</div>
+        </div>
+      </div>
+
+      <!-- EX 2 -->
+      <div class="ex">
+        <div class="ex-head"><span class="n">2</span><h3>O imóvel fica pronto, mas o cliente não consegue financiar o saldo esperado</h3></div>
+        <div class="ex-body">
+          <div class="chips"><span class="chip jur">Selic</span><span class="chip jur">TR</span></div>
+          <p>O cliente comprou durante a construção contando com um financiamento bancário na entrega das chaves. Nesse intervalo, as condições de juros do crédito imobiliário mudam. Ele pode ter conseguido pagar as parcelas da obra, mas encontrar dificuldade para quitar o saldo devedor na entrega.</p>
+          <h4>Como o problema se desenvolve</h4>
+          <ol class="seq">
+            <li>O cliente compra o imóvel e planeja financiar o saldo devedor no futuro.</li>
+            <li>As condições de juros do financiamento imobiliário se tornam menos favoráveis.</li>
+            <li>Com a mesma renda, o banco pode aprovar um valor menor de empréstimo.</li>
+            <li>O crédito aprovado pode não ser suficiente para quitar todo o saldo previsto.</li>
+            <li>O cliente precisa lidar com uma diferença financeira que não havia previsto adequadamente.</li>
+          </ol>
+          <div class="impact">
+            <div class="jur"><b>Incorporador</b>Pode ter dificuldade para concluir o recebimento do saldo devedor e, conforme o empreendimento, atrasos no fluxo de recebimentos.</div>
+            <div class="inf"><b>Construtor</b>Pode ser afetado indiretamente se o problema de recebimento comprometer o fluxo financeiro da operação.</div>
+            <div class="imo"><b>Cliente</b>Pode ter dificuldade para concluir a compra mesmo tendo planejado o pagamento com antecedência.</div>
+          </div>
+          <div class="note warn"><strong>Limite da análise</strong>Essa é uma consequência possível da relação apresentada, não uma afirmação de que o banco negará o crédito ou de que o cliente perderá o imóvel.</div>
+        </div>
+      </div>
+
+      <!-- EX 3 -->
+      <div class="ex">
+        <div class="ex-head"><span class="n">3</span><h3>O dólar sobe e pressiona os custos da construção</h3></div>
+        <div class="ex-body">
+          <div class="chips"><span class="chip atv">Câmbio</span><span class="chip inf">IPA</span><span class="chip inf">IGP</span><span class="chip inf">INCC</span></div>
+          <p>A alta do dólar pode encarecer matérias-primas e insumos, pressionando o IPA e, pela composição do IGP (60% IPA), influenciando o resultado desse índice.</p>
+          <div class="chain inf">
+            <div class="step"><b>Dólar ↑</b>Câmbio</div><div class="arr">→</div>
+            <div class="step"><b>Insumos ↑</b>Matérias-primas</div><div class="arr">→</div>
+            <div class="step"><b>IPA ↑</b>Atacado</div><div class="arr">→</div>
+            <div class="step"><b>IGP influenciado</b>Via peso de 60%</div>
+          </div>
+          <div class="impact">
+            <div class="jur"><b>Incorporador</b>Pode precisar reavaliar o orçamento do empreendimento e sua viabilidade econômica.</div>
+            <div class="inf"><b>Construtor</b>Pode enfrentar alta em determinados insumos e precisar acompanhar a diferença entre orçamento inicial e custos efetivos.</div>
+            <div class="imo"><b>Cliente</b>Pode ser afetado se o aumento repercutir nos valores contratuais aplicáveis à sua compra, conforme o contrato.</div>
+          </div>
+          <div class="note warn"><strong>Distinção essencial</strong>A alta do dólar não significa que todos os materiais subirão na mesma proporção, nem que o preço de um imóvel será automaticamente reajustado pelo IGP-M. O mecanismo efetivo depende do indicador e das condições contratuais aplicáveis.</div>
+        </div>
+      </div>
+
+      <!-- EX 4 -->
+      <div class="ex">
+        <div class="ex-head"><span class="n">4</span><h3>A Selic sobe e o empreendimento perde compradores potenciais</h3></div>
+        <div class="ex-body">
+          <div class="chips"><span class="chip jur">Selic</span><span class="chip jur">CDI</span><span class="chip atv">PIB</span><span class="chip imo">Financiamento imobiliário</span></div>
+          <p>Juros elevados aumentam o custo do crédito e reduzem a disposição de empresários para investir. Na compra de imóveis, juros mais altos podem reduzir o valor de financiamento que uma família consegue obter.</p>
+          <div class="impact">
+            <div class="jur"><b>Incorporador</b>A análise do empreendimento não pode considerar só o custo de construção: é preciso observar a capacidade de compra do público.</div>
+            <div class="inf"><b>Construtor</b>Menos vendas ou o adiamento de novos empreendimentos pode afetar a continuidade de projetos e a demanda por serviços de construção.</div>
+            <div class="imo"><b>Cliente</b>Pode ver reduzido o valor do imóvel que consegue adquirir com a mesma renda.</div>
+          </div>
+          <div class="note key" style="--c:var(--marca)"><strong>Lição</strong>Uma obra pode ter orçamento tecnicamente viável e, ainda assim, enfrentar dificuldades comerciais ou financeiras.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 RISCOS -->
+    <section class="block" id="riscos">
+      <div class="sec-head"><span class="sec-num">8</span><div><h2>O risco do comprador</h2><p>Três riscos que merecem atenção especial</p></div></div>
+      <div class="grid3">
+        <div class="card actor imo"><div class="who">Risco 1</div><div class="what">Reajuste durante a obra</div>O comprador precisa entender que o valor nominal das parcelas pode mudar em função do índice previsto no contrato.</div>
+        <div class="card actor imo"><div class="who">Risco 2</div><div class="what">Financiamento futuro</div>O comprador pode assumir compromissos hoje contando com condições de crédito que não estarão necessariamente disponíveis na entrega das chaves.</div>
+        <div class="card actor imo"><div class="who">Risco 3</div><div class="what">Descompasso entre renda e obrigações</div>INPC e IPCA medem a inflação com ponderações diferentes. Por isso, a inflação vivida por uma família pode não coincidir com a variação do índice usado no seu contrato.</div>
+      </div>
+      <div class="note"><strong>Por que o Risco 3 é especialmente relevante</strong>Um índice pode subir de acordo com sua metodologia enquanto a renda de determinada família evolui de outra maneira. O efeito sobre a capacidade de pagamento depende da situação concreta do comprador.</div>
+
+      <h3 style="margin-top:32px">Roteiro de análise para os próximos conteúdos</h3>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Dimensão</th><th>O que analisar</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Mecanismo econômico</strong></td><td>Como o indicador ou conceito funciona segundo o material</td></tr>
+            <tr><td><strong>Incorporador</strong></td><td>Viabilidade, custos, recebimentos e vendas</td></tr>
+            <tr><td><strong>Construtor</strong></td><td>Orçamento, insumos e execução</td></tr>
+            <tr><td><strong>Cliente</strong></td><td>Preço, parcelas, financiamento, renda e riscos</td></tr>
+            <tr><td><strong>Cenários concretos</strong></td><td>Como uma alteração pode repercutir nos demais participantes</td></tr>
+            <tr><td><strong>Limites da análise</strong></td><td>O que é possível concluir e quais informações adicionais seriam necessárias</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- REVISÃO -->
+    <section class="block" id="revisao">
+      <div class="sec-head"><span class="sec-num">✓</span><div><h2>Revisão rápida</h2><p>Clique para ver a resposta</p></div></div>
+      <details class="qa"><summary>Qual a única diferença entre IPCA e IPCA-15?</summary><div class="a">A janela de coleta. O IPCA coleta do dia 01 ao 30/31 do mês; o IPCA-15, do dia 16 do mês anterior ao dia 15 do mês atual. Metodologia, pesos e locais são idênticos.</div></details>
+      <details class="qa"><summary>Por que o arroz pesa mais no INPC do que no IPCA?</summary><div class="a">Porque o INPC mede famílias de 1 a 5 salários mínimos, para as quais Alimentação e Transporte Público comprometem uma parcela maior da renda. A estrutura é a mesma; os pesos mudam.</div></details>
+      <details class="qa"><summary>Qual a composição de qualquer IGP?</summary><div class="a">60% IPA (atacado) + 30% IPC (consumidor, 1 a 33 SM) + 10% INCC (construção). IGP-M, IGP-DI e IGP-10 diferem apenas no período de coleta.</div></details>
+      <details class="qa"><summary>Qual a janela de coleta do IGP-M?</summary><div class="a">Do dia 21 do mês anterior ao dia 20 do mês atual.</div></details>
+      <details class="qa"><summary>Selic Meta e Selic Over são a mesma coisa?</summary><div class="a">Não. A Meta é decisão administrativa do Copom (a cada 45 dias). A Over é a média ponderada das operações overnight com títulos públicos, que o BC mantém praticamente colada à Meta comprando e vendendo títulos.</div></details>
+      <details class="qa"><summary>O que diferencia o CDI da Selic Over?</summary><div class="a">O CDI vem de empréstimos entre bancos sem garantia de títulos públicos, calculado pela B3. Historicamente fica cerca de 0,10 p.p. abaixo da Selic.</div></details>
+      <details class="qa"><summary>Por que a TR pode zerar?</summary><div class="a">Porque é obtida aplicando o fator redutor R à TBF. Quando os juros básicos estão muito baixos, a fórmula leva a TR a zero.</div></details>
+      <details class="qa"><summary>Como se forma a PTAX?</summary><div class="a">O BC faz 4 janelas de consulta aos negociadores de câmbio, calcula a média aritmética das cotações de compra e venda em cada uma, e a média final das 4 janelas é a PTAX do dia.</div></details>
+      <details class="qa"><summary>Por que o mercado trocou o IGP-M pelo IPCA nos aluguéis?</summary><div class="a">Porque 60% do IGP-M é atacado, sensível ao dólar. Em anos de dólar alto ele passou de 30% ao ano, muito acima da evolução dos salários (INPC), inviabilizando reajustes.</div></details>
+    </section>
+
+    <!-- PERGUNTA -->
+    <section class="block">
+      <div class="question">
+        <h3>❓ Pergunta para a próxima aula</h3>
+        <p>Entendendo que o INCC mede os custos do construtor na fase de obras e a Selic/TR dita a taxa do financiamento final do comprador, qual estratégia de mitigação de risco econômico você adotaria ao elaborar o contrato de parcelamento de um projeto residencial durante um período de transição política com alta volatilidade cambial?</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div>
+    <span>Indicadores econômicos — Guia de consulta</span>
+    <span><a href="../index.html">Voltar ao portal</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var fmt = function(n,d){ return n.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d}); };
+  var val = function(id){ var v = parseFloat(document.getElementById(id).value); return isNaN(v)?0:v; };
+
+  function peso(){
+    var a=val('pesoA'), b=val('pesoB'), p=val('altaP');
+    var ca=a*p/100, cb=b*p/100;
+    document.getElementById('pesoOut').innerHTML =
+      'Gasolina contribui com <strong>'+fmt(ca,3)+' p.p.</strong> para o índice; fósforo, com <strong>'+fmt(cb,4)+' p.p.</strong>'+
+      (cb>0?'<br><small>A mesma alta de '+fmt(p,1)+'% pesa '+fmt(ca/cb,0)+' vezes mais quando vem da gasolina.</small>':'');
+  }
+  function igp(){
+    var r = 0.6*val('ipa') + 0.3*val('ipc') + 0.1*val('incc');
+    document.getElementById('igpOut').innerHTML =
+      'IGP = 0,60×'+fmt(val('ipa'),2)+' + 0,30×'+fmt(val('ipc'),2)+' + 0,10×'+fmt(val('incc'),2)+' = <strong>'+fmt(r,2)+'%</strong>';
+  }
+  function selic(){
+    var a = val('selicA')/100;
+    var d = (Math.pow(1+a,1/252)-1)*100;
+    document.getElementById('selicOut').innerHTML =
+      '(1 + '+fmt(a,4)+')<sup>1/252</sup> − 1 = <strong>'+fmt(d,6)+'% ao dia útil</strong>';
+  }
+  ['pesoA','pesoB','altaP'].forEach(function(i){document.getElementById(i).addEventListener('input',peso)});
+  ['ipa','ipc','incc'].forEach(function(i){document.getElementById(i).addEventListener('input',igp)});
+  document.getElementById('selicA').addEventListener('input',selic);
+  peso(); igp(); selic();
+})();
+</script>
+</body>
+</html>
