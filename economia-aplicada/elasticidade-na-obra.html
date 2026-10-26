@@ -138,6 +138,10 @@ footer .wrap{padding-block:24px 48px;font-family:var(--f-mono);font-size:12px;co
 .trilha{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding:14px 0 0}
 .trilha a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
 .trilha a:hover{color:var(--blue);border-bottom-color:var(--blue)}
+
+.sg{font-family:var(--f-mono);font-weight:600;font-size:.95rem;padding:1px 8px;border:1px solid var(--line);background:var(--paper);color:var(--ink);white-space:nowrap;display:inline-block;line-height:1.5}
+.sg.l{background:var(--safety-soft);border-color:var(--safety)}
+td.l{white-space:normal}
 </style>
 
 </head>
@@ -415,6 +419,135 @@ No exemplo (a = 600, b = 1,5):
     <li><span>A oferta é mais elástica com <strong>insumos disponíveis</strong> e <strong>mais tempo</strong>. Oferta linear que passa pela origem tem elasticidade 1.</span></li>
     <li><span>Oferta de casas é rígida no curto prazo: <strong>estímulos à procura viram preço antes de virar casa</strong>.</span></li>
   </ol>
+
+  <h3>O que dominar, passo a passo</h3>
+  <p>Cada bloco traz a regra, o roteiro de cálculo e o detalhe que costuma enganar.</p>
+
+  <!-- 1 -->
+  <div class="def"><span class="tag"><span class="sg l">1</span> Elasticidade-renda e classificação dos bens</span>
+    <mark>Ey = %ΔQ ÷ %ΔRenda</mark>. O sinal e o tamanho dizem que tipo de bem é.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Classificação pelo valor de Ey</span><span><strong>Negativa:</strong> bem inferior. <strong>Entre 0 e 1:</strong> bem normal ou necessário. <strong>Maior que 1:</strong> bem de luxo ou superior.</span></div>
+    <div class="card"><span class="s">Participação no orçamento</span><span>Se <strong>Ey &gt; 1</strong>, a participação do bem no orçamento <mark>sobe</mark> quando a renda sobe. Se <strong>Ey &lt; 1</strong>, ela <mark>cai</mark>.</span></div>
+    <div class="card"><span class="s">Exemplo de cálculo</span><span>Renda sobe <strong>10%</strong> e Ey = <strong>2</strong>:</span>
+      <div class="eq">%ΔQ = Ey × %ΔRenda
+%ΔQ = 2 × 10% = 20%</div></div>
+    <div class="card"><span class="s">Classificando três bens</span><div class="tbl" style="background:transparent"><table style="min-width:260px"><thead><tr><th>Ey</th><th>Tipo</th></tr></thead><tbody>
+      <tr><td class="l">−0,78</td><td class="l">Inferior</td></tr>
+      <tr><td class="l">1,04</td><td class="l">Luxo / superior</td></tr>
+      <tr><td class="l">0,36</td><td class="l">Normal / necessário</td></tr>
+    </tbody></table></div></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhes que enganam</span><ul>
+    <li>"A participação cai" só garante <strong>Ey &lt; 1</strong>; não garante que Ey seja negativa.</li>
+    <li>A elasticidade-renda <strong>pode ser negativa</strong>; a elasticidade-preço, normalmente, <strong>já é negativa</strong>.</li>
+  </ul></div>
+
+  <!-- 2 -->
+  <div class="def"><span class="tag"><span class="sg l">2</span> Graus de elasticidade e formato da curva</span>
+    Quanto mais <mark>vertical</mark> a curva num ponto, <strong>menos</strong> elástica; quanto mais <mark>horizontal</mark>, <strong>mais</strong> elástica.</div>
+  <div class="tbl"><table style="min-width:480px">
+    <thead><tr><th>|E|</th><th>Grau</th><th>Formato</th></tr></thead>
+    <tbody>
+      <tr><td class="l">0</td><td class="l">Perfeitamente inelástica</td><td class="l">Vertical</td></tr>
+      <tr><td class="l">entre 0 e 1</td><td class="l">Inelástica</td><td class="l">—</td></tr>
+      <tr><td class="l">1</td><td class="l">Unitária</td><td class="l">Gasto constante</td></tr>
+      <tr><td class="l">maior que 1</td><td class="l">Elástica</td><td class="l">—</td></tr>
+      <tr><td class="l">infinito</td><td class="l">Perfeitamente elástica</td><td class="l">Horizontal</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box alerta"><span class="tag">⚠ Detalhe que engana</span><p>Elasticidade igual a <strong>zero</strong> é demanda perfeitamente <mark>INELÁSTICA</mark> — não é "perfeita" nem elástica.</p></div>
+
+  <!-- 3 -->
+  <div class="def"><span class="tag"><span class="sg l">3</span> Fatores que determinam a elasticidade-preço da demanda</span>
+    Mais <mark>substitutos</mark>, mais <mark>tempo</mark>, maior <mark>participação no orçamento</mark> e mercado mais <mark>competitivo</mark> tornam a demanda mais elástica.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Torna mais elástica</span><span>Mais <strong>substitutos</strong> disponíveis, <strong>prazo maior</strong> para reagir, maior <strong>participação no orçamento</strong>, mercado mais <strong>competitivo</strong>, e um bem definido de forma <strong>estreita</strong> — "arroz de uma marca" é mais elástico que "arroz".</span></div>
+    <div class="card"><span class="s">Torna menos elástica</span><span>Mais <strong>essencialidade</strong> torna a demanda <strong>menos</strong> elástica.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhe que engana</span><p>"Quanto mais essencial, mais elástica" é <strong>falso</strong>: é o contrário — mais essencial, <mark>menos elástica</mark>.</p></div>
+
+  <!-- 4 -->
+  <div class="def"><span class="tag"><span class="sg l">4</span> Cálculo de elasticidade</span>
+    <mark>Ep = %ΔQ ÷ %ΔP</mark>. Por função: <mark>Ep = (dQ/dP) · (P/Q)</mark>. Para uma reta Q = a − bP: <mark>Ep = −bP ÷ (a − bP)</mark>.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Definições e sinal</span><span><strong>Preço:</strong> normalmente <strong>negativa</strong>. <strong>Renda:</strong> pode ser positiva ou negativa. <strong>Cruzada:</strong> positiva (substitutos) ou negativa (complementares).</span></div>
+    <div class="card"><span class="s">Exemplo com percentuais</span><span>Preço de 300 para 330 (+10%); quantidade de 1.000 para 870 (−13%):</span>
+      <div class="eq">Ep = −13% ÷ 10%
+Ep = −1,3  ⇒  elástica</div></div>
+    <div class="card"><span class="s">Prevendo o preço a partir da quantidade</span><span>Quantidade cai <strong>10%</strong>, Ep = <strong>−0,5</strong>. Isole %ΔP em <mark>%ΔQ = Ep × %ΔP</mark>:</span>
+      <div class="eq">%ΔP = %ΔQ ÷ Ep
+%ΔP = −10% ÷ (−0,5) = 20%
+preço sobe 20%</div></div>
+    <div class="card"><span class="s">Prevendo a quantidade a partir do preço</span><span>Preço dobra (<strong>+100%</strong>), Ep = <strong>−0,15</strong>:</span>
+      <div class="eq">%ΔQ = Ep × %ΔP
+%ΔQ = −0,15 × 100% = −15%
+quantidade cai 15%</div></div>
+    <div class="card" style="grid-column:1/-1"><span class="s">Equilíbrio e elasticidade no ponto</span><span>Q = 2.400 − 120P e oferta 1.800 + 80P:</span>
+      <div class="eq">2.400 − 120P = 1.800 + 80P
+600 = 200P   ⇒   P = 3
+Q = 2.400 − 120·3 = 2.040
+Ep = −120 × (3 ÷ 2.040) ≈ −0,18</div></div>
+  </div>
+
+  <!-- 5 -->
+  <div class="def"><span class="tag"><span class="sg l">5</span> Elasticidade ao longo da demanda linear</span>
+    Numa reta, a elasticidade <mark>não é constante</mark>: ela muda ponto a ponto, mesmo com a inclinação sempre igual.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Três trechos da mesma reta</span><span><strong>Elástica</strong> na parte de cima (q menor que a/2); <strong>unitária</strong> no ponto médio (q = a/2); <strong>inelástica</strong> abaixo dele.</span></div>
+    <div class="card"><span class="s">Receita e extremos</span><span>A receita é <strong>máxima</strong> onde <mark>|E| = 1</mark>. Perto de q = 0, <strong>|E|</strong> é muito maior que 1.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhe que engana</span><p>Elasticidade <strong>não é</strong> a inclinação da reta: a inclinação é constante, a elasticidade <mark>muda</mark> em cada ponto.</p></div>
+
+  <!-- 6 -->
+  <div class="def"><span class="tag"><span class="sg l">6</span> Elasticidade-preço cruzada</span>
+    <mark>Exy = %ΔQx ÷ %ΔPy</mark>. O sinal diz a relação entre os dois bens.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Pelo sinal</span><span><strong>Positiva:</strong> substitutos. <strong>Negativa:</strong> complementares. <strong>Zero:</strong> independentes.</span></div>
+    <div class="card"><span class="s">Efeito na demanda de X</span><span>Preço do <strong>substituto</strong> cai: demanda de X vai para a <mark>esquerda</mark>. Preço do <strong>complementar</strong> sobe: demanda de X também vai para a <mark>esquerda</mark>.</span></div>
+  </div>
+
+  <!-- 7 -->
+  <div class="def"><span class="tag"><span class="sg l">7</span> Teste da receita total</span>
+    Compara o que acontece com a <mark>receita (p · q)</mark> quando o preço muda, para identificar o grau de elasticidade.</div>
+  <div class="tbl"><table style="min-width:480px">
+    <thead><tr><th>Demanda</th><th>Preço sobe</th><th>Preço cai</th></tr></thead>
+    <tbody>
+      <tr><td class="l">Elástica</td><td class="l">Receita cai</td><td class="l">Receita sobe</td></tr>
+      <tr><td class="l">Inelástica</td><td class="l">Receita sobe</td><td class="l">Receita cai</td></tr>
+      <tr><td class="l">Unitária</td><td class="l">Receita constante</td><td class="l">Receita constante</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid"><div class="card"><span class="s">Exemplo numérico</span><span>Preço de 10 para 9 (−10%); quantidade de 100 para 115 (+15%):</span>
+    <div class="eq">Ep = 15% ÷ (−10%) = −1,5  (elástica)
+RT antes = 10 × 100 = 1.000
+RT depois = 9 × 115 = 1.035</div></div></div>
+
+  <!-- 8 -->
+  <div class="def"><span class="tag"><span class="sg l">8</span> Elasticidade-preço da oferta</span>
+    <mark>Es = %ΔQs ÷ %ΔP</mark>, sempre <strong>positiva</strong>: preço e quantidade ofertada andam no mesmo sentido.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Tempo e formato da curva</span><span>Prazo <strong>maior</strong> torna a oferta <strong>mais elástica</strong> — a oferta agrícola, por exemplo, é elástica no longo prazo. Oferta <strong>vertical</strong> é inelástica; <strong>horizontal</strong> é infinitamente elástica.</span></div>
+    <div class="card"><span class="s">Reta pela origem</span><span>Qualquer oferta linear que <strong>passa pela origem</strong> tem elasticidade <mark>sempre igual a 1</mark>, qualquer que seja a inclinação.</span></div>
+  </div>
+
+  <!-- 9 -->
+  <div class="def"><span class="tag"><span class="sg l">9</span> Bem de Giffen</span>
+    Bem <mark>inferior</mark> em que o <strong>efeito renda</strong> supera o <strong>efeito substituição</strong>: a demanda fica <mark>positivamente inclinada</mark>, com elasticidade-preço positiva.</div>
+  <div class="grid"><div class="card"><span class="s">Exemplo</span><span>Quem passa a comer <strong>mais</strong> no restaurante modesto quando o preço de lá <strong>sobe</strong>, porque a renda real caiu e sobrou menos para a opção melhor.</span></div></div>
+
+  <h3>Quadro-resumo de fórmulas</h3>
+  <div class="tbl"><table style="min-width:620px">
+    <thead><tr><th>Fórmula</th><th>Para que serve</th></tr></thead>
+    <tbody>
+      <tr><td class="num">Ep = %ΔQd ÷ %ΔP</td><td class="l">Elasticidade-preço da demanda; normalmente negativa.</td></tr>
+      <tr><td class="num">Ey = %ΔQd ÷ %ΔRenda</td><td class="l">Elasticidade-renda; o sinal indica o tipo de bem.</td></tr>
+      <tr><td class="num">Exy = %ΔQx ÷ %ΔPy</td><td class="l">Elasticidade cruzada; o sinal indica substituto ou complementar.</td></tr>
+      <tr><td class="num">Es = %ΔQs ÷ %ΔP</td><td class="l">Elasticidade-preço da oferta; sempre positiva.</td></tr>
+      <tr><td class="num">RT = p · q</td><td class="l">Receita total, usada no teste da receita.</td></tr>
+      <tr><td class="num">%ΔQ = Ep × %ΔP</td><td class="l">Previsão de variação de quantidade ou de preço, isolando o termo desejado.</td></tr>
+    </tbody>
+  </table></div>
 </section>
 
 </div>

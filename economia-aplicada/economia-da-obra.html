@@ -121,6 +121,11 @@ footer .wrap{padding-block:24px 48px;font-family:var(--f-mono);font-size:12px;co
 .trilha{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding:14px 0 0}
 .trilha a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
 .trilha a:hover{color:var(--blue);border-bottom-color:var(--blue)}
+
+.sg{font-family:var(--f-mono);font-weight:600;font-size:.95rem;padding:1px 8px;border:1px solid var(--line);background:var(--paper);color:var(--ink);white-space:nowrap;display:inline-block;line-height:1.5}
+.sg.l{background:var(--safety-soft);border-color:var(--safety)}
+td.l{white-space:normal}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--f-mono);white-space:nowrap}
 </style>
 
 </head>
@@ -546,6 +551,130 @@ q = 600 − 1,5·200  →  q = 300</div></div>
     <li><span><strong>Excedente = bem-estar</strong>, calculado como área de triângulo.</span></li>
     <li><span>Tetos e pisos de preço geram escassez ou sobra, <strong>peso morto</strong>, filas, perda de qualidade e mercado ilegal.</span></li>
   </ol>
+
+  <h3>O que dominar, passo a passo</h3>
+  <p>Cada bloco traz a regra, o roteiro de cálculo e o detalhe que costuma enganar.</p>
+
+  <!-- 1 -->
+  <div class="def"><span class="tag"><span class="sg l">1</span> Custo de oportunidade</span>
+    É o valor da <mark>melhor alternativa sacrificada</mark>, nunca o que foi efetivamente gasto.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">O que entra na conta</span><span>Cursar a faculdade custa o <strong>salário sacrificado</strong> por não trabalhar nesse tempo. Estudar à noite custa o <strong>benefício de sair</strong> naquele horário.</span></div>
+    <div class="card"><span class="s">Crime ou escola</span><span>Se a alternativa ao estudo rende <strong>w</strong> com probabilidade <strong>(1 − p)</strong> de não ser pego, o custo de oportunidade de estudar é <mark>(1 − p) × w</mark>.</span>
+      <div class="eq">p = 0,3   w = 2.000
+CO(estudar) = (1 − 0,3) × 2.000
+CO(estudar) = 1.400</div></div>
+    <div class="card" style="grid-column:1/-1"><span class="s">Custo de oportunidade com produtividade</span><span>Num mesmo período, um trabalhador produz <strong>2X ou 4Y</strong>. O que ele abre mão para produzir uma unidade a mais de cada bem:</span>
+      <div class="eq">2X = 4Y
+1X custa 2Y
+1Y custa 1/2 X</div></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhes que enganam</span><ul>
+    <li>Mensalidade e livros <strong>não</strong> são custo de oportunidade: são gasto, não alternativa sacrificada.</li>
+    <li>O custo de oportunidade <strong>sobe</strong> se a alternativa melhora e <strong>cai</strong> se ela piora — numa crise de desemprego, por exemplo, o custo de oportunidade de estudar cai.</li>
+  </ul></div>
+
+  <!-- 2 -->
+  <div class="def"><span class="tag"><span class="sg l">2</span> Deslocamentos de oferta e demanda</span>
+    Um deslocamento de curva muda <mark>preço e quantidade de equilíbrio</mark> juntos. O sentido depende de qual curva se moveu.</div>
+  <div class="tbl"><table style="min-width:480px">
+    <thead><tr><th>Deslocamento</th><th>Preço</th><th>Quantidade</th></tr></thead>
+    <tbody>
+      <tr><td class="l">Demanda sobe</td><td class="l">Sobe</td><td class="l">Sobe</td></tr>
+      <tr><td class="l">Demanda cai</td><td class="l">Cai</td><td class="l">Cai</td></tr>
+      <tr><td class="l">Oferta sobe</td><td class="l">Cai</td><td class="l">Sobe</td></tr>
+      <tr><td class="l">Oferta cai</td><td class="l">Sobe</td><td class="l">Cai</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid g2">
+    <div class="card"><span class="s">O que desloca a demanda</span><span><strong>Renda</strong>, preços de <strong>outros bens</strong>, preferências e <strong>propaganda</strong>, <strong>expectativas</strong> e número de <strong>compradores</strong>.</span></div>
+    <div class="card"><span class="s">O que desloca a oferta</span><span>Preço dos <strong>insumos</strong>, <strong>tecnologia</strong>, <strong>impostos</strong> e número de <strong>vendedores</strong>.</span></div>
+  </div>
+  <div class="box obra"><span class="tag">Dois choques ao mesmo tempo</span><p>Um efeito fica <strong>determinado</strong> e o outro fica <mark>ambíguo</mark>. Se a demanda sobe e a oferta cai, os dois puxam o preço para cima — <strong>preço sobe</strong> — mas puxam a quantidade em sentidos opostos — <strong>quantidade indeterminada</strong>.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Detalhes que enganam</span><ul>
+    <li>Só a mudança de <strong>preço do próprio bem</strong> é movimento ao longo da curva; qualquer outro fator desloca a curva inteira.</li>
+    <li>Insumo mais caro ou imposto novo deslocam a <strong>oferta para a esquerda</strong>.</li>
+    <li>Propaganda eficaz desloca a <strong>demanda para a direita</strong>.</li>
+  </ul></div>
+
+  <!-- 3 -->
+  <div class="def"><span class="tag"><span class="sg l">3</span> Fronteira de Possibilidades de Produção (FPP)</span>
+    Mostra as combinações <mark>máximas</mark> de dois bens que a economia produz com os recursos e a tecnologia disponíveis.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Onde está o ponto</span><span>Ponto <strong>dentro</strong> da curva: ociosidade. Ponto <strong>sobre</strong> a curva: eficiente. Ponto <strong>fora</strong> da curva: inatingível com os recursos atuais.</span></div>
+    <div class="card"><span class="s">O que desloca a FPP</span><span><strong>Tecnologia</strong> e <strong>mais recursos</strong> deslocam a curva <mark>para fora</mark>. Uma guerra, que destrói recursos, desloca a curva <mark>para dentro</mark>.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhes que enganam</span><ul>
+    <li>A concavidade vem do <strong>custo de oportunidade crescente</strong>, não da escassez em si.</li>
+    <li><strong>Renda, inflação, demanda agregada</strong> e <strong>preço dos insumos</strong> não deslocam a FPP.</li>
+    <li>Todo ponto <strong>sobre</strong> a curva é eficiente, mesmo os mais próximos dos eixos.</li>
+    <li><strong>Desemprego</strong> deixa a economia <strong>dentro</strong> da curva, não sobre ela.</li>
+  </ul></div>
+
+  <!-- 4 -->
+  <div class="def"><span class="tag"><span class="sg l">4</span> Conceitos básicos</span>
+    Toda a economia parte da <mark>escassez</mark>: desejos ilimitados diante de recursos limitados.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Problema econômico fundamental</span><span>Decidir <strong>o quê</strong>, <strong>como</strong>, <strong>quanto</strong> e <strong>para quem</strong> produzir.</span></div>
+    <div class="card"><span class="s">Trade-off e incentivos</span><span><strong>Trade-off:</strong> obter mais de um bem custa abrir mão de outro. <strong>Incentivos</strong> levam as pessoas a agir; decisões racionais comparam a <strong>mudança marginal</strong>, não o total.</span></div>
+    <div class="card" style="grid-column:1/-1"><span class="s">Livre mercado</span><span>É <strong>descentralizado</strong>, organizado por <strong>divisão do trabalho</strong> e <strong>propriedade privada</strong>. Uma troca só acontece quando <strong>as duas partes esperam ganhar</strong> com ela.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhe que engana</span><p>Com recursos <strong>ilimitados</strong>, os problemas acima <mark>perderiam o caráter econômico</mark>: não haveria o que escolher.</p></div>
+
+  <!-- 5 -->
+  <div class="def"><span class="tag"><span class="sg l">5</span> Cálculo com equações de oferta e demanda</span>
+    No equilíbrio, <mark>Qd = Qo</mark>. Iguale as duas equações, ache o preço e depois a quantidade.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Roteiro de cálculo</span><span>1) Iguale Qd e Qo. 2) Isole <strong>p</strong>. 3) Substitua p numa das equações para achar <strong>Q</strong>.</span>
+      <div class="eq">Qd = 100 − 10p
+Qo = 20 + 10p
+100 − 10p = 20 + 10p
+80 = 20p   ⇒   p = 4
+Q = 100 − 10·4 = 60</div></div>
+    <div class="card"><span class="s">Se a demanda muda</span><span>Com <strong>Qd = 120 − 10p</strong> (demanda maior) e a mesma oferta, o novo equilíbrio tem preço mais alto.</span>
+      <div class="eq">120 − 10p = 20 + 10p
+100 = 20p   ⇒   p = 5
+variação: (5 − 4) ÷ 4 = 25%</div></div>
+  </div>
+
+  <!-- 6 -->
+  <div class="def"><span class="tag"><span class="sg l">6</span> Leis da demanda e da oferta, escassez e excesso</span>
+    <mark>Demanda:</mark> relação <strong>negativa</strong> entre preço e quantidade demandada. <mark>Oferta:</mark> relação <strong>positiva</strong> entre preço e quantidade ofertada.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Escassez</span><span>Quantidade ofertada <strong>abaixo</strong> da de equilíbrio gera escassez — <strong>excesso de demanda</strong>.</span></div>
+    <div class="card"><span class="s">Excesso de oferta</span><span>Preço <strong>acima</strong> do equilíbrio gera <strong>excesso de oferta</strong>: os vendedores querem oferecer mais do que os compradores querem levar.</span></div>
+  </div>
+
+  <!-- 7 -->
+  <div class="def"><span class="tag"><span class="sg l">7</span> Preço tabelado ou fixado e excesso</span>
+    Com o preço fixado fora do equilíbrio, o <mark>excesso</mark> é a diferença entre o que se quer comprar e o que se quer vender: <mark>|Qd − Qo|</mark>.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Preço máximo (tabelamento)</span><span>Fixado <strong>abaixo</strong> do equilíbrio: gera <strong>excesso de demanda</strong>.</span></div>
+    <div class="card"><span class="s">Preço mínimo</span><span>Fixado <strong>acima</strong> do equilíbrio: gera <strong>excesso de oferta</strong>.</span></div>
+    <div class="card" style="grid-column:1/-1"><span class="s">Exemplo, com as equações do bloco 5</span><span>Qd = 100 − 10p e Qo = 20 + 10p, com preço tabelado em <strong>3</strong> (abaixo do equilíbrio de 4):</span>
+      <div class="eq">Qd(3) = 100 − 10·3 = 70
+Qo(3) = 20 + 10·3 = 50
+excesso = |70 − 50| = 20</div></div>
+  </div>
+
+  <!-- 8 -->
+  <div class="def"><span class="tag"><span class="sg l">8</span> Demanda de mercado e tipos de bem</span>
+    A demanda de mercado é a <mark>soma horizontal</mark> das demandas individuais: para cada preço, soma-se a quantidade que cada comprador leva.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Substitutos e complementares</span><span><strong>Substitutos:</strong> preço de um sobe, demanda do outro sobe. <strong>Complementares:</strong> preço de um sobe, demanda do outro cai.</span></div>
+    <div class="card"><span class="s">Normal, inferior e Giffen</span><span><strong>Bem normal:</strong> renda sobe, demanda sobe. <strong>Bem inferior:</strong> renda sobe, demanda cai. <strong>Bem de Giffen:</strong> inferior com demanda <mark>positivamente inclinada</mark>.</span></div>
+  </div>
+
+  <h3>Quadro-resumo de fórmulas</h3>
+  <div class="tbl"><table style="min-width:560px">
+    <thead><tr><th>Fórmula</th><th>Para que serve</th></tr></thead>
+    <tbody>
+      <tr><td class="num">Qd = Qo</td><td class="l">Condição de equilíbrio de mercado.</td></tr>
+      <tr><td class="num">excesso = |Qd − Qo|</td><td class="l">Tamanho do excesso de oferta ou de demanda com o preço fixado fora do equilíbrio.</td></tr>
+      <tr><td class="num">%Δ = (novo − antigo) ÷ antigo</td><td class="l">Variação percentual de preço, quantidade ou qualquer outra variável.</td></tr>
+      <tr><td class="num">CO</td><td class="l">Custo de oportunidade: valor da melhor alternativa sacrificada ao fazer uma escolha.</td></tr>
+    </tbody>
+  </table></div>
 </section>
 
 </div>
