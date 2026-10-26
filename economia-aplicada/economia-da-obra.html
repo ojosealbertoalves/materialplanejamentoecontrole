@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Economia da Obra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: prancha técnica — cabeçalho com malha milimetrada, navegação fixa em chips, coluna única de leitura com esquemas em SVG desenhados em escala */
+:root{
+  --paper:#f1f4f3; --surface:#ffffff; --ink:#16222a; --muted:#56656d; --line:#cfd8da;
+  --blue:#1d5a89; --blue-soft:#e2ecf4; --supply:#b0512a; --supply-soft:#f7e6dc;
+  --safety:#d9a300; --safety-soft:#fbf1cd; --grid:rgba(29,90,137,.07);
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#10171b; --surface:#172126; --ink:#e3eaec; --muted:#97a6ac; --line:#2a3940;
+  --blue:#72aad6; --blue-soft:#182c3a; --supply:#e48c5e; --supply-soft:#3a2418;
+  --safety:#f0c43a; --safety-soft:#352d12; --grid:rgba(114,170,214,.07); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#10171b; --surface:#172126; --ink:#e3eaec; --muted:#97a6ac; --line:#2a3940;
+  --blue:#72aad6; --blue-soft:#182c3a; --supply:#e48c5e; --supply-soft:#3a2418;
+  --safety:#f0c43a; --safety-soft:#352d12; --grid:rgba(114,170,214,.07); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+header.hero{background-color:var(--surface);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:16px 16px;border-bottom:1px solid var(--line)}
+header.hero .wrap{padding-block:56px 40px;display:grid;gap:18px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+h1{font-family:var(--f-display);font-stretch:118%;font-weight:800;font-size:clamp(2.3rem,7vw,4.2rem);line-height:1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.lede{font-size:1.12rem;max-width:62ch;color:var(--muted);margin:0}
+.balance{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:8px}
+.balance span{font-family:var(--f-mono);font-size:13px;padding:8px 12px;border:1px solid var(--line);background:var(--paper)}
+.balance b{font-family:var(--f-display);font-size:1.3rem;color:var(--safety)}
+
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:thin}
+nav.toc a{flex:0 0 auto;font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;padding:5px 10px;border:1px solid var(--line);background:var(--surface);white-space:nowrap}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--blue);border-color:var(--blue);outline:none}
+
+main .wrap{display:grid;gap:72px;padding-block:56px 80px}
+section{display:grid;gap:20px;scroll-margin-top:64px}
+.sec-head{display:grid;gap:6px;border-top:2px solid var(--ink);padding-top:14px}
+.sec-num{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--blue)}
+h2{font-family:var(--f-display);font-stretch:112%;font-weight:750;font-size:clamp(1.6rem,4vw,2.2rem);line-height:1.1;margin:0;text-wrap:balance}
+h3{font-family:var(--f-display);font-stretch:108%;font-weight:700;font-size:1.15rem;margin:0}
+p{margin:0;max-width:68ch}
+strong{font-weight:600}
+mark{background:var(--safety-soft);color:inherit;padding:0 3px;border-bottom:2px solid var(--safety)}
+
+.def{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ink);padding:18px 20px;font-size:1.08rem}
+.def .tag{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+
+.box{padding:16px 18px;display:grid;gap:8px}
+.box .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.box.obra{background:var(--blue-soft);border:1px solid color-mix(in srgb,var(--blue) 35%,transparent)}
+.box.obra .tag{color:var(--blue)}
+.box.alerta{background:var(--safety-soft);border:1px dashed var(--safety)}
+.box.alerta .tag{color:var(--ink)}
+.box ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
+
+.grid{display:grid;gap:12px}
+.g5{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.card .k{font-family:var(--f-display);font-stretch:115%;font-weight:800;font-size:1.25rem;color:var(--blue)}
+.card .s{font-size:.92rem;color:var(--muted)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--paper)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+.star{color:var(--safety)}
+
+figure{margin:0;background:var(--surface);border:1px solid var(--line);padding:16px;display:grid;gap:10px;min-width:0}
+figure .svgbox{overflow-x:auto}
+figure svg{display:block;width:100%;height:auto;min-width:300px}
+figcaption{font-size:.88rem;color:var(--muted)}
+svg text{font-family:var(--f-mono);fill:var(--muted);font-size:13px}
+svg .ax{stroke:var(--ink);stroke-width:1.5;fill:none}
+svg .gl{stroke:var(--line);stroke-width:1;fill:none}
+svg .dem{stroke:var(--blue);stroke-width:3;fill:none}
+svg .sup{stroke:var(--supply);stroke-width:3;fill:none}
+svg .dash{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:4 4;fill:none}
+svg .dashb{stroke:var(--blue);stroke-width:2.5;stroke-dasharray:7 6;fill:none}
+svg .ink{fill:var(--ink)} svg .tink{fill:var(--ink)}
+svg .tb{fill:var(--blue)} svg .ts{fill:var(--supply)} svg .ty{fill:var(--ink);font-weight:500}
+svg .fb{fill:var(--blue);fill-opacity:.18} svg .fs{fill:var(--supply);fill-opacity:.2} svg .fy{fill:var(--safety);fill-opacity:.45}
+svg .dot{fill:var(--ink)} svg .dotb{fill:var(--blue)} svg .doty{fill:var(--safety);stroke:var(--ink);stroke-width:1.2}
+svg .hollow{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+svg .arr{stroke:var(--ink);stroke-width:2;fill:none}
+svg .gap{stroke:var(--safety);stroke-width:5;fill:none}
+
+.shift{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.shift .card{text-align:left}
+.shift .ev{font-family:var(--f-mono);font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.shift .res{display:flex;gap:16px;font-family:var(--f-display);font-size:1.05rem;font-weight:700}
+.up{color:var(--blue)} .dn{color:var(--supply)}
+.rule{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.rule .card{border:2px solid var(--ink)}
+
+.eq{font-family:var(--f-mono);font-size:.95rem;background:var(--paper);border:1px solid var(--line);padding:12px 14px;overflow-x:auto;white-space:pre;line-height:1.75}
+
+ol.cola{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:c;background:var(--surface);border:1px solid var(--line)}
+ol.cola li{counter-increment:c;display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+ol.cola li:last-child{border-bottom:0}
+ol.cola li::before{content:counter(c,decimal-leading-zero);font-family:var(--f-display);font-weight:800;font-size:1.3rem;color:var(--blue);line-height:1.2}
+
+footer .wrap{padding-block:24px 48px;font-family:var(--f-mono);font-size:12px;color:var(--muted);border-top:1px solid var(--line)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+.trilha{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding:14px 0 0}
+.trilha a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
+.trilha a:hover{color:var(--blue);border-bottom-color:var(--blue)}
+</style>
+
+</head>
+<body>
+<p class="wrap trilha"><a href="../index.html">Portal</a> / <a href="index.html">Economia aplicada à construção civil</a> / Economia da Obra</p>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Microeconomia aplicada · Incorporação de casas</div>
+    <h1>Economia da Obra</h1>
+    <p class="lede">Escassez, oferta, demanda e preço explicados a partir das decisões de quem projeta, orça e entrega casas. Cada conceito vem com o lugar onde ele aparece no canteiro e no estande de vendas.</p>
+    <div class="balance">
+      <span>Recursos escassos</span><b>×</b><span>Necessidades ilimitadas</span><b>=</b><span>Escolhas</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Seções">
+  <div class="wrap">
+    <a href="#escassez">Escassez</a><a href="#principios">Princípios</a><a href="#sistemas">Sistemas</a><a href="#cpp">CPP</a><a href="#demanda">Demanda</a><a href="#oferta">Oferta</a><a href="#equilibrio">Equilíbrio</a><a href="#excedentes">Excedentes</a><a href="#controle">Controle de preços</a><a href="#algebra">Álgebra</a><a href="#resumo">Resumo</a>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+
+<!-- 1 -->
+<section id="escassez">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Escassez e o problema econômico fundamental</h2></div>
+  <div class="def"><span class="tag">Conceito</span>Economia é o estudo de como a sociedade <mark>administra recursos escassos</mark> diante de necessidades ilimitadas. Da escassez nascem cinco perguntas. Sem escassez, nenhuma delas seria um problema.</div>
+  <div class="grid g5">
+    <div class="card"><span class="k">O que?</span><span>Casa térrea, sobrado, 2 ou 3 quartos.</span></div>
+    <div class="card"><span class="k">Como?</span><span>Alvenaria convencional, parede de concreto, pré-moldado.</span></div>
+    <div class="card"><span class="k">Quando?</span><span>Em qual etapa do loteamento e em qual época do ano.</span></div>
+    <div class="card"><span class="k">Para quem?</span><span>Qual faixa de renda.</span></div>
+    <div class="card"><span class="k">Quanto?</span><span>Quantas unidades por fase.</span></div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Cada lançamento responde às cinco perguntas. <strong>Terreno, capital, equipe e prazo</strong> são os recursos escassos.</p></div>
+</section>
+
+<!-- 2 -->
+<section id="principios">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Os princípios econômicos</h2></div>
+  <p>São as ideias que sustentam todo o raciocínio econômico. Não precisam ser decoradas; precisam ser reconhecidas no dia a dia.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Princípio</th><th>Ideia central</th><th>Na incorporadora</th></tr></thead>
+    <tbody>
+      <tr><td>Tradeoff</td><td>Para obter algo é preciso abrir mão de outra coisa.</td><td>Prazo × custo × padrão de acabamento. Acelerar a obra custa mais; economizar no acabamento afeta a venda.</td></tr>
+      <tr><td>Custo de oportunidade <span class="star">★</span></td><td>É o benefício da <strong>segunda melhor opção</strong>, a que você não escolheu.</td><td>Veja o detalhamento logo abaixo.</td></tr>
+      <tr><td>Incentivos</td><td>Recompensas e punições levam as pessoas a agir. Preços e impostos são os incentivos mais fortes.</td><td>Bônus por entrega antecipada e multa contratual com empreiteiros. Mudança de imposto muda o comportamento do mercado.</td></tr>
+      <tr><td>Benefícios do comércio</td><td>A especialização aumenta a produtividade.</td><td>Empreiteiros especializados (elétrica, hidráulica, cobertura) rendem mais que uma equipe genérica fazendo tudo.</td></tr>
+      <tr><td>Mercados rumam ao equilíbrio</td><td>Se alguém está ganhando mais, outros se mexem até o ganho sumir (a "mão invisível").</td><td>Produto de concorrente vendendo bem logo ganha cópias, e o preço daquele nicho cai.</td></tr>
+      <tr><td>Mercados falham, o governo pode ajudar</td><td>Falhas de mercado causam ineficiência.</td><td>Regulação e programas habitacionais.</td></tr>
+      <tr><td>Produtividade e padrão de vida</td><td>A renda depende do quanto cada trabalhador produz. O PIB per capita é só uma média e esconde desigualdade.</td><td>Produtividade da mão de obra define custo e prazo. Renda média alta não garante muitos compradores com aquele poder de compra.</td></tr>
+      <tr><td>Moeda em excesso gera inflação</td><td>Mais dinheiro para a mesma quantidade de bens faz o nível de preços subir.</td><td>Insumos sobem e o orçamento da obra fica defasado.</td></tr>
+      <tr><td>Inflação × desemprego</td><td>No curto prazo existe um tradeoff entre os dois.</td><td>Ajuda a ler o cenário que afeta as vendas.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Custo de oportunidade na prática</h3>
+  <div class="grid g2">
+    <div class="card"><span class="s">Opção escolhida</span><span class="k">Negócio a 1,5% a.m.</span><span>R$200 mil rendem <strong>R$3.000/mês</strong>.</span></div>
+    <div class="card"><span class="s">Melhor alternativa abandonada</span><span class="k" style="color:var(--supply)">Aplicação a 1% a.m.</span><span>Rendaria R$2.000/mês. Esse é o <strong>custo de oportunidade</strong>.</span></div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora</span>
+    <ul>
+      <li><strong>Terreno próprio não é "de graça".</strong> O custo é o que se ganharia vendendo o terreno ou usando-o em outro projeto.</li>
+      <li><strong>Casa pronta e não vendida</strong> prende capital que poderia render ou girar em outra obra.</li>
+      <li><strong>Engenheiro alocado na obra A</strong> é a obra B que ficou sem ele.</li>
+    </ul>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>Custo de oportunidade <strong>não é o que você gastou</strong> (material, mensalidade). É <mark>o que você deixou de ganhar</mark>.</p></div>
+</section>
+
+<!-- 3 -->
+<section id="sistemas">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Formas de organização econômica</h2></div>
+  <div class="grid g3">
+    <div class="card"><h3>Economia de mercado</h3><span>Livre iniciativa, propriedade privada e concorrência. O <strong>sistema de preços</strong> coordena tudo: produto em excesso faz o preço cair; produto em falta faz o preço subir.</span></div>
+    <div class="card"><h3>Economia planificada</h3><span>O Estado decide o que, como e para quem produzir. O preço é só um indicador.</span></div>
+    <div class="card"><h3>Economia mista</h3><span>A realidade de quase todos os países: Estado e setor privado atuando juntos.</span></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Elementos de um sistema econômico</span><span><strong>Fatores de produção</strong> (trabalho, capacidade empresarial, capital, terra, recursos naturais, tecnologia), <strong>empresas</strong> e <strong>instituições</strong>.</span></div>
+    <div class="card"><span class="s">Setores</span><span><strong>Primário:</strong> agro e extrativismo. <strong>Secundário:</strong> indústria, que transforma bens. <strong>Terciário:</strong> serviços.</span></div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>A empresa opera numa economia mista: o preço da casa é definido pelo mercado, mas regulação e crédito são influenciados pelo Estado. <mark>Estoque encalhado é o sistema de preços avisando que o preço está acima do equilíbrio.</mark></p></div>
+</section>
+
+<!-- 4 -->
+<section id="cpp">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Curva de Possibilidades de Produção</h2></div>
+  <div class="def"><span class="tag">Conceito</span>Gráfico de todas as combinações de dois bens que podem ser produzidas usando <strong>todos os fatores disponíveis</strong>, com uma <strong>tecnologia dada</strong>.</div>
+  <figure>
+    <div class="svgbox">
+    <svg viewBox="0 0 480 360" role="img" aria-label="Curva de possibilidades de produção entre casas térreas e sobrados">
+      <line class="ax" x1="60" y1="20" x2="60" y2="310"/><line class="ax" x1="60" y1="310" x2="460" y2="310"/>
+      <path class="dashb" d="M60,38 C 270,38 430,150 430,310"/>
+      <path class="dem" d="M60,70 C 230,70 380,160 380,310"/>
+      <circle class="dotb" cx="159" cy="81" r="6"/><text class="tb" x="150" y="68">A · eficiente</text>
+      <circle class="dotb" cx="284" cy="134" r="6"/><text class="tb" x="294" y="128">B · eficiente</text>
+      <circle class="doty" cx="170" cy="220" r="7"/><text class="ty" x="182" y="216">D · equipe parada</text><text x="182" y="232" font-size="11">possível, ineficiente</text>
+      <circle class="hollow" cx="380" cy="72" r="7"/><text class="tink" x="320" y="56">C · impossível hoje</text>
+      <text class="tb" x="395" y="40" font-size="11">nova tecnologia</text>
+      <path class="arr" d="M350,215 L388,230" marker-end="url(#ah)"/>
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ink"/></marker></defs>
+      <text x="250" y="340" text-anchor="middle" class="tink">Casas térreas →</text>
+      <text x="22" y="170" text-anchor="middle" class="tink" transform="rotate(-90 22 170)">Sobrados →</text>
+    </svg>
+    </div>
+    <figcaption>Equipe fixa dividida entre térreas e sobrados. A linha cheia é o limite atual; a tracejada é o limite depois de uma tecnologia nova.</figcaption>
+  </figure>
+  <div class="grid g2">
+    <div class="card"><span class="s">Sobre a curva</span><span>Produção <strong>eficiente</strong>.</span></div>
+    <div class="card"><span class="s">Abaixo da curva</span><span>Possível, mas <strong>ineficiente</strong>: há fatores parados.</span></div>
+    <div class="card"><span class="s">Acima da curva</span><span><strong>Impossível</strong> com os recursos atuais.</span></div>
+    <div class="card"><span class="s">Formato côncavo</span><span>Vem da <strong>especialização</strong>. Os primeiros trabalhadores transferidos rendem muito; os últimos rendem pouco, porque estão fora da sua especialidade.</span></div>
+  </div>
+  <h3>O que desloca a curva</h3>
+  <div class="grid g3">
+    <div class="card"><span class="k up">Para fora</span><span>Mais fatores de produção ou tecnologia nova. Tecnologia que ajuda só um bem desloca só o eixo desse bem.</span></div>
+    <div class="card"><span class="k dn">Para dentro</span><span>Guerras, calamidades, emigração: tudo que reduz os fatores disponíveis.</span></div>
+    <div class="card"><span class="k" style="color:var(--ink)">Não desloca</span><span>Empregar quem estava parado. Isso só leva a produção até a curva.</span></div>
+  </div>
+  <div class="box obra"><span class="tag">Na obra</span>
+    <ul>
+      <li>Equipe parada esperando material é o ponto <strong>D</strong>. Resolver a logística aumenta a produção sem investimento novo.</li>
+      <li>Prometer mais casas do que a equipe consegue entregar é escolher o ponto <strong>C</strong>.</li>
+      <li>Parede de concreto ou kits pré-fabricados são tecnologia nova: a curva <strong>se expande</strong>.</li>
+      <li>Tirar o melhor carpinteiro da cobertura para fazer reboco explica a concavidade: ganho pequeno de um lado, perda grande do outro.</li>
+    </ul>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>A curva é côncava por causa da <mark>especialização</mark>, e não por causa da escassez.</p></div>
+</section>
+
+<!-- 5 -->
+<section id="demanda">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Demanda</h2></div>
+  <div class="def"><span class="tag">Definição</span>Demanda é a quantidade que os consumidores <mark>desejam E podem</mark> comprar. <strong>Não é a venda concretizada.</strong></div>
+  <div class="grid g3">
+    <div class="card"><span class="s">Demanda de mercado</span><span>Soma <strong>horizontal</strong> das demandas individuais.</span></div>
+    <div class="card"><span class="s">Preço de reserva</span><span>O máximo que cada comprador aceita pagar.</span></div>
+    <div class="card"><span class="s">Lei da demanda</span><span>Preço e quantidade são <strong>inversos</strong>: a curva é decrescente.</span></div>
+  </div>
+
+  <h3>A regra de ouro: mover-se na curva × mover a curva</h3>
+  <div class="grid g2">
+    <figure>
+      <div class="svgbox">
+      <svg viewBox="0 0 280 210" role="img" aria-label="Movimento ao longo da curva de demanda">
+        <line class="ax" x1="30" y1="15" x2="30" y2="185"/><line class="ax" x1="30" y1="185" x2="270" y2="185"/>
+        <line class="dem" x1="45" y1="30" x2="245" y2="175"/>
+        <circle class="dot" cx="85" cy="59" r="6"/><circle class="dot" cx="195" cy="139" r="6"/>
+        <path class="arr" d="M98,74 L178,132" marker-end="url(#ah2)"/>
+        <defs><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ink"/></marker></defs>
+        <text class="tb" x="232" y="165">D</text>
+        <text x="16" y="105" class="tink" transform="rotate(-90 16 105)" text-anchor="middle">Preço</text>
+        <text x="150" y="203" class="tink" text-anchor="middle">Quantidade</text>
+      </svg>
+      </div>
+      <figcaption><strong>Preço do próprio bem mudou</strong> (variável endógena): movimento <strong>ao longo</strong> da curva. Muda a <em>quantidade demandada</em>.</figcaption>
+    </figure>
+    <figure>
+      <div class="svgbox">
+      <svg viewBox="0 0 280 210" role="img" aria-label="Deslocamento da curva de demanda">
+        <line class="ax" x1="30" y1="15" x2="30" y2="185"/><line class="ax" x1="30" y1="185" x2="270" y2="185"/>
+        <line class="dem" x1="40" y1="30" x2="190" y2="175" opacity=".45"/>
+        <line class="dem" x1="95" y1="30" x2="245" y2="175"/>
+        <path class="arr" d="M118,102 L160,102" marker-end="url(#ah3)"/>
+        <defs><marker id="ah3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ink"/></marker></defs>
+        <text class="tb" x="168" y="170">D1</text><text class="tb" x="238" y="165">D2</text>
+        <text x="16" y="105" class="tink" transform="rotate(-90 16 105)" text-anchor="middle">Preço</text>
+        <text x="150" y="203" class="tink" text-anchor="middle">Quantidade</text>
+      </svg>
+      </div>
+      <figcaption><strong>Qualquer outro fator mudou</strong> (variável exógena): a curva inteira <strong>se desloca</strong>. Muda a <em>demanda</em>.</figcaption>
+    </figure>
+  </div>
+
+  <h3>Fatores que deslocam a demanda por casas</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Fator</th><th>Regra</th><th>Exemplo</th></tr></thead>
+    <tbody>
+      <tr><td>Renda</td><td>Renda ↑ → demanda ↑ (bem normal)</td><td>Aumento de renda numa região desloca a curva para a direita.</td></tr>
+      <tr><td>Bem inferior</td><td>Renda ↑ → demanda ↓</td><td>Produto muito básico perde procura quando a renda local sobe: o cliente migra para um padrão melhor.</td></tr>
+      <tr><td>Bem de Giffen</td><td>Preço ↑ → quantidade ↑. Curva crescente</td><td>Raríssimo. Todo bem de Giffen é inferior, mas nem todo bem inferior é de Giffen.</td></tr>
+      <tr><td>Substitutos</td><td>Preço do substituto ↑ → minha demanda ↑</td><td>Aluguel, apartamentos ou casas usadas mais caros aumentam a procura pela casa nova.</td></tr>
+      <tr><td>Complementares</td><td>Preço do complementar ↑ → minha demanda ↓</td><td>Itens consumidos junto com a casa: móveis, mudança, outros custos de morar.</td></tr>
+      <tr><td>Gostos</td><td>Preferência ↑ → demanda ↑</td><td>Valorização de quintal e espaço de home office.</td></tr>
+      <tr><td>Expectativas</td><td>Espera alta futura de preço → compra agora</td><td>"A tabela sobe no próximo mês" antecipa vendas.</td></tr>
+      <tr><td>Tamanho do mercado</td><td>Mais consumidores → curva de mercado para a direita</td><td>Cidade crescendo, polo industrial chegando.</td></tr>
+      <tr><td>Outros</td><td>Clima, época do ano, guerra, catástrofes</td><td>Sazonalidade de vendas.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Lendo uma função de demanda</h3>
+  <p>A função de demanda é uma equação que mostra quanto as pessoas querem comprar de um bem conforme mudam os fatores que influenciam essa vontade.</p>
+  <div class="eq" style="font-size:1.1rem;text-align:center">qDX = r − 2·pX + pY − pZ</div>
+  <div class="tbl"><table style="min-width:560px">
+    <thead><tr><th>Sigla</th><th>Significado</th><th>Exemplo com casas</th><th>Sinal</th><th>Leitura</th></tr></thead>
+    <tbody>
+      <tr><td>qDX</td><td>Quantidade demandada do bem X</td><td>Quantas casas novas os compradores querem e podem comprar</td><td>—</td><td>É o resultado da conta</td></tr>
+      <tr><td>r</td><td>Renda do consumidor</td><td>Salário das famílias da região</td><td class="up"><strong>+</strong></td><td>Renda ↑ → procura ↑. X é <strong>bem normal</strong></td></tr>
+      <tr><td>pX</td><td>Preço do próprio bem X</td><td>Preço da casa nova</td><td class="dn"><strong>−2</strong></td><td>Preço ↑ → procura ↓. É a <strong>lei da demanda</strong>; o 2 indica que o preço pesa o dobro</td></tr>
+      <tr><td>pY</td><td>Preço de outro bem, Y</td><td>Valor do aluguel</td><td class="up"><strong>+</strong></td><td>Aluguel ↑ → mais gente quer comprar. Y é <strong>substituto</strong> de X</td></tr>
+      <tr><td>pZ</td><td>Preço de outro bem, Z</td><td>Preço dos móveis</td><td class="dn"><strong>−</strong></td><td>Móveis ↑ → montar a casa fica mais caro e a procura cai. Z é <strong>complementar</strong> de X</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Testando com números</h3>
+  <div class="grid g2">
+    <div class="card" style="min-width:0"><span class="s">Situação inicial</span>
+      <div class="eq">r = 100   pX = 20
+pY = 30   pZ = 10
+
+qDX = 100 − 2·20 + 30 − 10
+qDX = 100 − 40 + 30 − 10
+qDX = 80</div>
+      <span class="k">80 casas</span></div>
+    <div class="card" style="min-width:0;border-color:var(--blue)"><span class="s">Aluguel sobe de 30 para 50</span>
+      <div class="eq">r = 100   pX = 20
+pY = 50   pZ = 10
+
+qDX = 100 − 2·20 + 50 − 10
+qDX = 100 − 40 + 50 − 10
+qDX = 100</div>
+      <span class="k up">100 casas ↑</span></div>
+  </div>
+  <div class="grid g3">
+    <div class="card"><span class="s">Se a renda subir de 100 para 120</span><span>qDX = 120 − 40 + 30 − 10 = <strong class="up">100</strong></span></div>
+    <div class="card"><span class="s">Se o preço da casa subir de 20 para 25</span><span>qDX = 100 − 50 + 30 − 10 = <strong class="dn">70</strong></span></div>
+    <div class="card"><span class="s">Se os móveis subirem de 10 para 20</span><span>qDX = 100 − 40 + 30 − 20 = <strong class="dn">70</strong></span></div>
+  </div>
+  <div class="box obra"><span class="tag">O que observar</span><p>No caso do aluguel, a procura pela casa aumentou <strong>sem que o preço dela mudasse</strong>: a curva de demanda inteira se deslocou para a direita. Só a mudança em <strong>pX</strong> é movimento ao longo da curva. <mark>O que importa é ler o sinal</mark>: positivo, as duas variáveis andam juntas; negativo, andam em sentidos opostos.</p></div>
+  <p style="font-size:.9rem;color:var(--muted)">Valores ilustrativos, sem unidade definida.</p>
+</section>
+
+<!-- 6 -->
+<section id="oferta">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Oferta</h2></div>
+  <div class="def"><span class="tag">Definição</span>Oferta é a quantidade que os produtores <strong>querem e podem</strong> vender. A curva é <mark>crescente</mark>: preço maior torna mais interessante produzir.</div>
+  <p>Mudança no preço do próprio bem é movimento ao longo da curva. Os fatores abaixo <strong>deslocam</strong> a curva.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Fator</th><th>Regra</th><th>Na incorporadora</th></tr></thead>
+    <tbody>
+      <tr><td>Custos</td><td>Insumos ou impostos ↑ → oferta ↓ (curva para a esquerda)</td><td>Alta do aço e do cimento, ou mais tributo, reduzem lançamentos.</td></tr>
+      <tr><td>Tecnologia <span class="star">★</span></td><td>Melhora → oferta ↑</td><td>Tecnologia é <strong>qualquer forma de transformar insumo em produto</strong>. Mudar a sequência de execução, planejar, padronizar e montar linha de produção também conta.</td></tr>
+      <tr><td>Preço de outros bens</td><td>Substitutos na produção: se o outro passa a valer mais, produzo menos deste. Complementares na produção saem juntos</td><td>Lote urbanizado e casa pronta disputam o mesmo terreno: se lote ficar mais lucrativo, sai menos casa.</td></tr>
+      <tr><td>Expectativas</td><td>Espera alta futura → oferta menos agora</td><td>Segurar unidades em estoque esperando valorização.</td></tr>
+      <tr><td>Tamanho do mercado</td><td>Mais produtores → curva para a direita</td><td>Concorrentes entrando na mesma região.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="eq">qO = 50 + 15p      → sinal do preço positivo: quanto maior o preço, maior a oferta</div>
+  <div class="box obra"><span class="tag">Onde a engenharia mexe na economia</span><p>Custos e tecnologia são os dois fatores de oferta que estão nas mãos do engenheiro. <mark>Reorganizar a sequência da obra é, em termos econômicos, ganho de tecnologia.</mark></p></div>
+</section>
+
+<!-- 7 -->
+<section id="equilibrio">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Equilíbrio e sua dinâmica</h2></div>
+  <div class="def"><span class="tag">Definição</span>Equilíbrio é onde a <strong>quantidade ofertada = quantidade demandada</strong>, no cruzamento das curvas. Vale para um mercado competitivo, em que nenhum agente sozinho define o preço.</div>
+  <figure>
+    <div class="svgbox">
+    <svg viewBox="0 0 540 380" role="img" aria-label="Equilíbrio do mercado de casas e excesso de oferta a 250 mil">
+      <g class="gl"><line x1="60" y1="255" x2="490" y2="255"/><line x1="60" y1="105" x2="490" y2="105"/><line x1="60" y1="30" x2="490" y2="30"/></g>
+      <line class="ax" x1="60" y1="20" x2="60" y2="330"/><line class="ax" x1="60" y1="330" x2="500" y2="330"/>
+      <line class="dash" x1="60" y1="180" x2="275" y2="180"/><line class="dash" x1="275" y1="180" x2="275" y2="330"/>
+      <line class="dash" x1="60" y1="142.5" x2="490" y2="142.5"/>
+      <line class="gap" x1="221.25" y1="142.5" x2="364.58" y2="142.5"/>
+      <line class="dem" x1="60" y1="30" x2="490" y2="330"/>
+      <line class="sup" x1="60" y1="270" x2="490" y2="90"/>
+      <circle class="dot" cx="275" cy="180" r="7"/><text class="tink" x="70" y="168" font-weight="500">E: 300 · R$200 mil</text>
+      <circle class="dotb" cx="221.25" cy="142.5" r="5"/><circle class="dotb" cx="364.58" cy="142.5" r="5" style="fill:var(--supply)"/>
+      <text class="ty" x="236" y="132">sobram 200 casas</text>
+      <text class="tb" x="470" y="312">D</text><text class="ts" x="470" y="84">O</text>
+      <g font-size="11"><text x="52" y="334" text-anchor="end">0</text><text x="52" y="259" text-anchor="end">100</text><text x="52" y="184" text-anchor="end">200</text><text x="52" y="146" text-anchor="end">250</text><text x="52" y="109" text-anchor="end">300</text><text x="52" y="34" text-anchor="end">400</text>
+      <text x="131.7" y="348" text-anchor="middle">100</text><text x="203.3" y="348" text-anchor="middle">200</text><text x="275" y="348" text-anchor="middle">300</text><text x="346.7" y="348" text-anchor="middle">400</text><text x="418.3" y="348" text-anchor="middle">500</text><text x="490" y="348" text-anchor="middle">600</text></g>
+      <text x="275" y="372" text-anchor="middle" class="tink">Casas por ano</text>
+      <text x="16" y="180" text-anchor="middle" class="tink" transform="rotate(-90 16 180)">Preço (R$ mil)</text>
+    </svg>
+    </div>
+    <figcaption>Exemplo hipotético de uma cidade. Tabelando a casa a R$250 mil, compradores querem 225 unidades e incorporadoras oferecem 425: o excesso força o preço de volta a R$200 mil.</figcaption>
+  </figure>
+  <div class="grid g2">
+    <div class="card"><span class="s">Preço acima do equilíbrio</span><span class="k dn">Sobra produto</span><span>Excesso de oferta, o preço cai. <strong>É o estoque encalhado.</strong></span></div>
+    <div class="card"><span class="s">Preço abaixo do equilíbrio</span><span class="k up">Falta produto</span><span>Escassez, o preço sobe. <strong>É o lançamento que esgota em dias</strong>: sinal de casa vendida barato demais.</span></div>
+  </div>
+  <p><strong>Ceteris paribus</strong> significa "tudo o mais constante": mudamos uma variável por vez. Esse exercício se chama <strong>estática comparativa</strong>.</p>
+
+  <h3>Os quatro movimentos</h3>
+  <div class="shift">
+    <div class="card"><span class="ev">Demanda ↑</span><div class="res"><span class="up">Preço ↑</span><span class="up">Qtd ↑</span></div></div>
+    <div class="card"><span class="ev">Demanda ↓</span><div class="res"><span class="dn">Preço ↓</span><span class="dn">Qtd ↓</span></div></div>
+    <div class="card"><span class="ev">Oferta ↑</span><div class="res"><span class="dn">Preço ↓</span><span class="up">Qtd ↑</span></div></div>
+    <div class="card"><span class="ev">Oferta ↓</span><div class="res"><span class="up">Preço ↑</span><span class="dn">Qtd ↓</span></div></div>
+  </div>
+  <div class="rule">
+    <div class="card"><span class="s">Regra prática</span><span>Preço e quantidade na <strong>mesma direção</strong> → quem mudou foi a <strong>demanda</strong>.</span></div>
+    <div class="card"><span class="s">Regra prática</span><span>Preço e quantidade em <strong>direções opostas</strong> → quem mudou foi a <strong>oferta</strong>.</span></div>
+  </div>
+  <div class="box obra"><span class="tag">Dois choques ao mesmo tempo</span><p>A variável empurrada em sentidos opostos fica <strong>indeterminada</strong>. Se os insumos encarecem (oferta ↓) e a renda local sobe (demanda ↑), <mark>o preço das casas sobe com certeza</mark>, mas não dá para cravar se o volume vendido aumenta ou diminui.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>Aumento de imposto desloca a <strong>oferta</strong>; para o comprador, isso é um movimento <strong>ao longo</strong> da curva de demanda. Uma campanha publicitária mexe no gosto e desloca a <strong>demanda</strong>.</p></div>
+</section>
+
+<!-- 8 -->
+<section id="excedentes">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Excedente do consumidor e do produtor</h2></div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Excedente do consumidor (EC)</span><span>Preço de reserva − preço pago. Quem aceitaria pagar R$250 mil e pagou R$220 mil ganhou <strong>R$30 mil</strong> de excedente.</span></div>
+    <div class="card"><span class="s">Excedente do produtor (EP)</span><span>Preço recebido − preço mínimo que o produtor aceitaria.</span></div>
+  </div>
+  <figure>
+    <div class="svgbox">
+    <svg viewBox="0 0 540 380" role="img" aria-label="Excedentes do consumidor e do produtor como triângulos">
+      <polygon class="fb" points="60,30 275,180 60,180"/>
+      <polygon class="fs" points="60,180 275,180 60,270"/>
+      <line class="ax" x1="60" y1="20" x2="60" y2="330"/><line class="ax" x1="60" y1="330" x2="500" y2="330"/>
+      <line class="dash" x1="275" y1="180" x2="275" y2="330"/>
+      <line class="dem" x1="60" y1="30" x2="490" y2="330"/>
+      <line class="sup" x1="60" y1="270" x2="490" y2="90"/>
+      <line class="ax" x1="60" y1="180" x2="275" y2="180" style="stroke-width:1.2"/>
+      <circle class="dot" cx="275" cy="180" r="6"/>
+      <text class="tb" x="70" y="160" font-weight="500">EC = R$30 mi</text>
+      <text class="ts" x="70" y="205" font-weight="500">EP = R$18 mi</text>
+      <text class="tb" x="470" y="312">D</text><text class="ts" x="470" y="84">O</text>
+      <g font-size="11"><text x="52" y="34" text-anchor="end">400</text><text x="52" y="184" text-anchor="end">200</text><text x="52" y="274" text-anchor="end">80</text><text x="52" y="334" text-anchor="end">0</text><text x="275" y="348" text-anchor="middle">300</text><text x="490" y="348" text-anchor="middle">600</text></g>
+      <text x="275" y="372" text-anchor="middle" class="tink">Casas por ano</text>
+      <text x="16" y="180" text-anchor="middle" class="tink" transform="rotate(-90 16 180)">Preço (R$ mil)</text>
+    </svg>
+    </div>
+    <figcaption>Mesmo mercado hipotético. Cada excedente é a área de um triângulo: (base × altura) / 2.</figcaption>
+  </figure>
+  <div class="grid g3">
+    <div class="card"><span class="s">Base</span><span>Quantidade de equilíbrio.</span></div>
+    <div class="card"><span class="s">Altura do EC</span><span>Preço máximo da demanda (onde qD = 0) − preço de equilíbrio.</span></div>
+    <div class="card"><span class="s">Altura do EP</span><span>Preço de equilíbrio − preço mínimo da oferta (onde qO = 0).</span></div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p><mark>Excedente = bem-estar.</mark> No equilíbrio, o excedente total é o máximo possível. O preço mínimo da incorporadora é, na prática, o <strong>custo total da unidade</strong>: toda redução de custo que a engenharia consegue aumenta o excedente do produtor, ou seja, a margem, sem mexer no preço.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>"Excedente" no sentido de <strong>sobra de produto</strong> é outra coisa.</p></div>
+</section>
+
+<!-- 9 -->
+<section id="controle">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Controle de preços</h2></div>
+  <p>Quando uma regra fixa um <strong>teto</strong> abaixo do equilíbrio, alguns produtores saem do mercado e mais gente quer comprar.</p>
+  <figure>
+    <div class="svgbox">
+    <svg viewBox="0 0 540 380" role="img" aria-label="Teto de preço gerando escassez e peso morto">
+      <polygon class="fy" points="185.42,117.5 185.42,217.5 275,180"/>
+      <line class="ax" x1="60" y1="20" x2="60" y2="330"/><line class="ax" x1="60" y1="330" x2="500" y2="330"/>
+      <line class="dem" x1="60" y1="30" x2="490" y2="330"/>
+      <line class="sup" x1="60" y1="270" x2="490" y2="90"/>
+      <line class="ax" x1="60" y1="217.5" x2="490" y2="217.5" style="stroke-dasharray:10 5"/>
+      <line class="gap" x1="185.42" y1="217.5" x2="328.75" y2="217.5" style="stroke:var(--supply)"/>
+      <circle class="hollow" cx="275" cy="180" r="5"/>
+      <text class="tink" x="400" y="210">teto R$150 mil</text>
+      <text class="ty" x="196" y="245">faltam 200 casas</text>
+      <text class="tink" x="200" y="98">peso morto</text>
+      <path class="arr" d="M225,104 L215,160" marker-end="url(#ah4)"/>
+      <defs><marker id="ah4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="ink"/></marker></defs>
+      <text class="tb" x="470" y="312">D</text><text class="ts" x="470" y="84">O</text>
+      <g font-size="11"><text x="52" y="221" text-anchor="end">150</text><text x="52" y="184" text-anchor="end">200</text><text x="185" y="348" text-anchor="middle">175</text><text x="275" y="348" text-anchor="middle">300</text><text x="329" y="348" text-anchor="middle">375</text></g>
+      <text x="275" y="372" text-anchor="middle" class="tink">Casas por ano</text>
+      <text x="16" y="180" text-anchor="middle" class="tink" transform="rotate(-90 16 180)">Preço (R$ mil)</text>
+    </svg>
+    </div>
+    <figcaption>Com teto de R$150 mil, só 175 casas são ofertadas e 375 são procuradas. O triângulo amarelo é o excedente perdido com as 125 vendas que deixam de acontecer.</figcaption>
+  </figure>
+  <div class="grid g3">
+    <div class="card"><h3>Escassez permanente</h3><span>O preço não pode subir para equilibrar o mercado.</span></div>
+    <div class="card"><h3>Peso morto</h3><span>Excedente perdido com as transações que deixam de ocorrer.</span></div>
+    <div class="card"><h3>Alocação ineficiente</h3><span>Compra quem tem sorte ou contato, e não quem mais valoriza o bem.</span></div>
+    <div class="card"><h3>Desperdício</h3><span>Tempo perdido em filas é recurso desperdiçado.</span></div>
+    <div class="card"><h3>Sucateamento</h3><span>Sem poder subir o preço, some o incentivo de manter a qualidade.</span></div>
+    <div class="card"><h3>Mercado ilegal</h3><span>Surge quem venda acima do teto para quem não conseguiu comprar.</span></div>
+  </div>
+  <div class="card"><span class="s">Piso de preço</span><span>Exemplo clássico: o salário mínimo. Gera <strong>excesso de oferta de trabalho</strong> e também peso morto.</span></div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Quando uma regra ou programa limita o valor da unidade abaixo do que o custo comporta, a pressão chega ao engenheiro como <mark>cortar especificação para caber no teto</mark>. É o sucateamento visto de dentro da obra.</p></div>
+</section>
+
+<!-- 10 -->
+<section id="algebra">
+  <div class="sec-head"><span class="sec-num">10</span><h2>Álgebra do equilíbrio</h2></div>
+  <p>Iguale demanda e oferta, resolva para <strong>p</strong> e substitua <strong>p</strong> em qualquer uma das funções para achar <strong>q</strong>.</p>
+  <div class="grid g2">
+    <div class="card" style="min-width:0"><span class="s">Exemplo numérico simples</span>
+      <div class="eq">qD = 400 − 10p
+qO = 100 + 5p
+
+400 − 10p = 100 + 5p
+300 = 15p   →  p = 20
+q = 400 − 10·20  →  q = 200</div></div>
+    <div class="card" style="min-width:0"><span class="s">Mercado hipotético de casas (p em R$ mil)</span>
+      <div class="eq">qD = 600 − 1,5p
+qO = −200 + 2,5p
+
+600 − 1,5p = −200 + 2,5p
+800 = 4p    →  p = 200
+q = 600 − 1,5·200  →  q = 300</div></div>
+  </div>
+  <div class="tbl"><table style="min-width:520px">
+    <thead><tr><th>Cenário</th><th>Cálculo</th><th>Resultado</th></tr></thead>
+    <tbody>
+      <tr><td>Tabela a R$250 mil</td><td>qD = 225; qO = 425</td><td>Sobram 200 casas: o preço precisa cair.</td></tr>
+      <tr><td>Excedente do consumidor</td><td>300 × (400 − 200) / 2</td><td>R$30 milhões</td></tr>
+      <tr><td>Excedente do produtor</td><td>300 × (200 − 80) / 2</td><td>R$18 milhões</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- Resumo -->
+<section id="resumo">
+  <div class="sec-head"><span class="sec-num">Síntese</span><h2>As 10 ideias que ficam</h2></div>
+  <ol class="cola">
+    <li><span>Economia é a <strong>ciência da escassez</strong>: o que, como, quando, para quem e quanto produzir.</span></li>
+    <li><span><strong>Custo de oportunidade</strong> é a melhor alternativa abandonada, e não o que foi gasto.</span></li>
+    <li><span>A <strong>CPP é côncava por especialização</strong>. Ponto dentro dela é ineficiência; tecnologia e mais fatores a expandem.</span></li>
+    <li><span><strong>Demanda é desejo mais capacidade de pagar</strong>, não é a venda.</span></li>
+    <li><span><strong>Preço do próprio bem move ao longo da curva</strong>; qualquer outro fator desloca a curva.</span></li>
+    <li><span>Substituto: preço ↑, demanda ↑. Complementar: preço ↑, demanda ↓. Bem inferior: renda ↑, demanda ↓. Giffen tem curva crescente.</span></li>
+    <li><span>Na oferta, custos e impostos ↑ levam a curva para a esquerda. <strong>Tecnologia inclui método e sequência de produção.</strong></span></li>
+    <li><span><strong>Mesma direção</strong> de preço e quantidade é demanda; <strong>direções opostas</strong> é oferta. Em choques simultâneos, uma variável fica indeterminada.</span></li>
+    <li><span><strong>Excedente = bem-estar</strong>, calculado como área de triângulo.</span></li>
+    <li><span>Tetos e pisos de preço geram escassez ou sobra, <strong>peso morto</strong>, filas, perda de qualidade e mercado ilegal.</span></li>
+  </ol>
+</section>
+
+</div>
+</main>
+<footer><div class="wrap">Valores dos mercados de casas são hipotéticos, criados para ilustrar o raciocínio.</div></footer>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elasticidade na Obra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: prancha técnica (mesma série de "Economia da Obra") — cabeçalho com malha milimetrada, chips de navegação fixos, coluna única com esquemas em escala */
+:root{
+  --paper:#f1f4f3; --surface:#ffffff; --ink:#16222a; --muted:#56656d; --line:#cfd8da;
+  --blue:#1d5a89; --blue-soft:#e2ecf4; --supply:#b0512a; --supply-soft:#f7e6dc;
+  --safety:#d9a300; --safety-soft:#fbf1cd; --grid:rgba(29,90,137,.07);
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#10171b; --surface:#172126; --ink:#e3eaec; --muted:#97a6ac; --line:#2a3940;
+  --blue:#72aad6; --blue-soft:#182c3a; --supply:#e48c5e; --supply-soft:#3a2418;
+  --safety:#f0c43a; --safety-soft:#352d12; --grid:rgba(114,170,214,.07); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#10171b; --surface:#172126; --ink:#e3eaec; --muted:#97a6ac; --line:#2a3940;
+  --blue:#72aad6; --blue-soft:#182c3a; --supply:#e48c5e; --supply-soft:#3a2418;
+  --safety:#f0c43a; --safety-soft:#352d12; --grid:rgba(114,170,214,.07); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+header.hero{background-color:var(--surface);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:16px 16px;border-bottom:1px solid var(--line)}
+header.hero .wrap{padding-block:56px 40px;display:grid;gap:18px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+h1{font-family:var(--f-display);font-stretch:118%;font-weight:800;font-size:clamp(2.3rem,7vw,4.2rem);line-height:1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.lede{font-size:1.12rem;max-width:62ch;color:var(--muted);margin:0}
+.formula-hero{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:6px;font-family:var(--f-mono)}
+.frac{display:inline-grid;text-align:center;font-size:14px;line-height:1.3}
+.frac span:first-child{border-bottom:2px solid var(--ink);padding:0 6px 4px}
+.frac span:last-child{padding:4px 6px 0}
+.formula-hero b{font-family:var(--f-display);font-size:1.4rem;color:var(--blue)}
+
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:thin}
+nav.toc a{flex:0 0 auto;font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;padding:5px 10px;border:1px solid var(--line);background:var(--surface);white-space:nowrap}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--blue);border-color:var(--blue);outline:none}
+
+main .wrap{display:grid;gap:72px;padding-block:56px 80px}
+section{display:grid;gap:20px;scroll-margin-top:64px}
+.sec-head{display:grid;gap:6px;border-top:2px solid var(--ink);padding-top:14px}
+.sec-num{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--blue)}
+h2{font-family:var(--f-display);font-stretch:112%;font-weight:750;font-size:clamp(1.6rem,4vw,2.2rem);line-height:1.1;margin:0;text-wrap:balance}
+h3{font-family:var(--f-display);font-stretch:108%;font-weight:700;font-size:1.15rem;margin:0}
+p{margin:0;max-width:68ch}
+strong{font-weight:600}
+mark{background:var(--safety-soft);color:inherit;padding:0 3px;border-bottom:2px solid var(--safety)}
+
+.def{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ink);padding:18px 20px;font-size:1.08rem}
+.def .tag{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+
+.box{padding:16px 18px;display:grid;gap:8px}
+.box .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.box.obra{background:var(--blue-soft);border:1px solid color-mix(in srgb,var(--blue) 35%,transparent)}
+.box.obra .tag{color:var(--blue)}
+.box.alerta{background:var(--safety-soft);border:1px dashed var(--safety)}
+.box.alerta .tag{color:var(--ink)}
+.box ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
+
+.grid{display:grid;gap:12px}
+.g5{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.card .k{font-family:var(--f-display);font-stretch:115%;font-weight:800;font-size:1.25rem;color:var(--blue)}
+.card .s{font-size:.92rem;color:var(--muted)}
+.card.hi{border:2px solid var(--ink)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--paper)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--f-mono);white-space:nowrap}
+
+figure{margin:0;background:var(--surface);border:1px solid var(--line);padding:16px;display:grid;gap:10px;min-width:0}
+figure .svgbox{overflow-x:auto}
+figure svg{display:block;width:100%;height:auto;min-width:300px}
+figcaption{font-size:.88rem;color:var(--muted)}
+svg text{font-family:var(--f-mono);fill:var(--muted);font-size:13px}
+svg .ax{stroke:var(--ink);stroke-width:1.5;fill:none}
+svg .dem{stroke:var(--blue);stroke-width:3;fill:none}
+svg .sup{stroke:var(--supply);stroke-width:3;fill:none}
+svg .dash{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:4 4;fill:none}
+svg .tink{fill:var(--ink)} svg .tb{fill:var(--blue)} svg .ts{fill:var(--supply)}
+svg .fb{fill:var(--blue);fill-opacity:.12}
+svg .dot{fill:var(--ink)} svg .ink{fill:var(--ink)}
+svg .arr{stroke:var(--ink);stroke-width:2;fill:none}
+
+/* cinco graus */
+.graus{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.grau{background:var(--surface);border:1px solid var(--line);padding:12px;display:grid;gap:6px;align-content:start;min-width:0}
+.grau svg{width:100%;height:auto;display:block}
+.grau .v{font-family:var(--f-mono);font-size:12px;color:var(--blue)}
+.grau h3{font-size:1rem}
+.grau p{font-size:.88rem;color:var(--muted)}
+
+/* régua de classificação */
+.ruler{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1px solid var(--line);background:var(--surface);overflow-x:auto}
+.ruler > div{padding:12px 12px 14px;border-right:1px solid var(--line);display:grid;gap:4px;align-content:start;min-width:120px}
+.ruler > div:last-child{border-right:0}
+.ruler .r-val{font-family:var(--f-mono);font-size:13px;font-weight:500}
+.ruler .r-name{font-family:var(--f-display);font-weight:700;font-size:1rem}
+.ruler .r-ex{font-size:.85rem;color:var(--muted)}
+.z-neg{background:var(--supply-soft)} .z-neg .r-val{color:var(--supply)}
+.z-zero{background:var(--paper)}
+.z-pos{background:var(--blue-soft)} .z-pos .r-val{color:var(--blue)}
+
+.eq{font-family:var(--f-mono);font-size:.95rem;background:var(--paper);border:1px solid var(--line);padding:12px 14px;overflow-x:auto;white-space:pre;line-height:1.75}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;border:1px solid var(--line);background:var(--surface)}
+.steps > div{padding:14px 16px;border-right:1px solid var(--line);display:grid;gap:4px;align-content:start}
+.steps > div:last-child{border-right:0}
+.steps .n{font-family:var(--f-display);font-weight:800;font-size:1.4rem;color:var(--blue);line-height:1}
+.steps .c{font-family:var(--f-mono);font-size:.9rem}
+
+.up{color:var(--blue)} .dn{color:var(--supply)}
+
+ol.cola{list-style:none;margin:0;padding:0;display:grid;counter-reset:c;background:var(--surface);border:1px solid var(--line)}
+ol.cola li{counter-increment:c;display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+ol.cola li:last-child{border-bottom:0}
+ol.cola li::before{content:counter(c,decimal-leading-zero);font-family:var(--f-display);font-weight:800;font-size:1.3rem;color:var(--blue);line-height:1.2}
+
+footer .wrap{padding-block:24px 48px;font-family:var(--f-mono);font-size:12px;color:var(--muted);border-top:1px solid var(--line)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media (max-width:560px){.steps > div{border-right:0;border-bottom:1px solid var(--line)}.steps > div:last-child{border-bottom:0}}
+
+.trilha{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding:14px 0 0}
+.trilha a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
+.trilha a:hover{color:var(--blue);border-bottom-color:var(--blue)}
+</style>
+
+</head>
+<body>
+<p class="wrap trilha"><a href="../index.html">Portal</a> / <a href="index.html">Economia aplicada à construção civil</a> / Elasticidade na Obra</p>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Microeconomia aplicada · Incorporação de casas</div>
+    <h1>Elasticidade na Obra</h1>
+    <p class="lede">Saber que a procura cai quando o preço sobe é o básico. A elasticidade responde à pergunta que decide o lançamento: <strong>cai quanto?</strong> Aqui estão as quatro elasticidades, como calcular cada uma e onde elas aparecem nas decisões de preço, produto e produção.</p>
+    <div class="formula-hero" aria-label="Elasticidade é a variação percentual de uma variável dividida pela variação percentual de outra">
+      <b>E =</b>
+      <span class="frac"><span>variação % da variável afetada</span><span>variação % da variável que mudou</span></span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Seções">
+  <div class="wrap">
+    <a href="#conceito">Conceito</a><a href="#epd">Preço da demanda</a><a href="#graus">Cinco graus</a><a href="#receita">Receita total</a><a href="#curva">Ao longo da curva</a><a href="#fatores">Fatores</a><a href="#cruzada">Cruzada</a><a href="#renda">Renda</a><a href="#oferta">Oferta</a><a href="#resumo">Resumo</a>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+
+<!-- 01 -->
+<section id="conceito">
+  <div class="sec-head"><span class="sec-num">01</span><h2>O que é elasticidade</h2></div>
+  <div class="def"><span class="tag">Conceito</span>Elasticidade mede a <mark>sensibilidade</mark> de compradores e vendedores às mudanças do mercado: o quanto uma variável reage quando outra muda.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Análise qualitativa</span><span class="k">Como?</span><span>"Se a renda sobe, o que acontece com a procura?" Resposta: aumenta.</span></div>
+    <div class="card hi"><span class="s">Análise quantitativa</span><span class="k">Quanto?</span><span>"Se a renda sobe 10%, a procura sobe quantos por cento?" Essa é a pergunta da elasticidade.</span></div>
+  </div>
+  <h3>As quatro elasticidades</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Elasticidade</th><th>Mede a reação de</th><th>a uma mudança no</th></tr></thead>
+    <tbody>
+      <tr><td>Preço da demanda (EPD)</td><td>Quantidade demandada</td><td>Preço do próprio bem</td></tr>
+      <tr><td>Preço cruzada (EPCD)</td><td>Quantidade demandada de X</td><td>Preço de outro bem, Y</td></tr>
+      <tr><td>Renda da demanda (ERD)</td><td>Quantidade demandada</td><td>Renda do consumidor</td></tr>
+      <tr><td>Preço da oferta (EPO)</td><td>Quantidade ofertada</td><td>Preço do próprio bem</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Variação percentual em quatro passos</h3>
+  <div class="steps">
+    <div><span class="n">1</span><span>Anote o valor inicial e o final</span><span class="c">V0 = 200 · V1 = 220</span></div>
+    <div><span class="n">2</span><span>Subtraia o inicial do final</span><span class="c">220 − 200 = 20</span></div>
+    <div><span class="n">3</span><span>Divida pelo valor inicial</span><span class="c">20 ÷ 200 = 0,10</span></div>
+    <div><span class="n">4</span><span>Multiplique por 100</span><span class="c">0,10 × 100 = 10%</span></div>
+  </div>
+  <p style="font-size:.92rem;color:var(--muted)">Exemplo: casa que passa de R$200 mil para R$220 mil teve aumento de 10%.</p>
+</section>
+
+<!-- 02 -->
+<section id="epd">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Elasticidade-preço da demanda</h2></div>
+  <div class="def"><span class="tag">Definição</span>Compara a variação percentual da <strong>quantidade demandada</strong> com a variação percentual do <strong>preço do próprio bem</strong>.</div>
+  <div class="eq">EPD = variação % da quantidade demandada ÷ variação % do preço
+
+EPD = (ΔQ / Q) ÷ (ΔP / P)          Δ (delta) = variação</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Exemplo geral</span><span>Preço sobe de R$6 para R$10 (+67%). Quantidade cai de 10 para 9 milhões (−10%).</span><span class="k">EPD = −10 ÷ 67 ≈ −0,15</span><span>Pouca reação a um aumento grande. Comportamento típico de um bem essencial, como um remédio.</span></div>
+    <div class="card"><span class="s">Na incorporadora (hipotético)</span><span>Casa sobe de R$200 mil para R$220 mil (+10%). Vendas caem de 50 para 40 por mês (−20%).</span><span class="k">EPD = −20 ÷ 10 = −2</span><span>A procura reage o dobro do preço. Demanda <strong>elástica</strong>.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Atenção ao sinal</span>
+    <ul>
+      <li>A EPD é <strong>negativa</strong>, porque preço e quantidade andam em sentidos opostos. Por convenção, o sinal costuma ser omitido: "EPD = 2" quer dizer −2.</li>
+      <li>A exceção é o <strong>bem de Giffen</strong>, com EPD <strong>positiva</strong>. Isso não quer dizer que a demanda dele seja infinitamente elástica.</li>
+    </ul>
+  </div>
+  <div class="box obra"><span class="tag">Para lembrar: o arco e flecha</span><p>A força na corda é a mudança de preço; a distância da flecha é a mudança na quantidade. Arco <strong>elástico</strong>: pouca força manda a flecha longe. Arco <strong>rígido</strong> (inelástico): muita força para quase nenhum deslocamento.</p></div>
+</section>
+
+<!-- 03 -->
+<section id="graus">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Os cinco graus de elasticidade</h2></div>
+  <p>Do menos sensível ao mais sensível. Os mesmos cinco graus valem para a oferta.</p>
+  <div class="graus">
+    <div class="grau">
+      <svg viewBox="0 0 140 115" role="img" aria-label="Curva vertical"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><line class="dem" x1="78" y1="14" x2="78" y2="100"/><text x="128" y="100" font-size="10" text-anchor="end">Q</text><text x="24" y="16" font-size="10">P</text></svg>
+      <span class="v">EPD = 0</span><h3>Perfeitamente inelástica</h3><p>Curva vertical. O preço muda e a quantidade fica travada.</p>
+    </div>
+    <div class="grau">
+      <svg viewBox="0 0 140 115" role="img" aria-label="Curva íngreme"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><line class="dem" x1="58" y1="14" x2="98" y2="100"/><text x="128" y="100" font-size="10" text-anchor="end">Q</text><text x="24" y="16" font-size="10">P</text></svg>
+      <span class="v">0 &lt; EPD &lt; 1</span><h3>Inelástica</h3><p>A quantidade varia menos que o preço. Bens essenciais e com poucos substitutos.</p>
+    </div>
+    <div class="grau">
+      <svg viewBox="0 0 140 115" role="img" aria-label="Curva em hipérbole"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><path class="dem" d="M30,12 C 38,70 70,90 130,95"/><text x="128" y="87" font-size="10" text-anchor="end">Q</text><text x="34" y="16" font-size="10">P</text></svg>
+      <span class="v">EPD = 1</span><h3>Unitária</h3><p>Preço e quantidade variam na mesma proporção.</p>
+    </div>
+    <div class="grau">
+      <svg viewBox="0 0 140 115" role="img" aria-label="Curva achatada"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><line class="dem" x1="26" y1="42" x2="130" y2="78"/><text x="128" y="100" font-size="10" text-anchor="end">Q</text><text x="24" y="16" font-size="10">P</text></svg>
+      <span class="v">1 &lt; EPD &lt; ∞</span><h3>Elástica</h3><p>A quantidade varia mais que o preço. Bens supérfluos e com muitos substitutos.</p>
+    </div>
+    <div class="grau">
+      <svg viewBox="0 0 140 115" role="img" aria-label="Curva horizontal"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><line class="dem" x1="24" y1="58" x2="132" y2="58"/><text x="128" y="100" font-size="10" text-anchor="end">Q</text><text x="24" y="16" font-size="10">P</text></svg>
+      <span class="v">EPD = ∞</span><h3>Infinitamente elástica</h3><p>Curva horizontal. Preço um pouco acima e a procura vai a zero.</p>
+    </div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>A curva <strong>infinitamente elástica</strong> descreve bem um loteamento com várias casas parecidas de concorrentes. Se a sua casa custar um pouco mais que as do vizinho com o mesmo produto, a procura por ela praticamente some.</p></div>
+</section>
+
+<!-- 04 -->
+<section id="receita">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Elasticidade e receita total</h2></div>
+  <div class="def"><span class="tag">Definição</span><strong>Receita total = preço × quantidade.</strong> Do lado do comprador, a mesma conta é a despesa total. A elasticidade diz se vale a pena subir ou baixar o preço.</div>
+  <div class="tbl"><table>
+    <thead><tr><th>Demanda</th><th>Quem vence</th><th>Preço sobe</th><th>Preço cai</th></tr></thead>
+    <tbody>
+      <tr><td>Inelástica (&lt; 1)</td><td>Efeito preço supera o efeito quantidade</td><td class="up"><strong>Receita ↑</strong></td><td class="dn"><strong>Receita ↓</strong></td></tr>
+      <tr><td>Unitária (= 1)</td><td>Os dois efeitos empatam</td><td>Receita não muda</td><td>Receita não muda</td></tr>
+      <tr><td>Elástica (&gt; 1)</td><td>Efeito quantidade supera o efeito preço</td><td class="dn"><strong>Receita ↓</strong></td><td class="up"><strong>Receita ↑</strong></td></tr>
+    </tbody>
+  </table></div>
+  <h3>Simulação: subir a tabela de 40 casas de R$200 mil para R$220 mil (+10%)</h3>
+  <div class="grid g3">
+    <div class="card"><span class="s">Hoje</span><span class="k" style="color:var(--ink)">R$8,0 mi</span><span>40 casas × R$200 mil</span></div>
+    <div class="card"><span class="s">Se a demanda for elástica (EPD = 2)</span><span class="k dn">R$7,04 mi</span><span>Vendas caem 20%: 32 casas × R$220 mil. <strong>Perde receita.</strong></span></div>
+    <div class="card"><span class="s">Se a demanda for inelástica (EPD = 0,5)</span><span class="k up">R$8,36 mi</span><span>Vendas caem 5%: 38 casas × R$220 mil. <strong>Ganha receita.</strong></span></div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Antes de reajustar a tabela, a pergunta certa é <mark>quão sensível é o comprador daquele produto</mark>. Num produto com muita concorrência parecida, o aumento derruba a receita. Num produto diferenciado ou com pouca oferta na região, o aumento tende a compensar.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>Com EPD menor que 1, <strong>aumento de preço aumenta a receita</strong>. A afirmação contrária é um erro comum.</p></div>
+</section>
+
+<!-- 05 -->
+<section id="curva">
+  <div class="sec-head"><span class="sec-num">05</span><h2>A elasticidade muda ao longo da curva</h2></div>
+  <p>Numa curva de demanda em linha reta, a inclinação é a mesma em todos os pontos, mas a <strong>elasticidade não é</strong>. Ela depende de onde você está na curva.</p>
+  <figure>
+    <div class="svgbox">
+    <svg viewBox="0 0 540 380" role="img" aria-label="Demanda linear com trecho elástico, ponto unitário e trecho inelástico">
+      <rect class="fb" x="60" y="180" width="215" height="150"/>
+      <line class="ax" x1="60" y1="20" x2="60" y2="330"/><line class="ax" x1="60" y1="330" x2="500" y2="330"/>
+      <line class="sup" x1="60" y1="30" x2="275" y2="180"/>
+      <line class="dem" x1="275" y1="180" x2="490" y2="330"/>
+      <line class="dash" x1="167.5" y1="105" x2="167.5" y2="330"/><line class="dash" x1="60" y1="105" x2="167.5" y2="105"/>
+      <line class="dash" x1="382.5" y1="255" x2="382.5" y2="330"/><line class="dash" x1="60" y1="255" x2="382.5" y2="255"/>
+      <circle class="dot" cx="167.5" cy="105" r="6"/><circle class="dot" cx="275" cy="180" r="7"/><circle class="dot" cx="382.5" cy="255" r="6"/>
+      <text class="ts" x="178" y="96" font-weight="500">EPD = 3 · receita R$45 mi</text>
+      <text class="tink" x="288" y="172" font-weight="500">EPD = 1 · R$60 mi (máx.)</text>
+      <text class="tb" x="250" y="285" font-weight="500">EPD = 0,33</text>
+      <text class="tb" x="250" y="301">receita R$45 mi</text>
+      <text class="ts" x="110" y="48">trecho elástico</text>
+      <text class="tb" x="400" y="300">trecho inelástico</text>
+      <g font-size="11"><text x="52" y="34" text-anchor="end">400</text><text x="52" y="109" text-anchor="end">300</text><text x="52" y="184" text-anchor="end">200</text><text x="52" y="259" text-anchor="end">100</text><text x="52" y="334" text-anchor="end">0</text>
+      <text x="167.5" y="348" text-anchor="middle">150</text><text x="275" y="348" text-anchor="middle">300</text><text x="382.5" y="348" text-anchor="middle">450</text><text x="490" y="348" text-anchor="middle">600</text></g>
+      <text x="275" y="372" text-anchor="middle" class="tink">Casas por ano</text>
+      <text x="16" y="180" text-anchor="middle" class="tink" transform="rotate(-90 16 180)">Preço (R$ mil)</text>
+    </svg>
+    </div>
+    <figcaption>Mercado hipotético com demanda qD = 600 − 1,5p. O retângulo sombreado é a receita no ponto médio, a maior possível.</figcaption>
+  </figure>
+  <div class="grid g3">
+    <div class="card"><span class="s">Parte de cima (preço alto, pouca quantidade)</span><span class="k dn">Elástica</span><span>Baixar o preço <strong>aumenta</strong> a receita.</span></div>
+    <div class="card"><span class="s">Ponto médio</span><span class="k" style="color:var(--ink)">Unitária</span><span>Receita <strong>máxima</strong>.</span></div>
+    <div class="card"><span class="s">Parte de baixo (preço baixo, muita quantidade)</span><span class="k up">Inelástica</span><span>Subir o preço <strong>aumenta</strong> a receita.</span></div>
+  </div>
+  <h3>Elasticidade num ponto da curva</h3>
+  <div class="eq">EPD = (ΔQ / ΔP) × (P / Q)
+
+Para uma reta Q = a − b·P:   EPD = −b × P / (a − b·P)
+
+No exemplo (a = 600, b = 1,5):
+  P = 300 → Q = 150 → EPD = 1,5 × 300 / 150 = 3
+  P = 200 → Q = 300 → EPD = 1,5 × 200 / 300 = 1
+  P = 100 → Q = 450 → EPD = 1,5 × 100 / 450 ≈ 0,33</div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span>
+    <ul>
+      <li>Na demanda linear, a elasticidade é <strong>infinita</strong> onde a quantidade é zero e vai diminuindo conforme a quantidade aumenta.</li>
+      <li>Existem curvas com elasticidade constante, mas elas são exceção.</li>
+      <li>Uma curva de <strong>oferta</strong> em linha reta que passa pela origem tem elasticidade <strong>sempre igual a 1</strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 06 -->
+<section id="fatores">
+  <div class="sec-head"><span class="sec-num">06</span><h2>O que torna a demanda mais ou menos elástica</h2></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Fator</th><th>Regra</th><th>Na incorporadora</th></tr></thead>
+    <tbody>
+      <tr><td>Substitutos</td><td>Mais substitutos → <strong>mais elástica</strong></td><td>Aluguel, imóvel usado, apartamento e casas de concorrentes. Quanto mais opções na região, mais o comprador reage ao preço.</td></tr>
+      <tr><td>Essencialidade</td><td>Mais essencial → <strong>menos elástica</strong>. Luxo → mais elástica</td><td>Moradia é essencial, mas a casa própria nova compete com o aluguel. Itens de alto padrão são bem mais sensíveis a preço.</td></tr>
+      <tr><td>Peso na renda</td><td>Quanto maior a fatia da renda → <strong>mais elástica</strong></td><td>A casa é a maior compra da vida da família: pequenas diferenças de preço pesam muito. Já um opcional barato (tomada extra, ponto de ar-condicionado) quase não sofre resistência.</td></tr>
+      <tr><td>Tempo</td><td>Prazo mais longo → <strong>mais elástica</strong></td><td>No curto prazo o comprador é pego de surpresa; com o tempo ele pesquisa, adia a compra ou encontra alternativas.</td></tr>
+      <tr><td>Barreiras à entrada</td><td>Mercado difícil de entrar → <strong>menos elástica</strong> para quem já está nele</td><td>Único loteamento aprovado num bairro, terreno escasso, licença demorada: quem já está ali enfrenta compradores menos sensíveis a preço.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Diferenciar o produto (planta melhor, localização, prazo de entrega, acabamento visível) <mark>reduz os substitutos diretos</mark>. Isso torna a demanda menos elástica e dá margem para preço.</p></div>
+</section>
+
+<!-- 07 -->
+<section id="cruzada">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Elasticidade-preço cruzada</h2></div>
+  <div class="def"><span class="tag">Definição</span>Mede quanto a quantidade demandada de <strong>X</strong> muda quando o preço de <strong>outro bem, Y</strong>, muda. O que importa aqui é o <mark>sinal</mark>.</div>
+  <div class="eq">EPCD = variação % da quantidade demandada de X ÷ variação % do preço de Y</div>
+  <div class="ruler" role="table" aria-label="Classificação pela elasticidade cruzada">
+    <div class="z-neg"><span class="r-val">EPCD &lt; 0</span><span class="r-name">Complementares</span><span class="r-ex">Preço de um sobe, procura do outro cai. Sentidos opostos. Ex.: carro e gasolina.</span></div>
+    <div class="z-zero"><span class="r-val">EPCD = 0</span><span class="r-name">Independentes</span><span class="r-ex">Sem relação. Ex.: preço do celular e procura por refrigerante.</span></div>
+    <div class="z-pos"><span class="r-val">EPCD &gt; 0</span><span class="r-name">Substitutos</span><span class="r-ex">Preço de um sobe, procura do outro sobe. Mesmo sentido. Ex.: etanol e gasolina.</span></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Substituto (hipotético)</span><span>Aluguel sobe 10%. Procura por casa nova sobe 5%.</span><span class="k up">EPCD = +5 ÷ 10 = +0,5</span></div>
+    <div class="card"><span class="s">Complementar (hipotético)</span><span>Custo do financiamento sobe 10%. Procura por casa nova cai 15%.</span><span class="k dn">EPCD = −15 ÷ 10 = −1,5</span></div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Acompanhar o preço dos <strong>substitutos</strong> (aluguel, usados, concorrentes) e dos <strong>complementares</strong> (crédito, custos de mudança e mobília) ajuda a prever a velocidade de vendas antes de mexer na própria tabela.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>EPCD <strong>negativa</strong> indica bens <strong>complementares</strong>, nunca substitutos. Uma queda no preço de um substituto <strong>reduz</strong> a procura pelo outro.</p></div>
+</section>
+
+<!-- 08 -->
+<section id="renda">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Elasticidade-renda da demanda</h2></div>
+  <div class="def"><span class="tag">Definição</span>Mede quanto a quantidade demandada muda quando a <strong>renda do consumidor</strong> muda. O valor diz que tipo de bem é.</div>
+  <div class="eq">ERD = variação % da quantidade demandada ÷ variação % da renda</div>
+  <div class="ruler" role="table" aria-label="Classificação pela elasticidade-renda">
+    <div class="z-neg"><span class="r-val">ERD &lt; 0</span><span class="r-name">Inferior</span><span class="r-ex">Renda sobe, procura cai.</span></div>
+    <div class="z-zero"><span class="r-val">ERD = 0</span><span class="r-name">Consumo saciado</span><span class="r-ex">Renda muda, procura não.</span></div>
+    <div class="z-pos"><span class="r-val">0 a 1</span><span class="r-name">Normal (necessário)</span><span class="r-ex">Procura sobe menos que a renda.</span></div>
+    <div class="z-pos"><span class="r-val">= 1</span><span class="r-name">Normal (unitário)</span><span class="r-ex">Procura sobe na mesma proporção.</span></div>
+    <div class="z-pos"><span class="r-val">&gt; 1</span><span class="r-name">Superior / luxo</span><span class="r-ex">Procura sobe mais que a renda.</span></div>
+  </div>
+  <h3>Simulação: renda da região sobe 10%</h3>
+  <div class="tbl"><table style="min-width:520px">
+    <thead><tr><th>Produto</th><th>Reação da procura</th><th>ERD</th><th>Tipo</th></tr></thead>
+    <tbody>
+      <tr><td>Casa muito básica</td><td class="num dn">−3%</td><td class="num">−0,3</td><td>Inferior: famílias migram para um padrão melhor</td></tr>
+      <tr><td>Casa padrão econômico</td><td class="num up">+5%</td><td class="num">0,5</td><td>Normal, necessário</td></tr>
+      <tr><td>Casa padrão médio</td><td class="num up">+10%</td><td class="num">1,0</td><td>Normal, unitário</td></tr>
+      <tr><td>Casa alto padrão</td><td class="num up">+25%</td><td class="num">2,5</td><td>Superior / luxo</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Em ciclos de alta de renda, produtos com ERD alta crescem mais rápido. Em crises, são os primeiros a parar. <mark>O mix de produtos da empresa define o quanto ela sofre com cada ciclo.</mark></p></div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Combinando com a oferta</span><span>ERD = 2 e oferta infinitamente elástica (preço fixo). Renda +10% → procura +20%. Como o preço não muda, a <strong>quantidade vendida sobe 20%</strong>.</span></div>
+    <div class="card"><span class="s">Fatia da renda × tipo de bem</span><span>Se a fatia da renda gasta com um bem aumenta quando a renda cai, ele pode ser inferior <strong>ou</strong> normal com ERD menor que 1. A fatia sozinha não define o tipo.</span></div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section id="oferta">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Elasticidade-preço da oferta</h2></div>
+  <div class="def"><span class="tag">Definição</span>Mesma lógica da demanda, do ponto de vista do produtor: quanto a <strong>quantidade ofertada</strong> muda quando o preço muda. Tem os mesmos cinco graus.</div>
+  <div class="eq">EPO = variação % da quantidade ofertada ÷ variação % do preço</div>
+  <div class="grid g2">
+    <div class="card"><h3>Disponibilidade de insumos</h3><span>Insumos fáceis de obter → produtor responde rápido → <strong>oferta mais elástica</strong>. Insumos raros → oferta mais rígida.</span></div>
+    <div class="card"><h3>Tempo para adaptação</h3><span>No curto prazo é difícil ampliar a produção. Com o tempo fica mais fácil, e a <strong>oferta fica mais elástica</strong>.</span></div>
+  </div>
+  <div class="box obra"><span class="tag">Por que a oferta de casas é rígida no curto prazo</span>
+    <ul>
+      <li>Terreno aprovado, licenças e projeto levam meses.</li>
+      <li>A obra em si tem prazo físico.</li>
+      <li>Mão de obra qualificada e alguns insumos não aparecem de um dia para o outro.</li>
+    </ul>
+    <p>Consequência: quando a procura sobe de repente (renda maior, crédito mais barato, estímulo do governo), <mark>a maior parte do efeito vira aumento de preço</mark>, e não casa nova. No longo prazo a oferta responde e o preço se acomoda.</p>
+  </div>
+  <div class="box obra"><span class="tag">Onde a engenharia entra</span><p>Banco de terrenos aprovados, projetos padronizados prontos, fornecedores e equipes já contratados deixam a empresa <strong>mais elástica</strong>: ela consegue aproveitar a alta de preço lançando antes dos concorrentes.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>Um bem ser essencial não torna a oferta dele inelástica. O que deixa a oferta rígida é a <strong>dificuldade de obter insumos</strong> e o pouco tempo para reagir. Moradia é essencial, mas a oferta de casas é rígida por causa de terreno, licença e prazo de obra.</p></div>
+</section>
+
+<!-- Resumo -->
+<section id="resumo">
+  <div class="sec-head"><span class="sec-num">Síntese</span><h2>As 10 ideias que ficam</h2></div>
+  <ol class="cola">
+    <li><span>Elasticidade mede <strong>quanto</strong> uma variável reage à outra, sempre em <strong>variação percentual ÷ variação percentual</strong>.</span></li>
+    <li><span>A EPD é negativa (o sinal costuma ser omitido). Só o <strong>bem de Giffen</strong> tem EPD positiva.</span></li>
+    <li><span>Cinco graus: <strong>0</strong> (vertical), <strong>0 a 1</strong> (inelástica), <strong>1</strong> (unitária), <strong>maior que 1</strong> (elástica), <strong>∞</strong> (horizontal).</span></li>
+    <li><span><strong>Inelástica:</strong> subir o preço aumenta a receita. <strong>Elástica:</strong> subir o preço reduz a receita. <strong>Unitária:</strong> a receita não muda.</span></li>
+    <li><span>Na demanda linear, a elasticidade <strong>varia ao longo da curva</strong>. A receita é máxima no ponto médio, onde ela vale 1.</span></li>
+    <li><span>A demanda é mais elástica com <strong>mais substitutos</strong>, <strong>menos essencialidade</strong>, <strong>mais peso na renda</strong>, <strong>mais tempo</strong> e <strong>menos barreiras à entrada</strong>.</span></li>
+    <li><span>Elasticidade cruzada <strong>positiva</strong> indica substitutos; <strong>negativa</strong>, complementares; <strong>zero</strong>, independentes.</span></li>
+    <li><span>Elasticidade-renda: <strong>menor que 0</strong> inferior, <strong>0</strong> saciado, <strong>0 a 1</strong> necessário, <strong>maior que 1</strong> luxo.</span></li>
+    <li><span>A oferta é mais elástica com <strong>insumos disponíveis</strong> e <strong>mais tempo</strong>. Oferta linear que passa pela origem tem elasticidade 1.</span></li>
+    <li><span>Oferta de casas é rígida no curto prazo: <strong>estímulos à procura viram preço antes de virar casa</strong>.</span></li>
+  </ol>
+</section>
+
+</div>
+</main>
+<footer><div class="wrap">Os números das casas, vendas e rendas são hipotéticos, criados para ilustrar o raciocínio.</div></footer>
+</body>
+</html>

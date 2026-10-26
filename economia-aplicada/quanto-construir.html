@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quanto Construir</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: prancha técnica (mesma série de "Economia da Obra") — cabeçalho com malha milimetrada, chips de navegação fixos, coluna única com esquemas em escala */
+:root{
+  --paper:#f1f4f3; --surface:#ffffff; --ink:#16222a; --muted:#56656d; --line:#cfd8da;
+  --blue:#1d5a89; --blue-soft:#e2ecf4; --supply:#b0512a; --supply-soft:#f7e6dc;
+  --safety:#d9a300; --safety-soft:#fbf1cd; --grid:rgba(29,90,137,.07);
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#10171b; --surface:#172126; --ink:#e3eaec; --muted:#97a6ac; --line:#2a3940;
+  --blue:#72aad6; --blue-soft:#182c3a; --supply:#e48c5e; --supply-soft:#3a2418;
+  --safety:#f0c43a; --safety-soft:#352d12; --grid:rgba(114,170,214,.07); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#10171b; --surface:#172126; --ink:#e3eaec; --muted:#97a6ac; --line:#2a3940;
+  --blue:#72aad6; --blue-soft:#182c3a; --supply:#e48c5e; --supply-soft:#3a2418;
+  --safety:#f0c43a; --safety-soft:#352d12; --grid:rgba(114,170,214,.07); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+header.hero{background-color:var(--surface);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:16px 16px;border-bottom:1px solid var(--line)}
+header.hero .wrap{padding-block:56px 40px;display:grid;gap:18px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+h1{font-family:var(--f-display);font-stretch:118%;font-weight:800;font-size:clamp(2.3rem,7vw,4.2rem);line-height:1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.lede{font-size:1.12rem;max-width:62ch;color:var(--muted);margin:0}
+.formula-hero{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:6px;font-family:var(--f-mono)}
+.frac{display:inline-grid;text-align:center;font-size:14px;line-height:1.3}
+.frac span:first-child{border-bottom:2px solid var(--ink);padding:0 6px 4px}
+.frac span:last-child{padding:4px 6px 0}
+.formula-hero b{font-family:var(--f-display);font-size:1.4rem;color:var(--blue)}
+
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:thin}
+nav.toc a{flex:0 0 auto;font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;padding:5px 10px;border:1px solid var(--line);background:var(--surface);white-space:nowrap}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--blue);border-color:var(--blue);outline:none}
+
+main .wrap{display:grid;gap:72px;padding-block:56px 80px}
+section{display:grid;gap:20px;scroll-margin-top:64px}
+.sec-head{display:grid;gap:6px;border-top:2px solid var(--ink);padding-top:14px}
+.sec-num{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--blue)}
+h2{font-family:var(--f-display);font-stretch:112%;font-weight:750;font-size:clamp(1.6rem,4vw,2.2rem);line-height:1.1;margin:0;text-wrap:balance}
+h3{font-family:var(--f-display);font-stretch:108%;font-weight:700;font-size:1.15rem;margin:0}
+p{margin:0;max-width:68ch}
+strong{font-weight:600}
+mark{background:var(--safety-soft);color:inherit;padding:0 3px;border-bottom:2px solid var(--safety)}
+
+.def{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ink);padding:18px 20px;font-size:1.08rem}
+.def .tag{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+
+.box{padding:16px 18px;display:grid;gap:8px}
+.box .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.box.obra{background:var(--blue-soft);border:1px solid color-mix(in srgb,var(--blue) 35%,transparent)}
+.box.obra .tag{color:var(--blue)}
+.box.alerta{background:var(--safety-soft);border:1px dashed var(--safety)}
+.box.alerta .tag{color:var(--ink)}
+.box ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
+
+.grid{display:grid;gap:12px}
+.g5{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.card .k{font-family:var(--f-display);font-stretch:115%;font-weight:800;font-size:1.25rem;color:var(--blue)}
+.card .s{font-size:.92rem;color:var(--muted)}
+.card.hi{border:2px solid var(--ink)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--paper)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--f-mono);white-space:nowrap}
+
+figure{margin:0;background:var(--surface);border:1px solid var(--line);padding:16px;display:grid;gap:10px;min-width:0}
+figure .svgbox{overflow-x:auto}
+figure svg{display:block;width:100%;height:auto;min-width:300px}
+figcaption{font-size:.88rem;color:var(--muted)}
+svg text{font-family:var(--f-mono);fill:var(--muted);font-size:13px}
+svg .ax{stroke:var(--ink);stroke-width:1.5;fill:none}
+svg .dem{stroke:var(--blue);stroke-width:3;fill:none}
+svg .sup{stroke:var(--supply);stroke-width:3;fill:none}
+svg .dash{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:4 4;fill:none}
+svg .tink{fill:var(--ink)} svg .tb{fill:var(--blue)} svg .ts{fill:var(--supply)}
+svg .fb{fill:var(--blue);fill-opacity:.12}
+svg .dot{fill:var(--ink)} svg .ink{fill:var(--ink)}
+svg .arr{stroke:var(--ink);stroke-width:2;fill:none}
+
+/* cinco graus */
+.graus{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.grau{background:var(--surface);border:1px solid var(--line);padding:12px;display:grid;gap:6px;align-content:start;min-width:0}
+.grau svg{width:100%;height:auto;display:block}
+.grau .v{font-family:var(--f-mono);font-size:12px;color:var(--blue)}
+.grau h3{font-size:1rem}
+.grau p{font-size:.88rem;color:var(--muted)}
+
+/* régua de classificação */
+.ruler{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1px solid var(--line);background:var(--surface);overflow-x:auto}
+.ruler > div{padding:12px 12px 14px;border-right:1px solid var(--line);display:grid;gap:4px;align-content:start;min-width:120px}
+.ruler > div:last-child{border-right:0}
+.ruler .r-val{font-family:var(--f-mono);font-size:13px;font-weight:500}
+.ruler .r-name{font-family:var(--f-display);font-weight:700;font-size:1rem}
+.ruler .r-ex{font-size:.85rem;color:var(--muted)}
+.z-neg{background:var(--supply-soft)} .z-neg .r-val{color:var(--supply)}
+.z-zero{background:var(--paper)}
+.z-pos{background:var(--blue-soft)} .z-pos .r-val{color:var(--blue)}
+
+.eq{font-family:var(--f-mono);font-size:.95rem;background:var(--paper);border:1px solid var(--line);padding:12px 14px;overflow-x:auto;white-space:pre;line-height:1.75}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;border:1px solid var(--line);background:var(--surface)}
+.steps > div{padding:14px 16px;border-right:1px solid var(--line);display:grid;gap:4px;align-content:start}
+.steps > div:last-child{border-right:0}
+.steps .n{font-family:var(--f-display);font-weight:800;font-size:1.4rem;color:var(--blue);line-height:1}
+.steps .c{font-family:var(--f-mono);font-size:.9rem}
+
+.up{color:var(--blue)} .dn{color:var(--supply)}
+
+ol.cola{list-style:none;margin:0;padding:0;display:grid;counter-reset:c;background:var(--surface);border:1px solid var(--line)}
+ol.cola li{counter-increment:c;display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+ol.cola li:last-child{border-bottom:0}
+ol.cola li::before{content:counter(c,decimal-leading-zero);font-family:var(--f-display);font-weight:800;font-size:1.3rem;color:var(--blue);line-height:1.2}
+
+footer .wrap{padding-block:24px 48px;font-family:var(--f-mono);font-size:12px;color:var(--muted);border-top:1px solid var(--line)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media (max-width:560px){.steps > div{border-right:0;border-bottom:1px solid var(--line)}.steps > div:last-child{border-bottom:0}}
+
+svg .cmg{stroke:var(--supply);stroke-width:3;fill:none}
+svg .cme{stroke:var(--blue);stroke-width:3;fill:none}
+svg .cvm{stroke:var(--blue);stroke-width:2.5;stroke-dasharray:7 5;fill:none}
+svg .pr{stroke:var(--ink);stroke-width:2.5;fill:none}
+svg .heavy{stroke:var(--supply);stroke-width:6;fill:none;stroke-linecap:round}
+svg .rect{fill:var(--safety);fill-opacity:.35;stroke:var(--safety);stroke-width:1.5}
+svg .sh{fill:var(--safety);fill-opacity:.4}
+svg .hollow{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+.formula-hero b.big{font-size:2.2rem;letter-spacing:.02em;color:var(--ink)}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.two-svg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.two-svg figure svg{min-width:240px}
+td.l{white-space:normal}
+.pos{color:var(--blue);font-weight:600}.neg{color:var(--supply);font-weight:600}
+
+.trilha{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding:14px 0 0}
+.trilha a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
+.trilha a:hover{color:var(--blue);border-bottom-color:var(--blue)}
+</style>
+</head>
+<body>
+<p class="wrap trilha"><a href="../index.html">Portal</a> / <a href="index.html">Economia aplicada à construção civil</a> / Quanto Construir</p>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Microeconomia aplicada · Incorporação de casas</div>
+    <h1>Quanto Construir</h1>
+    <p class="lede">Preço e procura já são conhecidos. A pergunta agora é da empresa: quantas casas produzir, quando continuar uma obra com prejuízo, quando pausá-la, e o que acontece com o lucro quando outras incorporadoras entram no mesmo mercado.</p>
+    <div class="formula-hero" aria-label="A empresa maximiza o lucro onde a receita marginal é igual ao custo marginal">
+      <b class="big">RMg = CMg</b>
+      <span style="color:var(--muted);font-size:14px">a regra que decide a quantidade de qualquer empresa</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Seções">
+  <div class="wrap">
+    <a href="#mercado">Estruturas</a><a href="#receitas">Receitas</a><a href="#maximizacao">Maximização</a><a href="#perfeita">Concorrência perfeita</a><a href="#firma">Demanda da firma</a><a href="#curto">Equilíbrio</a><a href="#lucro">Lucro</a><a href="#encerramento">Encerramento</a><a href="#oferta">Oferta da firma</a><a href="#mercado-oferta">Oferta do mercado</a><a href="#longo">Longo prazo</a><a href="#algebra">Álgebra</a><a href="#resumo">Resumo</a>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+
+<!-- 01 -->
+<section id="mercado">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Mercado e estruturas de mercado</h2></div>
+  <div class="def"><span class="tag">Definição</span>Mercado é um lugar, <mark>concreto ou abstrato</mark>, que reúne compradores e vendedores de determinado bem. O recorte é livre: mercado de casas do país, do bairro, ou só de casas de dois quartos.</div>
+  <p>A <strong>estrutura</strong> do mercado define como compradores e vendedores interagem e, portanto, como preço e quantidade são determinados. Ela é definida por três critérios:</p>
+  <div class="grid g3">
+    <div class="card"><span class="k">Quantos?</span><span>Número de compradores e de vendedores.</span></div>
+    <div class="card"><span class="k">Iguais?</span><span>Grau de diferenciação do bem.</span></div>
+    <div class="card"><span class="k">Livre?</span><span>Facilidade ou dificuldade de entrar e sair do mercado.</span></div>
+  </div>
+  <div class="tbl"><table style="min-width:780px">
+    <thead><tr><th>Estrutura</th><th>Compradores</th><th>Vendedores</th><th>Produto diferenciado</th><th>Entrada e saída fáceis</th><th>Na incorporadora</th></tr></thead>
+    <tbody>
+      <tr><td>Concorrência perfeita</td><td>Muitos</td><td>Muitos</td><td>Não</td><td>Sim</td><td class="l">Serviços padronizados com muitos prestadores.</td></tr>
+      <tr><td>Monopólio</td><td>Muitos</td><td>Um</td><td>Não</td><td>Não</td><td class="l">Único loteamento aprovado numa cidade pequena.</td></tr>
+      <tr><td>Oligopólio</td><td>Muitos</td><td>Poucos</td><td>Não</td><td>Não</td><td class="l">Poucos fornecedores de um insumo na região.</td></tr>
+      <tr><td>Concorrência monopolística</td><td>Muitos</td><td>Muitos</td><td>Sim</td><td>Sim</td><td class="l">Casas de várias incorporadoras num bairro, cada uma com localização, planta e marca próprias.</td></tr>
+      <tr><td>Monopsônio</td><td>Um</td><td>Muitos</td><td>Não</td><td>Não</td><td class="l">Uma única empresa contratando quase toda a mão de obra de uma cidade pequena.</td></tr>
+      <tr><td>Oligopsônio</td><td>Poucos</td><td>Muitos</td><td>Não</td><td>Não</td><td class="l">Poucas construtoras grandes comprando a produção de muitos pequenos fornecedores.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>A mesma empresa vive em estruturas diferentes ao mesmo tempo: <strong>vendedora</strong> de casas (diferenciadas, em concorrência monopolística), <strong>compradora</strong> de insumos (às vezes diante de poucos fornecedores) e <strong>compradora</strong> de mão de obra. Cada mercado tem a sua regra de formação de preço.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>Concorrência perfeita e monopólio são os dois <strong>extremos</strong>. Nenhum mercado real é de um tipo puro: todos pendem mais para um lado ou para o outro.</p></div>
+</section>
+
+<!-- 02 -->
+<section id="receitas">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Lucro e receitas</h2></div>
+  <p>Para tudo o que segue, vale a hipótese de que a empresa <strong>busca o maior lucro possível</strong>. Há empresas com outros objetivos (cooperativas, ou quem prioriza crescer em clientes), mas a maximização do lucro é o ponto de partida da teoria.</p>
+  <div class="eq" style="text-align:center;font-size:1.1rem">Lucro total (LT) = Receita total (RT) − Custo total (CT)</div>
+  <div class="grid g3">
+    <div class="card"><span class="s">Receita total</span><span class="k">RT = p · q</span><span>Tudo que a empresa recebe.</span></div>
+    <div class="card"><span class="s">Receita média</span><span class="k">RMe = RT ÷ q = p</span><span>Com o mesmo preço para toda unidade, a receita média é o próprio preço.</span></div>
+    <div class="card"><span class="s">Receita marginal</span><span class="k">RMg = ΔRT ÷ Δq</span><span>Quanto a receita total aumenta ao vender <strong>uma unidade a mais</strong>.</span></div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora (hipotético)</span><p>Casa vendida a R$ 660 mil. Com 10 casas, RT = R$ 6.600 mil e RMe = R$ 660 mil. A 11ª casa soma mais R$ 660 mil, então RMg = R$ 660 mil.</p></div>
+</section>
+
+<!-- 03 -->
+<section id="maximizacao">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Maximização do lucro: RMg = CMg</h2></div>
+  <div class="def"><span class="tag">O ponto mais importante</span>Qualquer empresa maximiza o lucro na quantidade em que a <mark>receita marginal é igual ao custo marginal</mark>.</div>
+  <p>Três demonstrações diferentes chegam ao mesmo resultado.</p>
+  <div class="three">
+    <div class="card"><h3>1 · Pela derivada</h3><span>Lucro em função da quantidade: LT(q) = RT(q) − CT(q). O máximo está onde a derivada é zero.</span>
+      <div class="eq" style="padding:8px 10px">dLT/dq = RMg − CMg = 0
+⇒ RMg = CMg</div></div>
+    <div class="card"><h3>2 · Pelo gráfico</h3><span>O lucro é a distância entre as curvas RT e CT. Ela é máxima onde as duas têm a <strong>mesma inclinação</strong>. A inclinação de RT é a RMg e a de CT é o CMg.</span></div>
+    <div class="card"><h3>3 · Pela lógica</h3><span>Se a próxima unidade rende mais do que custa (RMg &gt; CMg), produza. Se custa mais do que rende (CMg &gt; RMg), reduza. Pare quando forem iguais.</span></div>
+  </div>
+  <figure>
+    <div class="svgbox"><svg viewBox="0 0 620 380" role="img" aria-label="Receita total e custo total com a maior distância em 25 casas"><line class="ax" x1="60" y1="20" x2="60" y2="330"/><line class="ax" x1="60" y1="330" x2="500" y2="330"/><g font-size="11"><text x="60.0" y="348" text-anchor="middle">0</text><text x="128.8" y="348" text-anchor="middle">5</text><text x="197.5" y="348" text-anchor="middle">10</text><text x="266.2" y="348" text-anchor="middle">15</text><text x="335.0" y="348" text-anchor="middle">20</text><text x="403.8" y="348" text-anchor="middle">25</text><text x="472.5" y="348" text-anchor="middle">30</text><text x="52" y="334.0" text-anchor="end">0</text><text x="52" y="263.5" text-anchor="end">5.000</text><text x="52" y="193.1" text-anchor="end">10.000</text><text x="52" y="122.6" text-anchor="end">15.000</text><text x="52" y="52.2" text-anchor="end">20.000</text></g><text x="280" y="372" text-anchor="middle" class="tink">Casas por ano</text><text x="14" y="180" text-anchor="middle" class="tink" transform="rotate(-90 14 180)">R$ mil por ano</text><path class="dem" d="M60.0,330.0 L280.0,181.2 L500.0,32.4"/><path class="cmg" d="M60.0,284.9 L65.5,282.9 L71.0,281.1 L76.5,279.3 L82.0,277.6 L87.5,276.0 L93.0,274.5 L98.5,273.1 L104.0,271.8 L109.5,270.5 L115.0,269.3 L120.5,268.2 L126.0,267.1 L131.5,266.1 L137.0,265.1 L142.5,264.2 L148.0,263.3 L153.5,262.5 L159.0,261.7 L164.5,260.9 L170.0,260.2 L175.5,259.5 L181.0,258.8 L186.5,258.1 L192.0,257.4 L197.5,256.7 L203.0,256.1 L208.5,255.4 L214.0,254.7 L219.5,254.0 L225.0,253.3 L230.5,252.5 L236.0,251.7 L241.5,250.9 L247.0,250.1 L252.5,249.2 L258.0,248.3 L263.5,247.4 L269.0,246.3 L274.5,245.3 L280.0,244.1 L285.5,243.0 L291.0,241.7 L296.5,240.3 L302.0,238.9 L307.5,237.4 L313.0,235.8 L318.5,234.2 L324.0,232.4 L329.5,230.5 L335.0,228.5 L340.5,226.5 L346.0,224.3 L351.5,222.0 L357.0,219.5 L362.5,217.0 L368.0,214.3 L373.5,211.4 L379.0,208.5 L384.5,205.4 L390.0,202.1 L395.5,198.7 L401.0,195.2 L406.5,191.4 L412.0,187.6 L417.5,183.5 L423.0,179.3 L428.5,174.9 L434.0,170.3 L439.5,165.5 L445.0,160.5 L450.5,155.4 L456.0,150.0 L461.5,144.5 L467.0,138.7 L472.5,132.7 L478.0,126.5 L483.5,120.1 L489.0,113.5 L494.5,106.6 L500.0,99.5"/><path class="dash" d="M335.0,239.8 L403.8,193.3 L472.5,146.8" style="stroke:var(--ink);stroke-width:1.6"/><line x1="403.8" y1="193.3" x2="403.8" y2="97.5" class="arr" style="stroke:var(--safety);stroke-width:5"/><circle class="dot" cx="403.8" cy="193.3" r="5"/><circle class="dot" cx="403.8" cy="97.5" r="5"/><text class="tink" x="395.8" y="141.4" text-anchor="end" font-weight="500">lucro máximo</text><text class="tink" x="395.8" y="156.4" text-anchor="end" font-weight="500">R$ 6.800 mil</text><text class="tb" x="496.0" y="24.4" text-anchor="end" font-weight="500">RT = 660 · q</text><text class="ts" x="496.0" y="119.5" text-anchor="end" font-weight="500">CT</text><text class="tink" x="68.2" y="276.9">CT em q = 0 é o custo fixo: 3.200</text><text class="tink" x="403.8" y="348" text-anchor="middle" font-weight="500" font-size="11" dy="14"></text></svg></div>
+    <figcaption>Modelo hipotético de uma construtora, com preço de R$ 660 mil por casa. A distância entre RT e CT é máxima em 25 casas por ano, onde a tangente ao CT (tracejada) é paralela à RT.</figcaption>
+  </figure>
+  <h3>A lógica, casa por casa</h3>
+  <div class="tbl"><table style="min-width:560px">
+    <thead><tr><th>Casa nº</th><th>Receita da casa (RMg)</th><th>Custo da casa (CMg)</th><th>Lucro da casa extra</th><th>Decisão</th></tr></thead>
+    <tbody>
+      <tr><td class="num">22</td><td class="num">660,0</td><td class="num">465,6</td><td class="num pos">+194,4</td><td>Construir</td></tr>
+      <tr><td class="num">23</td><td class="num">660,0</td><td class="num">525,6</td><td class="num pos">+134,4</td><td>Construir</td></tr>
+      <tr><td class="num">24</td><td class="num">660,0</td><td class="num">590,4</td><td class="num pos">+69,6</td><td>Construir</td></tr>
+      <tr><td class="num">25</td><td class="num">660,0</td><td class="num">660,0</td><td class="num">0</td><td><strong>Ponto ótimo</strong></td></tr>
+      <tr><td class="num">26</td><td class="num">660,0</td><td class="num">734,4</td><td class="num neg">−74,4</td><td>Não construir</td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:.9rem;color:var(--muted)">Valores em R$ mil.</p>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>A pergunta que decide o tamanho da fase não é "qual é o custo médio da obra", e sim <mark>"quanto custa e quanto rende a próxima casa"</mark>. Depois da casa 25, cada unidade extra exige hora extra, equipamento adicional ou frentes de obra mais caras, e destrói lucro.</p></div>
+</section>
+
+<!-- 04 -->
+<section id="perfeita">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Concorrência perfeita</h2></div>
+  <div class="def"><span class="tag">Característica central</span>Consumidores e firmas são <mark>tomadores de preço</mark> (ou "aceitadores de preço"): nenhum deles consegue, sozinho, influenciar o preço de mercado. Esse mercado é chamado de <strong>competitivo</strong>.</div>
+  <div class="grid g2">
+    <div class="card"><h3>1 · Mercado atomizado</h3><span>Um número muito grande de compradores e vendedores, cada um minúsculo diante do mercado. Quem cobrar acima do mercado fica sem clientes.</span></div>
+    <div class="card"><h3>2 · Produtos homogêneos</h3><span>Nenhuma diferença relevante entre os produtos para o consumidor: sem preferência por marca ou por localização.</span></div>
+    <div class="card"><h3>3 · Informação completa</h3><span>Todos conhecem o preço de mercado. Os consumidores conhecem sua renda e utilidade; as empresas conhecem seus custos e sua produção.</span></div>
+    <div class="card"><h3>4 · Livre entrada e saída</h3><span>Sem barreiras como patentes ou restrições legais. Isso mantém o mercado competitivo.</span></div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>O mercado de casas <strong>não</strong> é de concorrência perfeita: a localização já diferencia o produto, e terreno e licença são barreiras de entrada. Mesmo assim o modelo é útil como <mark>ponto de referência</mark>: quanto mais padronizado o produto e mais fácil a entrada, mais o mercado se comporta como ele. A regra de decisão sobre quantidade, a regra de pausar a obra e a pressão de longo prazo sobre o lucro valem como lente para qualquer mercado.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>Se existe <strong>preferência</strong> por local, marca ou qualidade, o produto não é homogêneo e o mercado não é de concorrência perfeita.</p></div>
+</section>
+
+<!-- 05 -->
+<section id="firma">
+  <div class="sec-head"><span class="sec-num">05</span><h2>A demanda da firma competitiva</h2></div>
+  <p>O mercado tem uma curva de demanda decrescente e uma oferta crescente, que se cruzam no equilíbrio (P*, Q*). Para a firma individual, porém, o preço já está dado.</p>
+  <div class="two-svg">
+    <figure><div class="svgbox"><svg viewBox="0 0 280 215" role="img" aria-label="Mercado: oferta e demanda cruzando no preço de equilíbrio"><line class="ax" x1="30" y1="15" x2="30" y2="185"/><line class="ax" x1="30" y1="185" x2="260" y2="185"/><line class="dem" x1="45" y1="30" x2="240" y2="170"/><line class="sup" x1="45" y1="170" x2="240" y2="30"/><line class="dash" x1="30" y1="100" x2="142" y2="100"/><line class="dash" x1="142" y1="100" x2="142" y2="185"/><circle class="dot" cx="142.5" cy="100" r="6"/><text class="tb" x="228" y="162" font-size="12">D</text><text class="ts" x="228" y="46" font-size="12">O</text><text class="tink" x="24" y="104" text-anchor="end" font-size="12">P*</text><text class="tink" x="142" y="200" text-anchor="middle" font-size="12">Q*</text></svg></div><figcaption><strong>Mercado:</strong> o equilíbrio define o preço P*.</figcaption></figure>
+    <figure><div class="svgbox"><svg viewBox="0 0 280 215" role="img" aria-label="Firma competitiva: demanda horizontal ao preço de mercado"><line class="ax" x1="30" y1="15" x2="30" y2="185"/><line class="ax" x1="30" y1="185" x2="260" y2="185"/><line class="pr" x1="30" y1="100" x2="250" y2="100"/><text class="tink" x="24" y="104" text-anchor="end" font-size="12">P*</text><text class="tink" x="140" y="84" text-anchor="middle" font-size="12" font-weight="500">D = RMe = RMg = P*</text><text class="tink" x="145" y="205" text-anchor="middle" font-size="12">Quantidade da firma</text></svg></div><figcaption><strong>Firma competitiva:</strong> a demanda que ela enfrenta é <strong>horizontal</strong>, na altura de P*.</figcaption></figure>
+  </div>
+  <div class="def"><span class="tag">Consequência</span>A unidade extra sempre rende o preço de mercado. Logo, na concorrência perfeita: <mark>RMg = p = RMe</mark>. A receita total cresce em linha reta.</div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Uma empresa pequena num mercado de produto muito padronizado vende mais casas sem derrubar o preço da região. Cada casa extra entra pelo preço de mercado.</p></div>
+</section>
+
+<!-- 06 -->
+<section id="curto">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Equilíbrio da firma no curto prazo</h2></div>
+  <div class="def"><span class="tag">Condição</span>A firma competitiva maximiza o lucro quando <mark>RMg = CMg = p</mark> <strong>e o custo marginal é crescente</strong>.</div>
+  <p>As curvas de custo médio (CMe) e de custo variável médio (CVMe) cruzam a curva de custo marginal exatamente nos seus pontos <strong>mínimos</strong>.</p>
+  <figure>
+    <div class="svgbox"><svg viewBox="0 0 620 380" role="img" aria-label="Preço igual ao custo marginal em dois pontos, só o trecho crescente maximiza o lucro"><line class="ax" x1="60" y1="20" x2="60" y2="330"/><line class="ax" x1="60" y1="330" x2="500" y2="330"/><g font-size="11"><text x="60.0" y="348" text-anchor="middle">0</text><text x="128.8" y="348" text-anchor="middle">5</text><text x="197.5" y="348" text-anchor="middle">10</text><text x="266.2" y="348" text-anchor="middle">15</text><text x="335.0" y="348" text-anchor="middle">20</text><text x="403.8" y="348" text-anchor="middle">25</text><text x="472.5" y="348" text-anchor="middle">30</text><text x="52" y="334.0" text-anchor="end">0</text><text x="52" y="256.5" text-anchor="end">180</text><text x="52" y="179.0" text-anchor="end">360</text><text x="52" y="101.5" text-anchor="end">540</text><text x="52" y="24.0" text-anchor="end">720</text></g><text x="280" y="372" text-anchor="middle" class="tink">Casas por ano</text><text x="14" y="180" text-anchor="middle" class="tink" transform="rotate(-90 14 180)">R$ mil por casa</text><polygon class="sh" points="94.4,220.2 97.8,224.0 101.2,227.7 104.7,231.3 108.1,234.7 111.6,238.0 115.0,241.1 118.4,244.2 121.9,247.1 125.3,249.9 128.8,252.5 132.2,255.0 135.6,257.4 139.1,259.7 142.5,261.8 145.9,263.8 149.4,265.7 152.8,267.4 156.2,269.0 159.7,270.5 163.1,271.9 166.6,273.1 170.0,274.2 173.4,275.2 176.9,276.0 180.3,276.7 183.8,277.3 187.2,277.8 190.6,278.1 194.1,278.3 197.5,278.3 200.9,278.3 204.4,278.1 207.8,277.8 211.2,277.3 214.7,276.7 218.1,276.0 221.6,275.2 225.0,274.2 228.4,273.1 231.9,271.9 235.3,270.5 238.8,269.0 242.2,267.4 245.6,265.7 249.1,263.8 252.5,261.8 255.9,259.7 259.4,257.4 262.8,255.0 266.2,252.5 269.7,249.9 273.1,247.1 276.6,244.2 280.0,241.1 283.4,238.0 286.9,234.7 290.3,231.3 293.8,227.7 297.2,224.0 300.6,220.2 300.6,220.2 94.4,220.2"/><path class="cmg" d="M60.0,175.0 L63.5,180.3 L67.1,185.4 L70.6,190.4 L74.2,195.2 L77.7,200.0 L81.3,204.5 L84.8,209.0 L88.4,213.3 L91.9,217.4 L95.5,221.5 L99.0,225.3 L102.6,229.1 L106.1,232.7 L109.7,236.2 L113.2,239.5 L116.8,242.7 L120.3,245.8 L123.9,248.7 L127.4,251.5 L131.0,254.1 L134.5,256.7 L138.1,259.0 L141.6,261.3 L145.2,263.4 L148.7,265.3 L152.3,267.2 L155.8,268.8 L159.4,270.4 L162.9,271.8 L166.5,273.1 L170.0,274.2 L173.6,275.2 L177.1,276.1 L180.7,276.8 L184.2,277.4 L187.8,277.8 L191.3,278.1 L194.9,278.3 L198.4,278.3 L202.0,278.2 L205.5,278.0 L209.1,277.6 L212.6,277.1 L216.2,276.4 L219.7,275.6 L223.3,274.7 L226.8,273.6 L230.4,272.4 L233.9,271.1 L237.5,269.6 L241.0,268.0 L244.6,266.2 L248.1,264.3 L251.6,262.3 L255.2,260.1 L258.7,257.8 L262.3,255.4 L265.8,252.8 L269.4,250.1 L272.9,247.2 L276.5,244.2 L280.0,241.1 L283.6,237.8 L287.1,234.4 L290.7,230.9 L294.2,227.2 L297.8,223.4 L301.3,219.4 L304.9,215.3 L308.4,211.1 L312.0,206.7 L315.5,202.2 L319.1,197.5 L322.6,192.8 L326.2,187.8 L329.7,182.8 L333.3,177.6 L336.8,172.2 L340.4,166.8 L343.9,161.1 L347.5,155.4 L351.0,149.5 L354.6,143.5 L358.1,137.3 L361.7,131.0 L365.2,124.6 L368.8,118.0 L372.3,111.3 L375.9,104.4 L379.4,97.5 L383.0,90.3 L386.5,83.1 L390.1,75.7 L393.6,68.1 L397.2,60.5 L400.7,52.6 L404.3,44.7 L407.8,36.6 L411.4,28.4 L414.9,20.0"/><path class="cme" d="M153.5,26.7 L157.7,37.0 L161.8,46.6 L166.0,55.4 L170.1,63.7 L174.3,71.3 L178.5,78.5 L182.6,85.3 L186.8,91.6 L190.9,97.5 L195.1,103.0 L199.3,108.3 L203.4,113.2 L207.6,117.9 L211.7,122.2 L215.9,126.4 L220.1,130.2 L224.2,133.9 L228.4,137.4 L232.5,140.6 L236.7,143.7 L240.8,146.6 L245.0,149.3 L249.2,151.8 L253.3,154.2 L257.5,156.4 L261.6,158.5 L265.8,160.4 L270.0,162.2 L274.1,163.9 L278.3,165.4 L282.4,166.9 L286.6,168.1 L290.8,169.3 L294.9,170.4 L299.1,171.3 L303.2,172.1 L307.4,172.8 L311.6,173.5 L315.7,174.0 L319.9,174.4 L324.0,174.7 L328.2,174.9 L332.4,175.0 L336.5,175.0 L340.7,174.9 L344.8,174.7 L349.0,174.5 L353.1,174.1 L357.3,173.7 L361.5,173.1 L365.6,172.5 L369.8,171.8 L373.9,171.0 L378.1,170.2 L382.3,169.2 L386.4,168.2 L390.6,167.0 L394.7,165.8 L398.9,164.5 L403.1,163.2 L407.2,161.7 L411.4,160.2 L415.5,158.6 L419.7,156.9 L423.9,155.2 L428.0,153.3 L432.2,151.4 L436.3,149.5 L440.5,147.4 L444.7,145.3 L448.8,143.1 L453.0,140.8 L457.1,138.4 L461.3,136.0 L465.5,133.5 L469.6,130.9 L473.8,128.3 L477.9,125.5 L482.1,122.7 L486.2,119.9"/><path class="cvm" d="M60.0,175.0 L65.3,179.0 L70.7,182.8 L76.0,186.5 L81.3,190.2 L86.6,193.7 L92.0,197.2 L97.3,200.5 L102.6,203.7 L108.0,206.8 L113.3,209.9 L118.6,212.8 L123.9,215.6 L129.3,218.3 L134.6,220.9 L139.9,223.4 L145.2,225.8 L150.6,228.1 L155.9,230.3 L161.2,232.4 L166.6,234.4 L171.9,236.3 L177.2,238.1 L182.5,239.7 L187.9,241.3 L193.2,242.8 L198.5,244.1 L203.9,245.4 L209.2,246.6 L214.5,247.6 L219.8,248.6 L225.2,249.4 L230.5,250.2 L235.8,250.8 L241.2,251.4 L246.5,251.8 L251.8,252.1 L257.1,252.3 L262.5,252.5 L267.8,252.5 L273.1,252.4 L278.5,252.2 L283.8,251.9 L289.1,251.5 L294.4,251.1 L299.8,250.5 L305.1,249.8 L310.4,248.9 L315.8,248.0 L321.1,247.0 L326.4,245.9 L331.7,244.7 L337.1,243.4 L342.4,241.9 L347.7,240.4 L353.0,238.8 L358.4,237.0 L363.7,235.2 L369.0,233.3 L374.4,231.2 L379.7,229.1 L385.0,226.8 L390.3,224.4 L395.7,222.0 L401.0,219.4 L406.3,216.8 L411.7,214.0 L417.0,211.1 L422.3,208.1 L427.6,205.0 L433.0,201.9 L438.3,198.6 L443.6,195.2 L449.0,191.7 L454.3,188.1 L459.6,184.4 L464.9,180.6 L470.3,176.7 L475.6,172.7 L480.9,168.5 L486.2,164.3"/><text class="ts" x="420.9" y="30" font-weight="500">CMg</text><text class="tb" x="482.2" y="111.9" text-anchor="end" font-weight="500">CMe</text><text class="tb" x="482.2" y="156.3" text-anchor="end" font-weight="500">CVMe</text><line class="pr" x1="60" y1="220.2" x2="500" y2="220.2"/><text class="tink" x="508" y="224.2" font-weight="500">p = RMg = 255</text><line class="dash" x1="94.4" y1="220.2" x2="94.4" y2="330"/><circle class="hollow" cx="94.4" cy="220.2" r="6"/><line class="dash" x1="300.6" y1="220.2" x2="300.6" y2="330"/><circle class="dot" cx="300.6" cy="220.2" r="6"/><text class="tink" x="94.4" y="206.2" text-anchor="middle" font-weight="500">q = 2,5</text><text class="tink" x="310.6" y="206.2" font-weight="500">q* = 17,5</text></svg></div>
+    <figcaption>Com preço de R$ 255 mil, o custo marginal iguala o preço em dois pontos: 2,5 e 17,5 casas por ano. A área sombreada é o lucro que a empresa perderia ao parar em 2,5.</figcaption>
+  </figure>
+  <div class="grid g2">
+    <div class="card"><span class="s">Produzir menos do que q*</span><span>Entre 2,5 e 17,5 cada casa rende mais do que custa (RMg &gt; CMg). Parar em 2,5 deixa esse lucro na mesa.</span></div>
+    <div class="card"><span class="s">Produzir mais do que q*</span><span>Depois de 17,5 cada casa custa mais do que rende (CMg &gt; RMg). Cada unidade a mais reduz o lucro.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>Dois pontos com CMg = p <strong>não</strong> significam dois máximos. Só vale o ponto em que o custo marginal está <strong>crescendo</strong>. No ponto de curva decrescente (2,5), produzir mais ainda aumenta o lucro.</p></div>
+</section>
+
+<!-- 07 -->
+<section id="lucro">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Lucro de curto prazo no gráfico</h2></div>
+  <div class="def"><span class="tag">Como ler</span>O lucro é a área de um <strong>retângulo</strong>: altura = preço − custo médio, largura = quantidade em que RMg = CMg.</div>
+  <figure>
+    <div class="svgbox"><svg viewBox="0 0 620 380" role="img" aria-label="Lucro de curto prazo como retângulo entre preço e custo médio"><line class="ax" x1="60" y1="20" x2="60" y2="330"/><line class="ax" x1="60" y1="330" x2="500" y2="330"/><g font-size="11"><text x="60.0" y="348" text-anchor="middle">0</text><text x="128.8" y="348" text-anchor="middle">5</text><text x="197.5" y="348" text-anchor="middle">10</text><text x="266.2" y="348" text-anchor="middle">15</text><text x="335.0" y="348" text-anchor="middle">20</text><text x="403.8" y="348" text-anchor="middle">25</text><text x="472.5" y="348" text-anchor="middle">30</text><text x="52" y="334.0" text-anchor="end">0</text><text x="52" y="256.5" text-anchor="end">180</text><text x="52" y="179.0" text-anchor="end">360</text><text x="52" y="166.9" text-anchor="end">388</text><text x="52" y="101.5" text-anchor="end">540</text><text x="52" y="49.8" text-anchor="end">660</text></g><text x="280" y="372" text-anchor="middle" class="tink">Casas por ano</text><text x="14" y="180" text-anchor="middle" class="tink" transform="rotate(-90 14 180)">R$ mil por casa</text><rect class="rect" x="60" y="45.8" width="343.8" height="117.1"/><path class="cmg" d="M60.0,175.0 L63.5,180.3 L67.1,185.4 L70.6,190.4 L74.2,195.2 L77.7,200.0 L81.3,204.5 L84.8,209.0 L88.4,213.3 L91.9,217.4 L95.5,221.5 L99.0,225.3 L102.6,229.1 L106.1,232.7 L109.7,236.2 L113.2,239.5 L116.8,242.7 L120.3,245.8 L123.9,248.7 L127.4,251.5 L131.0,254.1 L134.5,256.7 L138.1,259.0 L141.6,261.3 L145.2,263.4 L148.7,265.3 L152.3,267.2 L155.8,268.8 L159.4,270.4 L162.9,271.8 L166.5,273.1 L170.0,274.2 L173.6,275.2 L177.1,276.1 L180.7,276.8 L184.2,277.4 L187.8,277.8 L191.3,278.1 L194.9,278.3 L198.4,278.3 L202.0,278.2 L205.5,278.0 L209.1,277.6 L212.6,277.1 L216.2,276.4 L219.7,275.6 L223.3,274.7 L226.8,273.6 L230.4,272.4 L233.9,271.1 L237.5,269.6 L241.0,268.0 L244.6,266.2 L248.1,264.3 L251.6,262.3 L255.2,260.1 L258.7,257.8 L262.3,255.4 L265.8,252.8 L269.4,250.1 L272.9,247.2 L276.5,244.2 L280.0,241.1 L283.6,237.8 L287.1,234.4 L290.7,230.9 L294.2,227.2 L297.8,223.4 L301.3,219.4 L304.9,215.3 L308.4,211.1 L312.0,206.7 L315.5,202.2 L319.1,197.5 L322.6,192.8 L326.2,187.8 L329.7,182.8 L333.3,177.6 L336.8,172.2 L340.4,166.8 L343.9,161.1 L347.5,155.4 L351.0,149.5 L354.6,143.5 L358.1,137.3 L361.7,131.0 L365.2,124.6 L368.8,118.0 L372.3,111.3 L375.9,104.4 L379.4,97.5 L383.0,90.3 L386.5,83.1 L390.1,75.7 L393.6,68.1 L397.2,60.5 L400.7,52.6 L404.3,44.7 L407.8,36.6 L411.4,28.4 L414.9,20.0"/><path class="cme" d="M153.5,26.7 L157.7,37.0 L161.8,46.6 L166.0,55.4 L170.1,63.7 L174.3,71.3 L178.5,78.5 L182.6,85.3 L186.8,91.6 L190.9,97.5 L195.1,103.0 L199.3,108.3 L203.4,113.2 L207.6,117.9 L211.7,122.2 L215.9,126.4 L220.1,130.2 L224.2,133.9 L228.4,137.4 L232.5,140.6 L236.7,143.7 L240.8,146.6 L245.0,149.3 L249.2,151.8 L253.3,154.2 L257.5,156.4 L261.6,158.5 L265.8,160.4 L270.0,162.2 L274.1,163.9 L278.3,165.4 L282.4,166.9 L286.6,168.1 L290.8,169.3 L294.9,170.4 L299.1,171.3 L303.2,172.1 L307.4,172.8 L311.6,173.5 L315.7,174.0 L319.9,174.4 L324.0,174.7 L328.2,174.9 L332.4,175.0 L336.5,175.0 L340.7,174.9 L344.8,174.7 L349.0,174.5 L353.1,174.1 L357.3,173.7 L361.5,173.1 L365.6,172.5 L369.8,171.8 L373.9,171.0 L378.1,170.2 L382.3,169.2 L386.4,168.2 L390.6,167.0 L394.7,165.8 L398.9,164.5 L403.1,163.2 L407.2,161.7 L411.4,160.2 L415.5,158.6 L419.7,156.9 L423.9,155.2 L428.0,153.3 L432.2,151.4 L436.3,149.5 L440.5,147.4 L444.7,145.3 L448.8,143.1 L453.0,140.8 L457.1,138.4 L461.3,136.0 L465.5,133.5 L469.6,130.9 L473.8,128.3 L477.9,125.5 L482.1,122.7 L486.2,119.9"/><path class="cvm" d="M60.0,175.0 L65.3,179.0 L70.7,182.8 L76.0,186.5 L81.3,190.2 L86.6,193.7 L92.0,197.2 L97.3,200.5 L102.6,203.7 L108.0,206.8 L113.3,209.9 L118.6,212.8 L123.9,215.6 L129.3,218.3 L134.6,220.9 L139.9,223.4 L145.2,225.8 L150.6,228.1 L155.9,230.3 L161.2,232.4 L166.6,234.4 L171.9,236.3 L177.2,238.1 L182.5,239.7 L187.9,241.3 L193.2,242.8 L198.5,244.1 L203.9,245.4 L209.2,246.6 L214.5,247.6 L219.8,248.6 L225.2,249.4 L230.5,250.2 L235.8,250.8 L241.2,251.4 L246.5,251.8 L251.8,252.1 L257.1,252.3 L262.5,252.5 L267.8,252.5 L273.1,252.4 L278.5,252.2 L283.8,251.9 L289.1,251.5 L294.4,251.1 L299.8,250.5 L305.1,249.8 L310.4,248.9 L315.8,248.0 L321.1,247.0 L326.4,245.9 L331.7,244.7 L337.1,243.4 L342.4,241.9 L347.7,240.4 L353.0,238.8 L358.4,237.0 L363.7,235.2 L369.0,233.3 L374.4,231.2 L379.7,229.1 L385.0,226.8 L390.3,224.4 L395.7,222.0 L401.0,219.4 L406.3,216.8 L411.7,214.0 L417.0,211.1 L422.3,208.1 L427.6,205.0 L433.0,201.9 L438.3,198.6 L443.6,195.2 L449.0,191.7 L454.3,188.1 L459.6,184.4 L464.9,180.6 L470.3,176.7 L475.6,172.7 L480.9,168.5 L486.2,164.3"/><text class="ts" x="420.9" y="30" font-weight="500">CMg</text><text class="tb" x="482.2" y="111.9" text-anchor="end" font-weight="500">CMe</text><text class="tb" x="482.2" y="156.3" text-anchor="end" font-weight="500">CVMe</text><line class="pr" x1="60" y1="45.8" x2="500" y2="45.8"/><text class="tink" x="508" y="49.8" font-weight="500">p = 660</text><line class="dash" x1="403.8" y1="45.8" x2="403.8" y2="330"/><circle class="dot" cx="403.8" cy="45.8" r="6"/><circle class="dot" cx="403.8" cy="162.9" r="5"/><text class="tink" x="236" y="86" font-weight="500">Lucro = 25 × 272</text><text class="tink" x="236" y="102" font-weight="500">= R$ 6.800 mil</text><text class="tink" x="403.8" y="365" text-anchor="middle" font-size="11" font-weight="500" dy="-30"></text></svg></div>
+    <figcaption>Preço de R$ 660 mil. Em 25 casas, o custo médio é R$ 388 mil: lucro por casa de R$ 272 mil, lucro total de R$ 6.800 mil.</figcaption>
+  </figure>
+  <div class="tbl"><table style="min-width:520px">
+    <thead><tr><th>Conta</th><th>Cálculo</th><th>Resultado (R$ mil)</th></tr></thead>
+    <tbody>
+      <tr><td>Receita total</td><td class="num">660 × 25</td><td class="num">16.500</td></tr>
+      <tr><td>Custo total</td><td class="num">388 × 25</td><td class="num">9.700</td></tr>
+      <tr><td>Lucro</td><td class="num">16.500 − 9.700</td><td class="num pos">6.800</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 08 -->
+<section id="encerramento">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Prejuízo e encerramento das atividades</h2></div>
+  <p>Quando o preço não cobre o custo médio, há prejuízo. A questão é se vale mais <strong>continuar produzindo</strong> ou <strong>parar</strong>. Parar não elimina o custo fixo, então o prejuízo de quem para é exatamente <strong>−CF</strong>.</p>
+  <div class="eq">Parar compensa quando:   −CF  &gt;  p·q − CV − CF
+                        0  &gt;  p·q − CV
+                       CV  &gt;  p·q
+                  CV / q  &gt;  p        →   CVMe &gt; p</div>
+  <div class="def"><span class="tag">Regra de encerramento</span>A firma competitiva deve encerrar as atividades quando <mark>p &lt; CVMe</mark>. O preço de encerramento é o <strong>CVMe mínimo</strong>.</div>
+  <div class="box alerta"><span class="tag">⚠ Atenção aos termos</span><p><strong>Encerrar</strong> as atividades é "deixar de produzir" por ora, e não necessariamente sair do mercado. A <strong>saída</strong> é a decisão definitiva e depende da análise de longo prazo: ocorre quando não há perspectiva de lucro nem no curto nem no longo prazo.</p></div>
+
+  <h3>As cinco situações</h3>
+  <figure>
+    <div class="svgbox"><svg viewBox="0 0 700 380" role="img" aria-label="Cinco situações de preço em relação ao custo médio e ao custo variável médio"><line class="ax" x1="60" y1="20" x2="60" y2="330"/><line class="ax" x1="60" y1="330" x2="500" y2="330"/><g font-size="11"><text x="60.0" y="348" text-anchor="middle">0</text><text x="128.8" y="348" text-anchor="middle">5</text><text x="197.5" y="348" text-anchor="middle">10</text><text x="266.2" y="348" text-anchor="middle">15</text><text x="335.0" y="348" text-anchor="middle">20</text><text x="403.8" y="348" text-anchor="middle">25</text><text x="472.5" y="348" text-anchor="middle">30</text><text x="52" y="334.0" text-anchor="end">0</text><text x="52" y="256.5" text-anchor="end">180</text><text x="52" y="179.0" text-anchor="end">360</text><text x="52" y="101.5" text-anchor="end">540</text><text x="52" y="24.0" text-anchor="end">720</text></g><text x="280" y="372" text-anchor="middle" class="tink">Casas por ano</text><text x="14" y="180" text-anchor="middle" class="tink" transform="rotate(-90 14 180)">R$ mil por casa</text><path class="cmg" d="M60.0,175.0 L63.5,180.3 L67.1,185.4 L70.6,190.4 L74.2,195.2 L77.7,200.0 L81.3,204.5 L84.8,209.0 L88.4,213.3 L91.9,217.4 L95.5,221.5 L99.0,225.3 L102.6,229.1 L106.1,232.7 L109.7,236.2 L113.2,239.5 L116.8,242.7 L120.3,245.8 L123.9,248.7 L127.4,251.5 L131.0,254.1 L134.5,256.7 L138.1,259.0 L141.6,261.3 L145.2,263.4 L148.7,265.3 L152.3,267.2 L155.8,268.8 L159.4,270.4 L162.9,271.8 L166.5,273.1 L170.0,274.2 L173.6,275.2 L177.1,276.1 L180.7,276.8 L184.2,277.4 L187.8,277.8 L191.3,278.1 L194.9,278.3 L198.4,278.3 L202.0,278.2 L205.5,278.0 L209.1,277.6 L212.6,277.1 L216.2,276.4 L219.7,275.6 L223.3,274.7 L226.8,273.6 L230.4,272.4 L233.9,271.1 L237.5,269.6 L241.0,268.0 L244.6,266.2 L248.1,264.3 L251.6,262.3 L255.2,260.1 L258.7,257.8 L262.3,255.4 L265.8,252.8 L269.4,250.1 L272.9,247.2 L276.5,244.2 L280.0,241.1 L283.6,237.8 L287.1,234.4 L290.7,230.9 L294.2,227.2 L297.8,223.4 L301.3,219.4 L304.9,215.3 L308.4,211.1 L312.0,206.7 L315.5,202.2 L319.1,197.5 L322.6,192.8 L326.2,187.8 L329.7,182.8 L333.3,177.6 L336.8,172.2 L340.4,166.8 L343.9,161.1 L347.5,155.4 L351.0,149.5 L354.6,143.5 L358.1,137.3 L361.7,131.0 L365.2,124.6 L368.8,118.0 L372.3,111.3 L375.9,104.4 L379.4,97.5 L383.0,90.3 L386.5,83.1 L390.1,75.7 L393.6,68.1 L397.2,60.5 L400.7,52.6 L404.3,44.7 L407.8,36.6 L411.4,28.4 L414.9,20.0"/><path class="cme" d="M153.5,26.7 L157.7,37.0 L161.8,46.6 L166.0,55.4 L170.1,63.7 L174.3,71.3 L178.5,78.5 L182.6,85.3 L186.8,91.6 L190.9,97.5 L195.1,103.0 L199.3,108.3 L203.4,113.2 L207.6,117.9 L211.7,122.2 L215.9,126.4 L220.1,130.2 L224.2,133.9 L228.4,137.4 L232.5,140.6 L236.7,143.7 L240.8,146.6 L245.0,149.3 L249.2,151.8 L253.3,154.2 L257.5,156.4 L261.6,158.5 L265.8,160.4 L270.0,162.2 L274.1,163.9 L278.3,165.4 L282.4,166.9 L286.6,168.1 L290.8,169.3 L294.9,170.4 L299.1,171.3 L303.2,172.1 L307.4,172.8 L311.6,173.5 L315.7,174.0 L319.9,174.4 L324.0,174.7 L328.2,174.9 L332.4,175.0 L336.5,175.0 L340.7,174.9 L344.8,174.7 L349.0,174.5 L353.1,174.1 L357.3,173.7 L361.5,173.1 L365.6,172.5 L369.8,171.8 L373.9,171.0 L378.1,170.2 L382.3,169.2 L386.4,168.2 L390.6,167.0 L394.7,165.8 L398.9,164.5 L403.1,163.2 L407.2,161.7 L411.4,160.2 L415.5,158.6 L419.7,156.9 L423.9,155.2 L428.0,153.3 L432.2,151.4 L436.3,149.5 L440.5,147.4 L444.7,145.3 L448.8,143.1 L453.0,140.8 L457.1,138.4 L461.3,136.0 L465.5,133.5 L469.6,130.9 L473.8,128.3 L477.9,125.5 L482.1,122.7 L486.2,119.9"/><path class="cvm" d="M60.0,175.0 L65.3,179.0 L70.7,182.8 L76.0,186.5 L81.3,190.2 L86.6,193.7 L92.0,197.2 L97.3,200.5 L102.6,203.7 L108.0,206.8 L113.3,209.9 L118.6,212.8 L123.9,215.6 L129.3,218.3 L134.6,220.9 L139.9,223.4 L145.2,225.8 L150.6,228.1 L155.9,230.3 L161.2,232.4 L166.6,234.4 L171.9,236.3 L177.2,238.1 L182.5,239.7 L187.9,241.3 L193.2,242.8 L198.5,244.1 L203.9,245.4 L209.2,246.6 L214.5,247.6 L219.8,248.6 L225.2,249.4 L230.5,250.2 L235.8,250.8 L241.2,251.4 L246.5,251.8 L251.8,252.1 L257.1,252.3 L262.5,252.5 L267.8,252.5 L273.1,252.4 L278.5,252.2 L283.8,251.9 L289.1,251.5 L294.4,251.1 L299.8,250.5 L305.1,249.8 L310.4,248.9 L315.8,248.0 L321.1,247.0 L326.4,245.9 L331.7,244.7 L337.1,243.4 L342.4,241.9 L347.7,240.4 L353.0,238.8 L358.4,237.0 L363.7,235.2 L369.0,233.3 L374.4,231.2 L379.7,229.1 L385.0,226.8 L390.3,224.4 L395.7,222.0 L401.0,219.4 L406.3,216.8 L411.7,214.0 L417.0,211.1 L422.3,208.1 L427.6,205.0 L433.0,201.9 L438.3,198.6 L443.6,195.2 L449.0,191.7 L454.3,188.1 L459.6,184.4 L464.9,180.6 L470.3,176.7 L475.6,172.7 L480.9,168.5 L486.2,164.3"/><text class="ts" x="420.9" y="30" font-weight="500">CMg</text><text class="tb" x="482.2" y="111.9" text-anchor="end" font-weight="500">CMe</text><text class="tb" x="482.2" y="156.3" text-anchor="end" font-weight="500">CVMe</text><line class="pr" x1="60" y1="45.8" x2="500" y2="45.8" style="stroke-width:1.6;stroke-dasharray:3 4"/><circle class="dot" cx="403.8" cy="45.8" r="5.5"/><text class="tink" x="508" y="49.8" font-weight="500" font-size="12">1 · lucro</text><line class="pr" x1="60" y1="175.0" x2="500" y2="175.0" style="stroke-width:1.6;stroke-dasharray:3 4"/><circle class="dot" cx="335.0" cy="175.0" r="5.5"/><text class="tink" x="508" y="179.0" font-weight="500" font-size="12">2 · lucro zero</text><line class="pr" x1="60" y1="220.2" x2="500" y2="220.2" style="stroke-width:1.6;stroke-dasharray:3 4"/><circle class="dot" cx="300.6" cy="220.2" r="5.5"/><text class="tink" x="508" y="224.2" font-weight="500" font-size="12">3 · prejuízo menor</text><line class="pr" x1="60" y1="252.5" x2="500" y2="252.5" style="stroke-width:1.6;stroke-dasharray:3 4"/><circle class="dot" cx="266.2" cy="252.5" r="5.5"/><text class="tink" x="508" y="256.5" font-weight="500" font-size="12">4 · indiferente</text><line class="pr" x1="60" y1="271.9" x2="500" y2="271.9" style="stroke-width:1.6;stroke-dasharray:3 4"/><circle class="dot" cx="231.9" cy="271.9" r="5.5"/><text class="tink" x="508" y="275.9" font-weight="500" font-size="12">5 · encerra</text></svg></div>
+    <figcaption>Cinco preços possíveis para o mesmo modelo de custos. O ponto preto de cada linha é a quantidade que iguala o preço ao custo marginal.</figcaption>
+  </figure>
+  <div class="tbl"><table style="min-width:900px">
+    <thead><tr><th>#</th><th>Condição</th><th>Preço</th><th>q*</th><th>Receita</th><th>Custo total</th><th>Resultado produzindo</th><th>Resultado parando</th><th>Decisão</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="l">p &gt; CMe</td><td class="num">660</td><td class="num">25</td><td class="num">16.500</td><td class="num">9.700</td><td class="num pos">+6.800</td><td class="num neg">−3.200</td><td class="l"><strong>Produzir</strong>: há lucro.</td></tr>
+      <tr><td>2</td><td class="l">p = CMe</td><td class="num">360</td><td class="num">20</td><td class="num">7.200</td><td class="num">7.200</td><td class="num">0</td><td class="num neg">−3.200</td><td class="l"><strong>Produzir</strong>: remunera todos os custos, inclusive o capital dos sócios.</td></tr>
+      <tr><td>3</td><td class="l">CMe &gt; p &gt; CVMe</td><td class="num">255</td><td class="num">17,5</td><td class="num">4.462,5</td><td class="num">6.437,5</td><td class="num neg">−1.975</td><td class="num neg">−3.200</td><td class="l"><strong>Produzir</strong>: o prejuízo é menor do que o custo fixo.</td></tr>
+      <tr><td>4</td><td class="l">p = CVMe (mínimo)</td><td class="num">180</td><td class="num">15</td><td class="num">2.700</td><td class="num">5.900</td><td class="num neg">−3.200</td><td class="num neg">−3.200</td><td class="l"><strong>Indiferente</strong>: produzir ou parar dá o mesmo.</td></tr>
+      <tr><td>5</td><td class="l">p &lt; CVMe</td><td class="num">135</td><td class="num">12,5</td><td class="num">1.687,5</td><td class="num">5.512,5</td><td class="num neg">−3.825</td><td class="num neg">−3.200</td><td class="l"><strong>Parar</strong>: cada casa piora o prejuízo.</td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:.9rem;color:var(--muted)">Valores em R$ mil por ano. Custo fixo de R$ 3.200 mil. A situação 4 só ocorre no ponto em que o CVMe é mínimo, pois é onde ele cruza o custo marginal.</p>
+  <div class="box obra"><span class="tag">Na incorporadora: pausar a obra ou continuar?</span>
+    <ul>
+      <li><strong>Custos fixos</strong> (terreno e seu financiamento, projeto, licenças, estrutura da empresa) continuam correndo mesmo com a obra parada.</li>
+      <li><strong>Custos variáveis</strong> (insumos, mão de obra da frente de serviço, subempreiteiros) só existem se a obra andar.</li>
+      <li>Se o preço de venda cobre os custos variáveis, <mark>continuar reduz o prejuízo</mark>, ainda que a obra como um todo dê prejuízo.</li>
+      <li>Se o preço nem cobre os custos variáveis, <mark>cada casa construída aumenta a perda</mark>. Pausar e esperar o mercado é melhor.</li>
+    </ul>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>A regra supõe que os custos fixos são <strong>irreversíveis</strong> (já gastos e sem como recuperar). Se todos pudessem ser recuperados, por exemplo vendendo o terreno, a decisão de abandonar viria já abaixo do <strong>custo total médio</strong>.</p></div>
+</section>
+
+<!-- 09 -->
+<section id="oferta">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Curva de oferta da firma no curto prazo</h2></div>
+  <div class="def"><span class="tag">Resultado</span>A curva de oferta da firma competitiva é o <mark>trecho do custo marginal que fica acima do custo variável médio</mark>.</div>
+  <p>Quando o preço sobe de p1 para p2, a linha RMg = p sobe e a quantidade ótima se desloca <strong>ao longo</strong> da curva de CMg. Quando o preço cai abaixo do CVMe mínimo, a firma não produz nada: não há oferta.</p>
+  <figure>
+    <div class="svgbox"><svg viewBox="0 0 620 380" role="img" aria-label="Curva de oferta da firma: custo marginal acima do custo variável médio"><line class="ax" x1="60" y1="20" x2="60" y2="330"/><line class="ax" x1="60" y1="330" x2="500" y2="330"/><g font-size="11"><text x="60.0" y="348" text-anchor="middle">0</text><text x="128.8" y="348" text-anchor="middle">5</text><text x="197.5" y="348" text-anchor="middle">10</text><text x="266.2" y="348" text-anchor="middle">15</text><text x="335.0" y="348" text-anchor="middle">20</text><text x="403.8" y="348" text-anchor="middle">25</text><text x="472.5" y="348" text-anchor="middle">30</text><text x="52" y="334.0" text-anchor="end">0</text><text x="52" y="256.5" text-anchor="end">180</text><text x="52" y="179.0" text-anchor="end">360</text><text x="52" y="101.5" text-anchor="end">540</text><text x="52" y="24.0" text-anchor="end">720</text></g><text x="280" y="372" text-anchor="middle" class="tink">Casas por ano</text><text x="14" y="180" text-anchor="middle" class="tink" transform="rotate(-90 14 180)">R$ mil por casa</text><path class="cmg" d="M60.0,175.0 L63.5,180.3 L67.1,185.4 L70.6,190.4 L74.2,195.2 L77.7,200.0 L81.3,204.5 L84.8,209.0 L88.4,213.3 L91.9,217.4 L95.5,221.5 L99.0,225.3 L102.6,229.1 L106.1,232.7 L109.7,236.2 L113.2,239.5 L116.8,242.7 L120.3,245.8 L123.9,248.7 L127.4,251.5 L131.0,254.1 L134.5,256.7 L138.1,259.0 L141.6,261.3 L145.2,263.4 L148.7,265.3 L152.3,267.2 L155.8,268.8 L159.4,270.4 L162.9,271.8 L166.5,273.1 L170.0,274.2 L173.6,275.2 L177.1,276.1 L180.7,276.8 L184.2,277.4 L187.8,277.8 L191.3,278.1 L194.9,278.3 L198.4,278.3 L202.0,278.2 L205.5,278.0 L209.1,277.6 L212.6,277.1 L216.2,276.4 L219.7,275.6 L223.3,274.7 L226.8,273.6 L230.4,272.4 L233.9,271.1 L237.5,269.6 L241.0,268.0 L244.6,266.2 L248.1,264.3 L251.6,262.3 L255.2,260.1 L258.7,257.8 L262.3,255.4 L265.8,252.8 L269.4,250.1 L272.9,247.2 L276.5,244.2 L280.0,241.1 L283.6,237.8 L287.1,234.4 L290.7,230.9 L294.2,227.2 L297.8,223.4 L301.3,219.4 L304.9,215.3 L308.4,211.1 L312.0,206.7 L315.5,202.2 L319.1,197.5 L322.6,192.8 L326.2,187.8 L329.7,182.8 L333.3,177.6 L336.8,172.2 L340.4,166.8 L343.9,161.1 L347.5,155.4 L351.0,149.5 L354.6,143.5 L358.1,137.3 L361.7,131.0 L365.2,124.6 L368.8,118.0 L372.3,111.3 L375.9,104.4 L379.4,97.5 L383.0,90.3 L386.5,83.1 L390.1,75.7 L393.6,68.1 L397.2,60.5 L400.7,52.6 L404.3,44.7 L407.8,36.6 L411.4,28.4 L414.9,20.0" style="stroke-opacity:.35;stroke-dasharray:5 5"/><path class="cvm" d="M60.0,175.0 L65.3,179.0 L70.7,182.8 L76.0,186.5 L81.3,190.2 L86.6,193.7 L92.0,197.2 L97.3,200.5 L102.6,203.7 L108.0,206.8 L113.3,209.9 L118.6,212.8 L123.9,215.6 L129.3,218.3 L134.6,220.9 L139.9,223.4 L145.2,225.8 L150.6,228.1 L155.9,230.3 L161.2,232.4 L166.6,234.4 L171.9,236.3 L177.2,238.1 L182.5,239.7 L187.9,241.3 L193.2,242.8 L198.5,244.1 L203.9,245.4 L209.2,246.6 L214.5,247.6 L219.8,248.6 L225.2,249.4 L230.5,250.2 L235.8,250.8 L241.2,251.4 L246.5,251.8 L251.8,252.1 L257.1,252.3 L262.5,252.5 L267.8,252.5 L273.1,252.4 L278.5,252.2 L283.8,251.9 L289.1,251.5 L294.4,251.1 L299.8,250.5 L305.1,249.8 L310.4,248.9 L315.8,248.0 L321.1,247.0 L326.4,245.9 L331.7,244.7 L337.1,243.4 L342.4,241.9 L347.7,240.4 L353.0,238.8 L358.4,237.0 L363.7,235.2 L369.0,233.3 L374.4,231.2 L379.7,229.1 L385.0,226.8 L390.3,224.4 L395.7,222.0 L401.0,219.4 L406.3,216.8 L411.7,214.0 L417.0,211.1 L422.3,208.1 L427.6,205.0 L433.0,201.9 L438.3,198.6 L443.6,195.2 L449.0,191.7 L454.3,188.1 L459.6,184.4 L464.9,180.6 L470.3,176.7 L475.6,172.7 L480.9,168.5 L486.2,164.3"/><path class="heavy" d="M266.2,252.5 L268.7,250.6 L271.2,248.6 L273.7,246.6 L276.2,244.5 L278.6,242.4 L281.1,240.1 L283.6,237.8 L286.1,235.5 L288.5,233.0 L291.0,230.5 L293.5,228.0 L296.0,225.3 L298.5,222.6 L300.9,219.9 L303.4,217.0 L305.9,214.1 L308.4,211.2 L310.8,208.1 L313.3,205.0 L315.8,201.8 L318.3,198.6 L320.8,195.3 L323.2,191.9 L325.7,188.5 L328.2,185.0 L330.7,181.4 L333.1,177.8 L335.6,174.1 L338.1,170.3 L340.6,166.4 L343.1,162.5 L345.5,158.6 L348.0,154.5 L350.5,150.4 L353.0,146.2 L355.4,142.0 L357.9,137.7 L360.4,133.3 L362.9,128.9 L365.4,124.3 L367.8,119.8 L370.3,115.1 L372.8,110.4 L375.3,105.6 L377.7,100.8 L380.2,95.9 L382.7,90.9 L385.2,85.8 L387.7,80.7 L390.1,75.5 L392.6,70.3 L395.1,65.0 L397.6,59.6 L400.0,54.1 L402.5,48.6 L405.0,43.0 L407.5,37.4 L410.0,31.6 L412.4,25.9 L414.9,20.0"/><line class="dash" x1="60" y1="252.5" x2="266.2" y2="252.5"/><line class="dash" x1="266.2" y1="252.5" x2="266.2" y2="330"/><circle class="hollow" cx="266.2" cy="252.5" r="7"/><text class="ts" x="420.9" y="30" font-weight="500">CMg</text><text class="tb" x="482.2" y="156.3" text-anchor="end" font-weight="500">CVMe</text><text class="ts" x="349.0" y="205.0" font-weight="500">curva de oferta</text><text class="ts" x="349.0" y="221.0" font-weight="500">da construtora</text><text class="tink" x="278.2" y="282.5">preço de encerramento</text><text class="tink" x="278.2" y="298.5">= CVMe mínimo = 180</text></svg></div>
+    <figcaption>A parte destacada é a oferta da construtora: nada abaixo de R$ 180 mil e, acima disso, quanto maior o preço, mais casas.</figcaption>
+  </figure>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>O custo marginal só é a oferta <strong>inversa</strong> da firma (preço em função da quantidade). Isso vale a partir do CVMe mínimo e com CMg crescente.</p></div>
+</section>
+
+<!-- 10 -->
+<section id="mercado-oferta">
+  <div class="sec-head"><span class="sec-num">10</span><h2>Oferta de mercado no curto prazo</h2></div>
+  <div class="def"><span class="tag">Regra</span>A curva de oferta do mercado é a <mark>soma horizontal</mark> das curvas de oferta das firmas: para cada preço, soma-se o que cada firma oferta.</div>
+  <div class="tbl"><table style="min-width:560px">
+    <thead><tr><th>Preço</th><th>Construtora 1</th><th>Construtora 2</th><th>Construtora 3</th><th>Oferta do mercado</th></tr></thead>
+    <tbody>
+      <tr><td class="num">3</td><td class="num">0</td><td class="num">0</td><td class="num">4</td><td class="num"><strong>4</strong></td></tr>
+      <tr><td class="num">5</td><td class="num">1</td><td class="num">3</td><td class="num">5</td><td class="num"><strong>9</strong></td></tr>
+      <tr><td class="num">7</td><td class="l" colspan="3">Todas ampliam a oferta individual</td><td class="num"><strong>12</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:.9rem;color:var(--muted)">Exemplo com três firmas. A construtora 3 tem o custo mais baixo e é a única que entra quando o preço é 3. As demais entram conforme o preço sobe e passa o CVMe mínimo de cada uma.</p>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Num bairro, quando o preço da casa sobe, <strong>primeiro</strong> produzem as construtoras de custo mais baixo. A oferta total só cresce de verdade quando entram também as de custo mais alto.</p></div>
+</section>
+
+<!-- 11 -->
+<section id="longo">
+  <div class="sec-head"><span class="sec-num">11</span><h2>Longo prazo: escala e oferta do mercado</h2></div>
+  <p>No longo prazo <strong>todos os custos são variáveis</strong> (C = CV e CMe = CVMe) e as empresas entram e saem livremente. O formato da oferta de mercado depende do que acontece com os custos quando a produção cresce.</p>
+  <div class="grid g2">
+    <div class="card"><span class="s">Economias de escala</span><span>A produção aumenta e os custos aumentam <strong>proporcionalmente menos</strong>.</span></div>
+    <div class="card"><span class="s">Deseconomias de escala</span><span>A produção aumenta e os custos aumentam <strong>proporcionalmente mais</strong>.</span></div>
+  </div>
+  <div class="tbl"><table style="min-width:680px">
+    <thead><tr><th>Tipo</th><th>Origem</th><th>Na incorporadora</th></tr></thead>
+    <tbody>
+      <tr><td>Economia interna</td><td class="l">Melhoria no processo produtivo da própria empresa, como especialização da mão de obra.</td><td class="l">Padronização de projeto, equipes especializadas por etapa, compra de insumos em volume.</td></tr>
+      <tr><td>Deseconomia interna</td><td class="l">Dificuldade de coordenação, burocracia, controles excessivos.</td><td class="l">Gerir muitas obras simultâneas com a mesma estrutura de gestão.</td></tr>
+      <tr><td>Economia externa pecuniária</td><td class="l">A expansão do setor reduz o <strong>preço dos insumos</strong>.</td><td class="l">Mais demanda por um insumo faz seu fornecedor produzir em escala e baratear.</td></tr>
+      <tr><td>Economia externa não pecuniária</td><td class="l">A expansão do setor reduz custos médios por <strong>outro motivo</strong>.</td><td class="l">Formação de mão de obra qualificada e de fornecedores locais, difusão de técnicas.</td></tr>
+      <tr><td>Deseconomia externa pecuniária</td><td class="l">A expansão do setor <strong>encarece os insumos</strong>.</td><td class="l">Todas as obras do bairro disputando os mesmos pedreiros, areia e aço.</td></tr>
+      <tr><td>Deseconomia externa não pecuniária</td><td class="l">A expansão do setor eleva custos por <strong>outro motivo</strong>.</td><td class="l">Congestionamento de caminhões e canteiros encarece o transporte.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Três tipos de setor</h3>
+  <div class="graus" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+    <div class="grau"><svg viewBox="0 0 140 115" role="img" aria-label="Curva de oferta de longo prazo flat"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><line class="sup" x1="26" y1="55" x2="130" y2="55"/><text x="128" y="100" font-size="10" text-anchor="end">Q</text><text x="24" y="16" font-size="10">P</text></svg><span class="v">Oferta horizontal</span><h3>Custos constantes</h3><p>Custos sobem na mesma proporção da produção. A oferta de longo prazo iguala o preço ao custo médio mínimo.</p></div>
+    <div class="grau"><svg viewBox="0 0 140 115" role="img" aria-label="Curva de oferta de longo prazo up"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><line class="sup" x1="26" y1="85" x2="130" y2="25"/><text x="128" y="100" font-size="10" text-anchor="end">Q</text><text x="24" y="16" font-size="10">P</text></svg><span class="v">Oferta crescente</span><h3>Custos crescentes</h3><p>Deseconomias externas. Produzir mais exige preço maior para cobrir o custo médio mais alto.</p></div>
+    <div class="grau"><svg viewBox="0 0 140 115" role="img" aria-label="Curva de oferta de longo prazo down"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><line class="sup" x1="26" y1="25" x2="130" y2="85"/><text x="128" y="100" font-size="10" text-anchor="end">Q</text><text x="24" y="16" font-size="10">P</text></svg><span class="v">Oferta decrescente</span><h3>Custos decrescentes</h3><p>Economias externas, o caso mais raro. Quanto maior o setor, menor o custo médio.</p></div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Uma cidade que vive um boom de lançamentos passa por <strong>custos crescentes</strong>: mão de obra, areia e transporte encarecem para todos. Uma região que desenvolve cadeia local de fornecedores e profissionais caminha para <strong>custos decrescentes</strong>. O orçamento de uma obra feito para um cenário não vale no outro.</p></div>
+</section>
+
+<!-- 12 -->
+<section id="equilibrio-longo">
+  <div class="sec-head"><span class="sec-num">12</span><h2>Equilíbrio no longo prazo</h2></div>
+  <p>Enquanto houver lucro acima do normal, novas empresas entram. Enquanto houver prejuízo, empresas saem. O ciclo só para quando o lucro some.</p>
+  <div class="steps">
+    <div><span class="n">1</span><span>Há <strong>lucro extraordinário</strong> no mercado</span></div>
+    <div><span class="n">2</span><span>Novas empresas <strong>entram</strong></span></div>
+    <div><span class="n">3</span><span>A oferta de mercado se <strong>desloca para a direita</strong></span></div>
+    <div><span class="n">4</span><span>O <strong>preço cai</strong></span></div>
+    <div><span class="n">5</span><span>Para quando <strong>preço = custo médio</strong></span></div>
+  </div>
+  <div class="def"><span class="tag">Resultado</span>No longo prazo, o <mark>lucro econômico é zero</mark> (RT = CT): p = CMg = RMg = RMe = CMe, com o custo médio no seu mínimo.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Lucro normal × extraordinário</span><span>Os custos já incluem a <strong>remuneração do capital dos sócios</strong>. Lucro econômico zero significa retorno normal, igual ao que o mercado paga pelo capital. Só o que passa disso é extraordinário.</span></div>
+    <div class="card"><span class="s">Se a demanda cair no longo prazo</span><span>Num setor de custos constantes, o preço cai, empresas saem e a oferta se contrai até o preço voltar ao nível inicial. <strong>O preço volta ao que era; a quantidade fica menor.</strong></span></div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Um bairro novo com margens altas atrai concorrentes, e a margem de quem lançou primeiro se comprime. <mark>Lucro extraordinário num mercado de fácil entrada é temporário</mark>. A defesa duradoura é reduzir custo (para estar sempre no custo médio mínimo) e diferenciar o produto, justamente para sair da lógica de preço igual para todos.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>A persistência de lucros extraordinários no longo prazo <strong>não ocorre</strong> em concorrência perfeita, porque não há barreiras à entrada.</p></div>
+</section>
+
+<!-- 13 -->
+<section id="algebra">
+  <div class="sec-head"><span class="sec-num">13</span><h2>Álgebra: encontrando a quantidade ótima</h2></div>
+  <p>O custo marginal é a <strong>derivada do custo total</strong>. Na concorrência perfeita, iguale-o ao preço e resolva para q.</p>
+  <div class="grid g2">
+    <div class="card" style="min-width:0"><span class="s">Uma empresa, preço dado</span>
+      <div class="eq">CT = 0,4q² − 10q + 30      p = 10
+
+CMg = 0,8q − 10
+10 = 0,8q − 10
+q = 20 ÷ 0,8 = 25</div></div>
+    <div class="card" style="min-width:0"><span class="s">Do custo à oferta, e ao mercado</span>
+      <div class="eq">CT = 50 + 4q + q²
+
+CMg = 4 + 2q
+p = 4 + 2q   ⇒   q = (p − 4) ÷ 2
+
+100 empresas:
+Qo = 100 · (p − 4) ÷ 2 = 50p − 200</div></div>
+  </div>
+  <div class="card" style="min-width:0"><span class="s">Fechando o mercado com uma demanda de Qd = 1000 − 10p</span>
+    <div class="eq">Qd = Qo
+1000 − 10p = 50p − 200
+60p = 1200   ⇒   p = 20
+
+Cada empresa: q = (20 − 4) ÷ 2 = 8
+Mercado: 100 × 8 = 800  (= 1000 − 10·20 ✓)</div></div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>A mesma técnica serve para estimar o tamanho ótimo de uma fase. Com a função de custo da empresa (derivada = custo marginal) e o preço previsto, a quantidade que fecha o lucro máximo sai de uma única equação.</p></div>
+</section>
+
+<!-- Resumo -->
+<section id="resumo">
+  <div class="sec-head"><span class="sec-num">Síntese</span><h2>As 10 ideias que ficam</h2></div>
+  <ol class="cola">
+    <li><span>A <strong>estrutura de mercado</strong> (quantos, quão iguais, quão livre a entrada) define como preço e quantidade se formam.</span></li>
+    <li><span>Toda empresa maximiza o lucro onde <strong>RMg = CMg</strong>: pense sempre na próxima unidade.</span></li>
+    <li><span>Concorrência perfeita: mercado atomizado, produto homogêneo, informação completa e livre entrada e saída. A firma é <strong>tomadora de preço</strong>.</span></li>
+    <li><span>A demanda da firma competitiva é <strong>horizontal</strong>, e por isso <strong>RMg = p = RMe</strong>.</span></li>
+    <li><span>A condição de máximo é <strong>p = CMg com CMg crescente</strong>. Dois cruzamentos não são dois máximos.</span></li>
+    <li><span>O lucro de curto prazo é o <strong>retângulo</strong> (p − CMe) × q.</span></li>
+    <li><span>A empresa só <strong>encerra</strong> as atividades quando <strong>p &lt; CVMe</strong>. Entre o CVMe e o CMe vale a pena continuar, porque o custo fixo existe de qualquer jeito.</span></li>
+    <li><span>A oferta da firma é o <strong>CMg acima do CVMe mínimo</strong>; a do mercado é a soma horizontal.</span></li>
+    <li><span>No longo prazo a oferta depende das economias e deseconomias de escala: custos <strong>constantes, crescentes ou decrescentes</strong>.</span></li>
+    <li><span>Com livre entrada, o <strong>lucro econômico tende a zero</strong>, com preço igual ao custo médio mínimo.</span></li>
+  </ol>
+</section>
+
+</div>
+</main>
+<footer><div class="wrap">Os números das casas, preços e custos são hipotéticos, criados para ilustrar o raciocínio.</div></footer>
+</body>
+</html>
