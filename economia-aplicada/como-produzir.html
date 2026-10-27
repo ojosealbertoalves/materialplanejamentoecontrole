@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Como Produzir</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: prancha técnica (mesma série de "Economia da Obra") — cabeçalho com malha milimetrada, chips de navegação fixos, coluna única com esquemas em escala */
+:root{
+  --paper:#f1f4f3; --surface:#ffffff; --ink:#16222a; --muted:#56656d; --line:#cfd8da;
+  --blue:#1d5a89; --blue-soft:#e2ecf4; --supply:#b0512a; --supply-soft:#f7e6dc;
+  --safety:#d9a300; --safety-soft:#fbf1cd; --grid:rgba(29,90,137,.07);
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#10171b; --surface:#172126; --ink:#e3eaec; --muted:#97a6ac; --line:#2a3940;
+  --blue:#72aad6; --blue-soft:#182c3a; --supply:#e48c5e; --supply-soft:#3a2418;
+  --safety:#f0c43a; --safety-soft:#352d12; --grid:rgba(114,170,214,.07); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#10171b; --surface:#172126; --ink:#e3eaec; --muted:#97a6ac; --line:#2a3940;
+  --blue:#72aad6; --blue-soft:#182c3a; --supply:#e48c5e; --supply-soft:#3a2418;
+  --safety:#f0c43a; --safety-soft:#352d12; --grid:rgba(114,170,214,.07); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
+.wrap{max-width:880px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+header.hero{background-color:var(--surface);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:16px 16px;border-bottom:1px solid var(--line)}
+header.hero .wrap{padding-block:56px 40px;display:grid;gap:18px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+h1{font-family:var(--f-display);font-stretch:118%;font-weight:800;font-size:clamp(2.3rem,7vw,4.2rem);line-height:1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.lede{font-size:1.12rem;max-width:62ch;color:var(--muted);margin:0}
+.formula-hero{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:6px;font-family:var(--f-mono)}
+.frac{display:inline-grid;text-align:center;font-size:14px;line-height:1.3}
+.frac span:first-child{border-bottom:2px solid var(--ink);padding:0 6px 4px}
+.frac span:last-child{padding:4px 6px 0}
+.formula-hero b{font-family:var(--f-display);font-size:1.4rem;color:var(--blue)}
+
+nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:thin}
+nav.toc a{flex:0 0 auto;font-family:var(--f-mono);font-size:12px;color:var(--muted);text-decoration:none;padding:5px 10px;border:1px solid var(--line);background:var(--surface);white-space:nowrap}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--blue);border-color:var(--blue);outline:none}
+
+main .wrap{display:grid;gap:72px;padding-block:56px 80px}
+section{display:grid;gap:20px;scroll-margin-top:64px}
+.sec-head{display:grid;gap:6px;border-top:2px solid var(--ink);padding-top:14px}
+.sec-num{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--blue)}
+h2{font-family:var(--f-display);font-stretch:112%;font-weight:750;font-size:clamp(1.6rem,4vw,2.2rem);line-height:1.1;margin:0;text-wrap:balance}
+h3{font-family:var(--f-display);font-stretch:108%;font-weight:700;font-size:1.15rem;margin:0}
+p{margin:0;max-width:68ch}
+strong{font-weight:600}
+mark{background:var(--safety-soft);color:inherit;padding:0 3px;border-bottom:2px solid var(--safety)}
+
+.def{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--ink);padding:18px 20px;font-size:1.08rem}
+.def .tag{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+
+.box{padding:16px 18px;display:grid;gap:8px}
+.box .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.box.obra{background:var(--blue-soft);border:1px solid color-mix(in srgb,var(--blue) 35%,transparent)}
+.box.obra .tag{color:var(--blue)}
+.box.alerta{background:var(--safety-soft);border:1px dashed var(--safety)}
+.box.alerta .tag{color:var(--ink)}
+.box ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
+
+.grid{display:grid;gap:12px}
+.g5{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);padding:14px 16px;display:grid;gap:6px;align-content:start;min-width:0}
+.card .k{font-family:var(--f-display);font-stretch:115%;font-weight:800;font-size:1.25rem;color:var(--blue)}
+.card .s{font-size:.92rem;color:var(--muted)}
+.card.hi{border:2px solid var(--ink)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--paper)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--f-mono);white-space:nowrap}
+
+figure{margin:0;background:var(--surface);border:1px solid var(--line);padding:16px;display:grid;gap:10px;min-width:0}
+figure .svgbox{overflow-x:auto}
+figure svg{display:block;width:100%;height:auto;min-width:300px}
+figcaption{font-size:.88rem;color:var(--muted)}
+svg text{font-family:var(--f-mono);fill:var(--muted);font-size:13px}
+svg .ax{stroke:var(--ink);stroke-width:1.5;fill:none}
+svg .dem{stroke:var(--blue);stroke-width:3;fill:none}
+svg .sup{stroke:var(--supply);stroke-width:3;fill:none}
+svg .dash{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:4 4;fill:none}
+svg .tink{fill:var(--ink)} svg .tb{fill:var(--blue)} svg .ts{fill:var(--supply)}
+svg .fb{fill:var(--blue);fill-opacity:.12}
+svg .dot{fill:var(--ink)} svg .ink{fill:var(--ink)}
+svg .arr{stroke:var(--ink);stroke-width:2;fill:none}
+
+/* cinco graus */
+.graus{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.grau{background:var(--surface);border:1px solid var(--line);padding:12px;display:grid;gap:6px;align-content:start;min-width:0}
+.grau svg{width:100%;height:auto;display:block}
+.grau .v{font-family:var(--f-mono);font-size:12px;color:var(--blue)}
+.grau h3{font-size:1rem}
+.grau p{font-size:.88rem;color:var(--muted)}
+
+/* régua de classificação */
+.ruler{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;border:1px solid var(--line);background:var(--surface);overflow-x:auto}
+.ruler > div{padding:12px 12px 14px;border-right:1px solid var(--line);display:grid;gap:4px;align-content:start;min-width:120px}
+.ruler > div:last-child{border-right:0}
+.ruler .r-val{font-family:var(--f-mono);font-size:13px;font-weight:500}
+.ruler .r-name{font-family:var(--f-display);font-weight:700;font-size:1rem}
+.ruler .r-ex{font-size:.85rem;color:var(--muted)}
+.z-neg{background:var(--supply-soft)} .z-neg .r-val{color:var(--supply)}
+.z-zero{background:var(--paper)}
+.z-pos{background:var(--blue-soft)} .z-pos .r-val{color:var(--blue)}
+
+.eq{font-family:var(--f-mono);font-size:.95rem;background:var(--paper);border:1px solid var(--line);padding:12px 14px;overflow-x:auto;white-space:pre;line-height:1.75}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;border:1px solid var(--line);background:var(--surface)}
+.steps > div{padding:14px 16px;border-right:1px solid var(--line);display:grid;gap:4px;align-content:start}
+.steps > div:last-child{border-right:0}
+.steps .n{font-family:var(--f-display);font-weight:800;font-size:1.4rem;color:var(--blue);line-height:1}
+.steps .c{font-family:var(--f-mono);font-size:.9rem}
+
+.up{color:var(--blue)} .dn{color:var(--supply)}
+
+ol.cola{list-style:none;margin:0;padding:0;display:grid;counter-reset:c;background:var(--surface);border:1px solid var(--line)}
+ol.cola li{counter-increment:c;display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+ol.cola li:last-child{border-bottom:0}
+ol.cola li::before{content:counter(c,decimal-leading-zero);font-family:var(--f-display);font-weight:800;font-size:1.3rem;color:var(--blue);line-height:1.2}
+
+footer .wrap{padding-block:24px 48px;font-family:var(--f-mono);font-size:12px;color:var(--muted);border-top:1px solid var(--line)}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media (max-width:560px){.steps > div{border-right:0;border-bottom:1px solid var(--line)}.steps > div:last-child{border-bottom:0}}
+
+svg .cmg{stroke:var(--supply);stroke-width:3;fill:none}
+svg .cme{stroke:var(--blue);stroke-width:3;fill:none}
+svg .cvm{stroke:var(--blue);stroke-width:2.5;stroke-dasharray:7 5;fill:none}
+svg .pr{stroke:var(--ink);stroke-width:2.5;fill:none}
+svg .heavy{stroke:var(--supply);stroke-width:6;fill:none;stroke-linecap:round}
+svg .rect{fill:var(--safety);fill-opacity:.35;stroke:var(--safety);stroke-width:1.5}
+svg .sh{fill:var(--safety);fill-opacity:.4}
+svg .hollow{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+.tbl th{text-transform:none;letter-spacing:.01em}
+.sg{font-family:var(--f-mono);font-weight:600;font-size:.95rem;padding:1px 8px;border:1px solid var(--line);background:var(--paper);color:var(--ink);white-space:nowrap;display:inline-block;line-height:1.5}
+.sg.c{color:var(--supply);background:var(--supply-soft);border-color:color-mix(in srgb,var(--supply) 40%,transparent)}
+.sg.r{color:var(--blue);background:var(--blue-soft);border-color:color-mix(in srgb,var(--blue) 40%,transparent)}
+.sg.l{background:var(--safety-soft);border-color:var(--safety)}
+.gl{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--ink);padding:14px 16px;display:grid;gap:8px;align-content:start;min-width:0}
+.gl.c{border-top-color:var(--supply)}.gl.r{border-top-color:var(--blue)}.gl.l{border-top-color:var(--safety)}
+.gl .gh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.gl .gh b{font-family:var(--f-display);font-size:1.05rem}
+.gl .fm{font-family:var(--f-mono);font-size:.82rem;color:var(--muted)}
+.gl p{margin:0;font-size:.95rem}
+.gl ul.ex{list-style:none;padding:0;margin:0;display:grid;gap:5px;font-size:.9rem;border-top:1px dashed var(--line);padding-top:8px}
+.gl ul.ex li b{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.box.fora{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--supply)}
+.box.fora .tag{color:var(--supply)}
+.box.lembrete{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--blue)}
+.box.lembrete .tag{color:var(--blue)}
+.box p,.box ul{margin:0}
+.minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.minis .card span.s{color:var(--supply);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+.formula-hero b.big{font-size:2.2rem;letter-spacing:.02em;color:var(--ink)}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.two-svg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.two-svg figure svg{min-width:240px}
+td.l{white-space:normal}
+.pos{color:var(--blue);font-weight:600}.neg{color:var(--supply);font-weight:600}
+
+.trilha{font-family:var(--f-mono);font-size:12px;color:var(--muted);padding:14px 0 0}
+.trilha a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
+.trilha a:hover{color:var(--blue);border-bottom-color:var(--blue)}
+</style>
+
+</head>
+<body>
+<p class="wrap trilha"><a href="../index.html">Portal</a> / <a href="index.html">Economia aplicada à construção civil</a> / Como Produzir</p>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Microeconomia aplicada · Incorporação de casas</div>
+    <h1>Como Produzir</h1>
+    <p class="lede">Antes de olhar os custos, é preciso entender como equipe, equipamentos e insumos viram casas: quantos trabalhadores colocar numa frente de obra, o que muda ao comprar mais uma máquina, quando a produção para de crescer e o que acontece quando a empresa dobra de tamanho. Um glossário no início explica cada sigla com exemplos.</p>
+    <div class="formula-hero" aria-label="A quantidade produzida depende do capital e do trabalho">
+      <b class="big">q = f(K, L)</b>
+      <span style="color:var(--muted);font-size:14px">a quantidade produzida depende do capital e do trabalho</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Seções">
+  <div class="wrap">
+    <a href="#glossario">Glossário</a><a href="#fatores">Fatores</a><a href="#funcao">Função de produção</a><a href="#prazos">Curto e longo prazo</a><a href="#curto">PT, PMe e PMg</a><a href="#lei">Lei e relações</a><a href="#derivada">Derivada e máximo</a><a href="#isoquantas">Isoquantas</a><a href="#tmst">TMST</a><a href="#especiais">Casos especiais</a><a href="#escala">Escala</a><a href="#grau">Grau</a><a href="#complementos">Complementos</a><a href="#resumo">Síntese</a>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+
+<!-- 00 -->
+<section id="glossario">
+  <div class="sec-head"><span class="sec-num">00</span><h2>Glossário: as siglas, uma a uma</h2></div>
+  <p>As siglas da produção seguem o mesmo código das de custo e receita: <strong>T</strong> (total), <strong>Me</strong> (médio, por unidade) e <strong>Mg</strong> (marginal, da próxima unidade). A diferença é que agora o que se mede é o <strong>produto</strong>, não o dinheiro.</p>
+  <div class="grid g3">
+    <div class="card"><span class="s">Como ler</span><span><span class="sg">q = f(K, L)</span></span><span>"A quantidade produzida (q) é função (f) do capital (K) e do trabalho (L)".</span></div>
+    <div class="card"><span class="s">Total · médio · marginal</span><span><span class="sg">PT</span> <span class="sg">PMe</span> <span class="sg">PMg</span></span><span>Total é tudo o que sai. Médio é por trabalhador (÷ L). Marginal é o que o <strong>próximo</strong> trabalhador acrescenta.</span></div>
+    <div class="card"><span class="s">Curto · longo prazo</span><span><span class="sg c">K fixo</span> <span class="sg r">K e L variáveis</span></span><span>No curto prazo, um insumo não muda. No longo prazo, todos podem mudar.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Atenção às grafias</span><p>O produto marginal do trabalho aparece como <strong>PMgL, PMg<sub>L</sub> ou Pmg<sub>L</sub></strong>. É tudo a mesma coisa. O mesmo vale para a taxa marginal de substituição técnica: <strong>TMST, TST ou TTS</strong> são sinônimos.</p></div>
+
+  <h3>O mapa das siglas de produção</h3>
+  <div class="tbl"><table style="min-width:680px">
+    <thead><tr><th></th><th>Total</th><th>Médio (por trabalhador)</th><th>Marginal (trabalhador extra)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Produto</strong></td><td class="l"><span class="sg r">PT</span> = q = f(K, L)</td><td class="l"><span class="sg r">PMeL</span> = q ÷ L</td><td class="l"><span class="sg r">PMgL</span> = Δq ÷ ΔL</td></tr>
+      <tr><td><strong>Para o capital</strong></td><td class="l"><span class="sg">PT</span> (o mesmo q)</td><td class="l"><span class="sg">PMeK</span> = q ÷ K</td><td class="l"><span class="sg">PMgK</span> = Δq ÷ ΔK</td></tr>
+      <tr><td><strong>Entre os dois insumos</strong></td><td class="l" colspan="3"><span class="sg l">TMST</span> = inclinação da isoquanta = PMg do insumo do eixo horizontal ÷ PMg do insumo do eixo vertical</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Uma frente de obra para enxergar os números</h3>
+  <p>Uma frente de obra com <strong>capital fixo</strong> (uma betoneira, uma grua e os andaimes) e um número variável de trabalhadores. O produto é a <strong>alvenaria assentada por dia, em m²</strong>. Valores hipotéticos.</p>
+  <div class="tbl"><table style="min-width:640px">
+    <thead><tr><th>Trabalhadores (L)</th><th>Produto total<br>PT = q</th><th>Produto médio<br>PMeL = q ÷ L</th><th>Produto marginal<br>PMgL = PT − PT anterior</th></tr></thead>
+    <tbody>
+      <tr><td class="num">0</td><td class="num">0</td><td class="num">—</td><td class="num">—</td></tr>
+      <tr><td class="num">1</td><td class="num">10</td><td class="num">10,0</td><td class="num"><strong>10</strong></td></tr>
+      <tr><td class="num">2</td><td class="num">30</td><td class="num">15,0</td><td class="num"><strong>20</strong></td></tr>
+      <tr><td class="num">3</td><td class="num">60</td><td class="num">20,0</td><td class="num"><strong>30</strong></td></tr>
+      <tr><td class="num">4</td><td class="num">80</td><td class="num">20,0</td><td class="num"><strong>20</strong></td></tr>
+      <tr><td class="num">5</td><td class="num">96</td><td class="num">19,2</td><td class="num"><strong>16</strong></td></tr>
+      <tr><td class="num">6</td><td class="num">108</td><td class="num">18,0</td><td class="num"><strong>12</strong></td></tr>
+      <tr><td class="num">7</td><td class="num">112</td><td class="num">16,0</td><td class="num"><strong>4</strong></td></tr>
+      <tr><td class="num">8</td><td class="num">112</td><td class="num">14,0</td><td class="num"><strong>0</strong></td></tr>
+      <tr><td class="num">9</td><td class="num">108</td><td class="num">12,0</td><td class="num"><strong>−4</strong></td></tr>
+      <tr><td class="num">10</td><td class="num">100</td><td class="num">10,0</td><td class="num"><strong>−8</strong></td></tr>
+    </tbody>
+  </table></div>
+  <div class="box lembrete"><span class="tag">Como ler uma linha</span><p>Na linha do 5º trabalhador: o produto total foi de 80 para 96, então <strong>o 5º trabalhador acrescentou 16 m²</strong> (o PMgL). Já o <strong>produto médio</strong> é o total dividido pelos cinco: 96 ÷ 5 = 19,2. São duas perguntas diferentes: "quanto acrescenta o próximo?" e "quanto produz cada um, em média?".</p></div>
+
+  <h3>Cada sigla, com exemplos</h3>
+  <p>Padaria e incorporadora usam os números acima. Os exemplos de "outras áreas" mostram que a mesma ideia aparece em qualquer negócio.</p>
+  <div class="grid g2"><div class="gl "><div class="gh"><span class="sg ">K</span><b>Capital (físico)</b><span class="fm">máquinas e equipamentos</span></div><p>Tudo o que se usa na produção <strong>sem se transformar nela</strong>: máquinas, equipamentos, prédios, ferramentas. Ele mesmo já foi produzido por alguém. Não é o dinheiro da empresa (capital financeiro).</p><ul class="ex"><li><b>Padaria</b>Forno e batedeira.</li><li><b>Incorporadora</b>Betoneira, grua, fôrmas e andaimes.</li><li><b>Outras áreas</b>Hospital: aparelho de ressonância. Motorista de aplicativo: o carro.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">L</span><b>Trabalho</b><span class="fm">mão de obra</span></div><p>Pessoas (ou horas de trabalho) empregadas na produção. O L vem de <em>labour</em>, trabalho em inglês.</p><ul class="ex"><li><b>Padaria</b>Padeiros e ajudante.</li><li><b>Incorporadora</b>Pedreiros, serventes, carpinteiros.</li><li><b>Outras áreas</b>Restaurante: cozinheiros e garçons.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">insumo</span><b>Insumo (fator de produção)</b><span class="fm">são a mesma coisa</span></div><p>Tudo o que entra na produção: <strong>trabalho, capital e matérias-primas</strong>. "Insumo" e "fator de produção" querem dizer o mesmo.</p><ul class="ex"><li><b>Padaria</b>Farinha, ovos (matérias-primas).</li><li><b>Incorporadora</b>Cimento, aço, tijolo.</li><li><b>Outras áreas</b>Lavoura: sementes, adubo e terra.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">q = f(K, L)</span><b>Função de produção</b><span class="fm">quantidade máxima</span></div><p>Dá a <strong>maior quantidade</strong> q que se obtém com cada combinação de K e L. Cada combinação gera uma única quantidade, mas combinações diferentes podem gerar a mesma.</p><ul class="ex"><li><b>Padaria</b>q = K · L: com 2 fornos e 5 padeiros, 10 fornadas por dia.</li><li><b>Incorporadora</b>q = 20 · √(K · L): 4 conjuntos de equipamento e 9 trabalhadores fazem 120 m² de alvenaria por dia.</li><li><b>Outras áreas</b>Fábrica de móveis: 3 máquinas e 6 marceneiros fazem 40 sofás por semana. Outra combinação pode dar os mesmos 40.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">tecnologia</span><b>Tecnologia</b><span class="fm">estado do conhecimento</span></div><p>Como combinar os insumos para obter produto. Não precisa ser alta tecnologia: a receita de bolo da vovó também é.</p><ul class="ex"><li><b>Padaria</b>Uma receita que aproveita melhor a farinha.</li><li><b>Incorporadora</b>Alvenaria estrutural em vez de alvenaria convencional.</li><li><b>Outras áreas</b>Agricultura: plantio direto em vez de arar.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">PT</span><b>Produto total</b><span class="fm">PT = q</span></div><p>Tudo o que sai da produção com uma certa quantidade de insumos.</p><ul class="ex"><li><b>Padaria</b>120 pães por hora.</li><li><b>Incorporadora</b>Com 5 trabalhadores na frente de obra, 96 m² de alvenaria por dia.</li><li><b>Outras áreas</b>Call center: 600 atendimentos por dia.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">PMeL</span><b>Produto médio do trabalho</b><span class="fm">PMeL = q ÷ L</span></div><p>Também chamado <strong>produtividade média</strong>: quanto cada trabalhador produz, em média.</p><ul class="ex"><li><b>Padaria</b>120 pães ÷ 4 padeiros = 30 por padeiro.</li><li><b>Incorporadora</b>96 ÷ 5 = 19,2 m² por trabalhador.</li><li><b>Outras áreas</b>Call center: 600 ÷ 20 atendentes = 30 por atendente.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">PMgL</span><b>Produto marginal do trabalho</b><span class="fm">PMgL = Δq ÷ ΔL</span></div><p>Quanto a produção <strong>aumenta</strong> ao somar <strong>um trabalhador a mais</strong>, com o capital igual. É a produtividade marginal. O PMgK é o mesmo raciocínio para o capital.</p><ul class="ex"><li><b>Padaria</b>O 5º padeiro no mesmo forno traz menos do que o 3º.</li><li><b>Incorporadora</b>Do 4º para o 5º trabalhador: 96 − 80 = 16 m² a mais.</li><li><b>Outras áreas</b>Lavoura: o 1º quilo de adubo rende mais do que o 20º.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">fixo × variável</span><b>Insumo fixo e insumo variável</b><span class="fm">curto prazo</span></div><p>No curto prazo, pelo menos um insumo <strong>não pode ser alterado</strong> (o fixo, em geral o capital). O outro (em geral o trabalho) pode variar.</p><ul class="ex"><li><b>Padaria</b>O forno é fixo; o número de padeiros varia.</li><li><b>Incorporadora</b>A grua alugada por 6 meses é fixa; a equipe varia.</li><li><b>Outras áreas</b>Hospital: os leitos são fixos; os plantonistas variam.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">isoquanta</span><b>Isoquanta</b><span class="fm">iso = igual, quanta = quantidade</span></div><p>Curva que reúne todas as combinações de K e L que geram a <strong>mesma quantidade</strong> de produto.</p><ul class="ex"><li><b>Padaria</b>2 fornos e 6 padeiros, ou 3 fornos e 4 padeiros, dão as mesmas fornadas.</li><li><b>Incorporadora</b>4 equipamentos e 9 trabalhadores, ou 9 equipamentos e 4 trabalhadores: os mesmos 120 m² por dia.</li><li><b>Outras áreas</b>Lavoura: mais tratores e menos colhedores, ou o contrário, para a mesma colheita.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">TMST</span><b>Taxa marginal de substituição técnica</b><span class="fm">inclinação da isoquanta</span></div><p>Quanto se pode <strong>reduzir de um insumo</strong> ao somar uma unidade do outro, mantendo a produção igual. É a inclinação da isoquanta.</p><ul class="ex"><li><b>Padaria</b>Um forno a mais dispensa 2 padeiros: TMST = 2.</li><li><b>Incorporadora</b>De 3 equipamentos e 12 trabalhadores para 4 e 9: 1 equipamento a mais dispensa 3 trabalhadores. TMST = 3.</li><li><b>Outras áreas</b>Escritório: um software novo dispensa 3 digitadores.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">perfeitos</span><b>Substitutos e complementares perfeitos</b><span class="fm">retas e L</span></div><p><strong>Substitutos perfeitos:</strong> um insumo troca pelo outro numa proporção constante (isoquanta reta). <strong>Complementares perfeitos:</strong> só funcionam juntos, em proporção fixa (isoquanta em L, função mín).</p><ul class="ex"><li><b>Padaria</b>Gás ou lenha no forno: substitutos. Forno e padeiro: complementares.</li><li><b>Incorporadora</b>Caminhão-betoneira e motorista, 1 para 1: complementares.</li><li><b>Outras áreas</b>Sapato esquerdo e direito: q = mín(E, D).</li></ul></div><div class="gl "><div class="gh"><span class="sg ">escala</span><b>Escala e rendimentos de escala</b><span class="fm">todos os insumos juntos</span></div><p>Aumentar a escala é aumentar <strong>todos os insumos ao mesmo tempo, na mesma proporção</strong>. Os rendimentos de escala dizem o que acontece com a produção.</p><ul class="ex"><li><b>Padaria</b>Dobrar fornos e padeiros.</li><li><b>Incorporadora</b>Abrir uma segunda frente de obra idêntica à primeira.</li><li><b>Outras áreas</b>Poço de petróleo: o investimento sobe 20% e a produção sobe mais de 20%.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">grau</span><b>Grau da função e Cobb-Douglas</b><span class="fm">soma dos expoentes</span></div><p>Função Cobb-Douglas: q = A · K<sup>a</sup> · L<sup>b</sup>. O <strong>grau</strong> é a soma dos expoentes (a + b) e revela o tipo de rendimento de escala.</p><ul class="ex"><li><b>Padaria</b>q = K² · L: grau 3.</li><li><b>Incorporadora</b>q = 20 · K<sup>0,5</sup> · L<sup>0,5</sup>: grau 1.</li><li><b>Outras áreas</b>q = K<sup>0,5</sup> · L<sup>0,3</sup>: grau 0,8.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">Δ e derivada</span><b>Variação e derivada</b><span class="fm">d/dL</span></div><p>Δ é a variação entre dois pontos. A <strong>derivada</strong> é a variação para uma mudança minúscula: o PMgL é a derivada de q em relação a L. Regra rápida: <strong>a · Lⁿ vira n · a · Lⁿ⁻¹</strong>.</p><ul class="ex"><li><b>Padaria</b>q = 10L³: PMgL = 30L².</li><li><b>Outras áreas</b>Preço do táxi: bandeirada de R$ 6 mais R$ 3 por km. A derivada em relação aos km é 3; a bandeirada, que é constante, some.</li></ul></div><div class="gl "><div class="gh"><span class="sg ">σ</span><b>Elasticidade de substituição</b><span class="fm">sigma</span></div><p>Mede <strong>quão fácil é trocar um insumo pelo outro</strong> ao longo de uma isoquanta. Vale 0 nas proporções fixas, infinito nos substitutos perfeitos e 1 na Cobb-Douglas.</p><ul class="ex"><li><b>Incorporadora</b>Equipe especializada que só trabalha com o equipamento certo: σ perto de 0.</li><li><b>Outras áreas</b>Digitar à mão ou usar um software que faz exatamente o mesmo: σ muito alto.</li></ul></div></div>
+</section>
+
+<!-- 01 -->
+<section id="fatores">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Teoria da firma e fatores de produção</h2></div>
+  <div class="def"><span class="tag">Definição</span>A <mark>Teoria da Firma</mark> analisa, explica e prevê as decisões das empresas: produção final, preço, uso de insumos e mudanças nessas variáveis. Ela se divide em <strong>Teoria da Produção</strong> (esta página) e <strong>Teoria dos Custos</strong>.</div>
+  <p>Para produzir, a empresa usa três tipos de insumos, também chamados de <strong>fatores de produção</strong>:</p>
+  <div class="grid g3">
+    <div class="card"><span class="s">Trabalho (L)</span><span>As pessoas que operam e executam. Também chamado mão de obra.</span></div>
+    <div class="card"><span class="s">Matérias-primas</span><span>O que é transformado no processo e vira parte do produto.</span></div>
+    <div class="card"><span class="s">Capital (K)</span><span>Máquinas, equipamentos, prédios e ferramentas. É usado sem se transformar, e ele mesmo é um produto.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Atenção: capital físico × capital financeiro</span><p>Na Teoria da Firma, <strong>capital</strong> quer dizer <strong>capital físico</strong> (bens de capital), salvo aviso em contrário. O dinheiro que faz a empresa funcionar (capital financeiro) é só um tipo específico de capital.</p></div>
+  <h3>Cada fator é remunerado de um jeito</h3>
+  <div class="tbl"><table style="min-width:620px">
+    <thead><tr><th>Fator</th><th>Remuneração</th><th>Característica</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Trabalho</strong></td><td class="l">Salários</td><td class="l">Pagos pelo uso do trabalho.</td></tr>
+      <tr><td><strong>Terra</strong></td><td class="l">Aluguéis</td><td class="l">Pagos pelo uso da terra.</td></tr>
+      <tr><td><strong>Capital financeiro</strong> (de terceiros, como bancos)</td><td class="l">Juros</td><td class="l">São <strong>pré-determinados</strong> e independem do desempenho da empresa.</td></tr>
+      <tr><td><strong>Capital de risco</strong> (dos sócios)</td><td class="l">Lucros</td><td class="l">São <strong>variáveis</strong>: dependem do desempenho da empresa.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Os <strong>pedreiros e serventes</strong> são o trabalho (L). <strong>Cimento, aço e tijolo</strong> são matérias-primas. A <strong>betoneira, a grua e os andaimes</strong> são o capital (K). O terreno alugado paga <strong>aluguel</strong>; o financiamento bancário paga <strong>juros</strong>; o capital dos sócios é remunerado por <strong>lucros</strong>.</p></div>
+  <div class="box fora"><span class="tag">Em outras áreas</span><p>Um <strong>restaurante</strong> usa cozinheiros e garçons (L), ingredientes (matérias-primas) e fogões e freezers (K). Um <strong>motorista de aplicativo</strong> usa o próprio tempo (L), combustível (matéria-prima) e o carro (K). O financiamento do carro paga juros; o que sobra para ele é o lucro.</p></div>
+</section>
+
+<!-- 02 -->
+<section id="funcao">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Tecnologia e função de produção</h2></div>
+  <div class="def"><span class="tag">Tecnologia</span><mark>Tecnologia é o estado atual do conhecimento</mark> de como combinar insumos para obter produtos. Há só algumas formas viáveis de combiná-los: essa é uma restrição da empresa.</div>
+  <p>A <strong>função de produção</strong> relaciona as quantidades de cada insumo (x₁, x₂, ... xₙ) com a <strong>quantidade máxima</strong> de produto que elas permitem obter. Com dois insumos, capital e trabalho:</p>
+  <div class="eq" style="text-align:center;font-size:1.1rem">q = f(K, L)</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Cada combinação, um único resultado</span><span>Com certa quantidade de K e de L, só há uma quantidade máxima produzida. Mas <strong>combinações diferentes podem dar a mesma</strong> quantidade (é a ideia da isoquanta, mais adiante).</span></div>
+    <div class="card"><span class="s">Exemplos de funções</span><div class="eq" style="padding:8px 10px">q = K · L
+q = K + L
+q = 5K · 2L
+q = K² + 2L³
+q = √K · 2L</div></div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>O <strong>método construtivo</strong> é tecnologia: a mesma equipe e os mesmos equipamentos assentam mais m² por dia com alvenaria estrutural do que com a convencional. Mudar de método muda a função de produção, e não só os insumos usados.</p></div>
+  <div class="box fora"><span class="tag">Em outras áreas</span><p>A receita de bolo da vovó é tecnologia, porque combina os ingredientes de um jeito que os aproveita bem. Já a <strong>agricultura</strong> mudou de função de produção quando o plantio direto passou a dar mais colheita com o mesmo trabalho e a mesma área.</p></div>
+</section>
+
+<!-- 03 -->
+<section id="prazos">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Curto prazo e longo prazo</h2></div>
+  <div class="grid g2">
+    <div class="card hi"><span class="s">Curto prazo</span><span>Período em que <strong>pelo menos um dos insumos não pode ter a quantidade alterada</strong>. Esse é o insumo fixo; o outro pode variar.</span></div>
+    <div class="card hi"><span class="s">Longo prazo</span><span>Tempo necessário para que <strong>todos os insumos possam ter suas quantidades alteradas</strong>.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Atenção: não é calendário</span><p>Curto e longo prazo <strong>não</strong> são medidos em dias, meses ou anos. Não dá para dizer que dois dias é curto prazo ou que 100 anos é longo. O que conta é se <strong>todos</strong> os insumos já podem mudar.</p></div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Contratar mais pedreiros leva dias. Já <strong>comprar uma grua nova</strong> ou montar uma central de concreto leva meses. Enquanto o capital não chega, a empresa está no curto prazo: o capital é fixo e só o trabalho varia.</p></div>
+  <div class="box fora"><span class="tag">Em outras áreas</span><p>Para a <strong>barraca de frutas</strong> da feira, uma semana basta para ampliar as instalações e recrutar gente: seu longo prazo é uma semana. Uma <strong>montadora de automóveis</strong> leva cinco anos para construir uma fábrica nova, embora contrate operários em dias: antes disso, ela está no curto prazo.</p></div>
+</section>
+
+<!-- 04 -->
+<section id="curto">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Curto prazo: produto total, médio e marginal</h2></div>
+  <p>Consideramos o <strong>capital como insumo fixo</strong> e o <strong>trabalho como variável</strong>, o caso da maioria das empresas.</p>
+  <div class="grid g3">
+    <div class="card"><span class="s">Produto total (PT)</span><span class="k" style="font-size:1.05rem">q</span><span>A quantidade total produzida.</span></div>
+    <div class="card"><span class="s">Produto médio do trabalho</span><span class="k" style="font-size:1.05rem">PMeL = q ÷ L</span><span>Produtividade média: quanto cada trabalhador produz.</span></div>
+    <div class="card"><span class="s">Produto marginal do trabalho</span><span class="k" style="font-size:1.05rem">PMgL = Δq ÷ ΔL</span><span>Quanto o produto cresce com <strong>um trabalhador a mais</strong>.</span></div>
+  </div>
+  <p>Com a frente de obra do glossário, o produto marginal sobe no começo (a <strong>especialização</strong> faz cada trabalhador adicional render mais: um assenta, outro prepara a massa, outro cuida dos andaimes). Depois ele cai: o capital é fixo, e há gente demais disputando uma só betoneira. A partir do 9º trabalhador, eles passam a se atrapalhar e a produção total <strong>diminui</strong>.</p>
+  <figure>
+    <div class="svgbox"><svg viewBox="0 0 620 380" role="img" aria-label="Produto total do trabalho com capital fixo: cresce, desacelera, atinge o máximo e cai"><line class="ax" x1="60" y1="20" x2="60" y2="330"/><line class="ax" x1="60" y1="330" x2="500" y2="330"/><g font-size="11"><text x="60.0" y="348" text-anchor="middle">0</text><text x="104.0" y="348" text-anchor="middle">1</text><text x="148.0" y="348" text-anchor="middle">2</text><text x="192.0" y="348" text-anchor="middle">3</text><text x="236.0" y="348" text-anchor="middle">4</text><text x="280.0" y="348" text-anchor="middle">5</text><text x="324.0" y="348" text-anchor="middle">6</text><text x="368.0" y="348" text-anchor="middle">7</text><text x="412.0" y="348" text-anchor="middle">8</text><text x="456.0" y="348" text-anchor="middle">9</text><text x="500.0" y="348" text-anchor="middle">10</text><text x="52" y="334.0" text-anchor="end">0</text><text x="52" y="245.4" text-anchor="end">40</text><text x="52" y="156.9" text-anchor="end">80</text><text x="52" y="68.3" text-anchor="end">120</text></g><text x="280" y="372" text-anchor="middle" class="tink">Trabalhadores na frente de obra (L)</text><text x="14" y="180" text-anchor="middle" class="tink" transform="rotate(-90 14 180)">m² de alvenaria por dia (PT)</text><path class="dem" d="M60.0,330.0 C67.3,326.3 89.3,318.9 104.0,307.9 C118.7,296.8 133.3,282.0 148.0,263.6 C162.7,245.1 177.3,215.6 192.0,197.1 C206.7,178.7 221.3,166.1 236.0,152.9 C250.7,139.6 265.3,127.8 280.0,117.4 C294.7,107.1 309.3,96.8 324.0,90.9 C338.7,85.0 353.3,83.5 368.0,82.0 C382.7,80.5 397.3,80.5 412.0,82.0 C426.7,83.5 441.3,86.4 456.0,90.9 C470.7,95.3 492.7,105.6 500.0,108.6"/><circle cx="104.0" cy="307.9" r="3.5" style="fill:var(--blue)"/><circle cx="148.0" cy="263.6" r="3.5" style="fill:var(--blue)"/><circle cx="192.0" cy="197.1" r="3.5" style="fill:var(--blue)"/><circle cx="236.0" cy="152.9" r="3.5" style="fill:var(--blue)"/><circle cx="280.0" cy="117.4" r="3.5" style="fill:var(--blue)"/><circle cx="324.0" cy="90.9" r="3.5" style="fill:var(--blue)"/><circle cx="368.0" cy="82.0" r="3.5" style="fill:var(--blue)"/><circle cx="412.0" cy="82.0" r="3.5" style="fill:var(--blue)"/><circle cx="456.0" cy="90.9" r="3.5" style="fill:var(--blue)"/><circle cx="500.0" cy="108.6" r="3.5" style="fill:var(--blue)"/><line class="dash" x1="192.0" y1="197.1" x2="192.0" y2="330"/><circle class="hollow" cx="192.0" cy="197.1" r="6"/><text class="tink" x="202.0" y="223.1" font-weight="500">L = 3: PMg máximo,</text><text class="tink" x="202.0" y="239.1" font-weight="500">o ritmo desacelera</text><line class="dash" x1="412.0" y1="82.0" x2="412.0" y2="330"/><circle class="dot" cx="412.0" cy="82.0" r="6"/><text class="tink" x="400.0" y="70.0" text-anchor="end" font-weight="500">PT máximo = 112 (L = 8, PMg = 0)</text><text class="tb" x="508.0" y="112.6" font-weight="500">PT</text></svg></div>
+    <figcaption>Produto total (m² por dia). Sobe cada vez mais rápido até o 3º trabalhador, continua subindo mais devagar, atinge o máximo no 8º e depois cai. Valores hipotéticos.</figcaption>
+  </figure>
+  <figure>
+    <div class="svgbox"><svg viewBox="0 0 620 380" role="img" aria-label="Produto marginal e produto médio do trabalho: o marginal corta o médio no máximo do médio"><line class="ax" x1="60" y1="20" x2="60" y2="330"/><line class="ax" x1="60" y1="330" x2="500" y2="330"/><g font-size="11"><text x="60.0" y="348" text-anchor="middle">0</text><text x="104.0" y="348" text-anchor="middle">1</text><text x="148.0" y="348" text-anchor="middle">2</text><text x="192.0" y="348" text-anchor="middle">3</text><text x="236.0" y="348" text-anchor="middle">4</text><text x="280.0" y="348" text-anchor="middle">5</text><text x="324.0" y="348" text-anchor="middle">6</text><text x="368.0" y="348" text-anchor="middle">7</text><text x="412.0" y="348" text-anchor="middle">8</text><text x="456.0" y="348" text-anchor="middle">9</text><text x="500.0" y="348" text-anchor="middle">10</text><text x="52" y="321.1" text-anchor="end">-10</text><text x="52" y="256.5" text-anchor="end">0</text><text x="52" y="191.9" text-anchor="end">10</text><text x="52" y="127.3" text-anchor="end">20</text><text x="52" y="62.8" text-anchor="end">30</text></g><text x="280" y="372" text-anchor="middle" class="tink">Trabalhadores na frente de obra (L)</text><text x="14" y="180" text-anchor="middle" class="tink" transform="rotate(-90 14 180)">m² por dia, por trabalhador</text><line x1="60" y1="252.5" x2="500" y2="252.5" style="stroke:var(--ink);stroke-width:1"/><path class="cmg" d="M104.0,187.9 C111.3,177.2 133.3,144.9 148.0,123.3 C162.7,101.8 177.3,58.8 192.0,58.8 C206.7,58.8 221.3,108.3 236.0,123.3 C250.7,138.4 265.3,140.6 280.0,149.2 C294.7,157.8 309.3,162.1 324.0,175.0 C338.7,187.9 353.3,213.8 368.0,226.7 C382.7,239.6 397.3,243.9 412.0,252.5 C426.7,261.1 441.3,269.7 456.0,278.3 C470.7,286.9 492.7,299.9 500.0,304.2"/><path class="cme" d="M104.0,187.9 C111.3,182.5 133.3,166.4 148.0,155.6 C162.7,144.9 177.3,128.7 192.0,123.3 C206.7,118.0 221.3,122.5 236.0,123.3 C250.7,124.2 265.3,126.3 280.0,128.5 C294.7,130.7 309.3,132.8 324.0,136.2 C338.7,139.7 353.3,144.9 368.0,149.2 C382.7,153.5 397.3,157.8 412.0,162.1 C426.7,166.4 441.3,170.7 456.0,175.0 C470.7,179.3 492.7,185.8 500.0,187.9"/><circle cx="104.0" cy="187.9" r="3.5" style="fill:var(--supply)"/><circle cx="104.0" cy="187.9" r="3.5" style="fill:var(--blue)"/><circle cx="148.0" cy="123.3" r="3.5" style="fill:var(--supply)"/><circle cx="148.0" cy="155.6" r="3.5" style="fill:var(--blue)"/><circle cx="192.0" cy="58.8" r="3.5" style="fill:var(--supply)"/><circle cx="192.0" cy="123.3" r="3.5" style="fill:var(--blue)"/><circle cx="236.0" cy="123.3" r="3.5" style="fill:var(--supply)"/><circle cx="236.0" cy="123.3" r="3.5" style="fill:var(--blue)"/><circle cx="280.0" cy="149.2" r="3.5" style="fill:var(--supply)"/><circle cx="280.0" cy="128.5" r="3.5" style="fill:var(--blue)"/><circle cx="324.0" cy="175.0" r="3.5" style="fill:var(--supply)"/><circle cx="324.0" cy="136.2" r="3.5" style="fill:var(--blue)"/><circle cx="368.0" cy="226.7" r="3.5" style="fill:var(--supply)"/><circle cx="368.0" cy="149.2" r="3.5" style="fill:var(--blue)"/><circle cx="412.0" cy="252.5" r="3.5" style="fill:var(--supply)"/><circle cx="412.0" cy="162.1" r="3.5" style="fill:var(--blue)"/><circle cx="456.0" cy="278.3" r="3.5" style="fill:var(--supply)"/><circle cx="456.0" cy="175.0" r="3.5" style="fill:var(--blue)"/><circle cx="500.0" cy="304.2" r="3.5" style="fill:var(--supply)"/><circle cx="500.0" cy="187.9" r="3.5" style="fill:var(--blue)"/><text class="ts" x="204.0" y="32.9" font-weight="500">PMg máximo (L = 3)</text><line class="dash" x1="236.0" y1="123.3" x2="236.0" y2="252.5"/><circle class="hollow" cx="236.0" cy="123.3" r="6"/><text class="tink" x="250.0" y="69.7" font-weight="500">PMg = PMe (L = 4):</text><text class="tink" x="250.0" y="84.7" font-weight="500">a PMe está no máximo</text><circle class="dot" cx="412.0" cy="252.5" r="6"/><text class="tink" x="324.0" y="291.2" text-anchor="middle" font-weight="500">PMg = 0 (L = 8)</text><text class="ts" x="508.0" y="308.2" font-weight="500">PMg</text><text class="tb" x="508.0" y="191.9" font-weight="500">PMe</text></svg></div>
+    <figcaption>Produto marginal (laranja) e produto médio (azul). O PMg sobe até o 3º trabalhador, cruza o PMe no máximo do PMe (4º) e chega a zero no 8º, quando o PT é máximo.</figcaption>
+  </figure>
+</section>
+
+<!-- 05 -->
+<section id="lei">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Lei dos rendimentos marginais decrescentes e relações entre as curvas</h2></div>
+  <div class="def"><span class="tag">Lei</span>Quando aumentamos o insumo variável e mantemos o outro fixo, a <mark>produtividade marginal do insumo variável diminui a partir de determinado ponto</mark>.</div>
+  <p>Sempre que a lei vale, as três curvas se relacionam de um jeito previsível. Estas relações valem para qualquer situação de curto prazo com um insumo variável, a menos que o enunciado diga o contrário.</p>
+  <div class="tbl"><table style="min-width:760px">
+    <thead><tr><th>Quando...</th><th>...então</th><th>Na frente de obra</th></tr></thead>
+    <tbody>
+      <tr><td class="l"><strong>PMg &gt; 0</strong></td><td class="l">O PT está <strong>crescendo</strong>.</td><td class="l">Até o 7º trabalhador, todo novo acrescenta m².</td></tr>
+      <tr><td class="l"><strong>PMg = 0</strong></td><td class="l">O PT está no seu <strong>máximo</strong>.</td><td class="l">8º trabalhador: PMg = 0, PT = 112.</td></tr>
+      <tr><td class="l"><strong>PMg &lt; 0</strong></td><td class="l">O PT <strong>diminui</strong>.</td><td class="l">9º e 10º trabalhadores atrapalham.</td></tr>
+      <tr><td class="l"><strong>PMg passa do seu máximo</strong></td><td class="l">O PT continua crescendo, mas <strong>mais devagar</strong> (a inclinação diminui).</td><td class="l">Depois do 3º trabalhador.</td></tr>
+      <tr><td class="l"><strong>PMg &gt; PMe</strong></td><td class="l">O PMe está <strong>subindo</strong>.</td><td class="l">1º ao 3º trabalhador.</td></tr>
+      <tr><td class="l"><strong>PMg = PMe</strong></td><td class="l">O PMe está no seu <strong>máximo</strong> (a curva do PMg corta a do PMe nesse ponto).</td><td class="l">4º trabalhador: os dois valem 20.</td></tr>
+      <tr><td class="l"><strong>PMg &lt; PMe</strong></td><td class="l">O PMe está <strong>caindo</strong>.</td><td class="l">Do 5º trabalhador em diante.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="box lembrete"><span class="tag">É a mesma regra da média de notas</span><p>É a mesma lógica do cruzamento entre custo marginal e custo médio: se o novo trabalhador rende <strong>mais</strong> do que a média, a média sobe; se rende <strong>menos</strong>, a média cai. No ponto de virada, os dois se encontram.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Detalhes que enganam</span><ul>
+    <li>Quando o PMg começa a cair, o <strong>PT não cai</strong>: só cresce mais devagar. O PT só cai quando o PMg fica <strong>negativo</strong>.</li>
+    <li>O <strong>máximo do PMg</strong> (3º trabalhador) não é o máximo do PMe (4º) nem o máximo do PT (8º).</li>
+    <li>O PMe pode estar caindo mesmo com o PMg ainda <strong>positivo</strong>, desde que o PMg seja menor que o PMe.</li>
+  </ul></div>
+  <div class="box fora"><span class="tag">Em outras áreas</span><p>Numa <strong>cozinha pequena</strong> (capital fixo), o 1º cozinheiro faz tudo sozinho, o 2º e o 3º dividem tarefas e o restaurante produz muito mais pratos. O 6º já quase não tem espaço, e o 9º derruba panelas e atrapalha todos. Mesma lei, outro setor: <strong>mais gente na mesma estrutura rende cada vez menos</strong>.</p></div>
+</section>
+
+<!-- 06 -->
+<section id="derivada">
+  <div class="sec-head"><span class="sec-num">06</span><h2>O produto marginal na função e a produção máxima</h2></div>
+  <div class="def"><span class="tag">Regra</span>O <mark>produto marginal do trabalho é a derivada parcial da função de produção em relação a L</mark>. O produto <strong>máximo</strong> ocorre onde <strong>PMgL = 0</strong>.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Como derivar (regra rápida)</span><span><strong>a · Lⁿ</strong> vira <strong>n · a · Lⁿ⁻¹</strong>: desce o expoente para multiplicar e subtrai 1 dele. Quem não depende de L entra como constante e some.</span>
+      <div class="eq">q = L³ · K
+PMgL = 3 · L² · K</div></div>
+    <div class="card"><span class="s">Achando a produção máxima</span><span>1) Derive q em relação a L. 2) Iguale a zero. 3) Resolva. 4) Confirme que o PMg está <strong>decrescendo</strong> nessa raiz.</span>
+      <div class="eq">q = 6L² − 0,1L³
+PMgL = 12L − 0,3L²
+12L − 0,3L² = 0
+L · (12 − 0,3L) = 0
+L = 0   ou   L = 40
+q(40) = 9.600 − 6.400 = 3.200</div></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhes que enganam</span><ul>
+    <li>A raiz <strong>L = 0</strong> também zera o PMg, mas ali o PMg está <strong>crescendo</strong> (é um mínimo, não um máximo). Vale a raiz em que o PMg decresce: L = 40.</li>
+    <li>No máximo da produção, o <strong>PMg é zero</strong>, não o valor do insumo. Aqui, L = 40, mas PMg = 0.</li>
+    <li>Nem toda função tem máximo: em <strong>q = 10 + 20K</strong>, quanto mais K, mais q, sem fim.</li>
+    <li>Se existe um máximo, a partir dele o PMg passa a <strong>decrescer</strong>: não pode ser crescente para todos os valores do insumo.</li>
+  </ul></div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>A conta mostra até quantos trabalhadores vale a pena aumentar a equipe de uma frente de obra se o objetivo fosse só maximizar os m² assentados. Na prática, a empresa para antes, porque cada trabalhador custa salário. É aí que entram os custos, tema da próxima etapa.</p></div>
+</section>
+
+<!-- 07 -->
+<section id="isoquantas">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Longo prazo: isoquantas</h2></div>
+  <div class="def"><span class="tag">Definição</span><mark>Isoquantas</mark> são curvas que mostram <strong>todas as combinações de fatores de produção que geram a mesma quantidade de produto</strong>. O conjunto delas forma um <strong>mapa de isoquantas</strong>.</div>
+  <p>No longo prazo, a empresa pode variar capital e trabalho. Para cada combinação, a função de produção dá uma quantidade. Tabela da frente de obra, com <strong>q = 20 · √(K · L)</strong> (m² por dia, hipotético):</p>
+  <div class="tbl"><table style="min-width:560px">
+    <thead><tr><th>Trabalho (L) ↓ · Capital (K) →</th><th>K = 1</th><th>K = 4</th><th>K = 9</th></tr></thead>
+    <tbody>
+      <tr><td class="num">L = 4</td><td class="num">40</td><td class="num">80</td><td class="num"><strong>120</strong></td></tr>
+      <tr><td class="num">L = 9</td><td class="num">60</td><td class="num"><strong>120</strong></td><td class="num">180</td></tr>
+      <tr><td class="num">L = 16</td><td class="num">80</td><td class="num">160</td><td class="num">240</td></tr>
+      <tr><td class="num">L = 25</td><td class="num">100</td><td class="num">200</td><td class="num">300</td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:.9rem;color:var(--muted)">Descendo uma linha, aumenta o trabalho e a produção sobe. Indo para a direita, aumenta o capital e a produção também sobe. As duas células em destaque dão <strong>os mesmos 120 m²</strong> com combinações diferentes: 4 equipamentos e 9 trabalhadores, ou 9 equipamentos e 4 trabalhadores. Estão na mesma isoquanta.</p>
+  <figure>
+    <div class="svgbox"><svg viewBox="0 0 640 380" role="img" aria-label="Mapa de isoquantas: três níveis de produção, com combinações de capital e trabalho"><line class="ax" x1="60" y1="20" x2="60" y2="330"/><line class="ax" x1="60" y1="330" x2="500" y2="330"/><g font-size="11"><text x="60.0" y="348" text-anchor="middle">0</text><text x="115.0" y="348" text-anchor="middle">2</text><text x="170.0" y="348" text-anchor="middle">4</text><text x="225.0" y="348" text-anchor="middle">6</text><text x="280.0" y="348" text-anchor="middle">8</text><text x="335.0" y="348" text-anchor="middle">10</text><text x="390.0" y="348" text-anchor="middle">12</text><text x="445.0" y="348" text-anchor="middle">14</text><text x="500.0" y="348" text-anchor="middle">16</text><text x="52" y="334.0" text-anchor="end">0</text><text x="52" y="295.2" text-anchor="end">2</text><text x="52" y="256.5" text-anchor="end">4</text><text x="52" y="217.8" text-anchor="end">6</text><text x="52" y="179.0" text-anchor="end">8</text><text x="52" y="140.2" text-anchor="end">10</text><text x="52" y="101.5" text-anchor="end">12</text><text x="52" y="62.8" text-anchor="end">14</text><text x="52" y="24.0" text-anchor="end">16</text></g><text x="280" y="372" text-anchor="middle" class="tink">Capital (K): conjuntos de equipamento</text><text x="14" y="180" text-anchor="middle" class="tink" transform="rotate(-90 14 180)">Trabalho (L): trabalhadores</text><path class="cme" d="M121.9,20.0 L128.2,48.7 L134.5,72.5 L140.8,92.6 L147.1,109.7 L153.4,124.6 L159.7,137.6 L166.0,149.0 L172.3,159.2 L178.6,168.3 L184.9,176.4 L191.2,183.8 L197.5,190.5 L203.8,196.6 L210.1,202.2 L216.4,207.4 L222.7,212.1 L229.0,216.5 L235.3,220.6 L241.6,224.4 L247.9,227.9 L254.2,231.2 L260.5,234.3 L266.8,237.3 L273.1,240.0 L279.4,242.6 L285.7,245.0 L292.0,247.3 L298.3,249.5 L304.6,251.6 L310.9,253.6 L317.2,255.4 L323.5,257.2 L329.8,258.9 L336.1,260.5 L342.4,262.1 L348.8,263.6 L355.1,265.0 L361.4,266.3 L367.7,267.7 L374.0,268.9 L380.3,270.1 L386.6,271.3 L392.9,272.4 L399.2,273.4 L405.5,274.5 L411.8,275.5 L418.1,276.4 L424.4,277.4 L430.7,278.3 L437.0,279.1 L443.3,280.0 L449.6,280.8 L455.9,281.5 L462.2,282.3 L468.5,283.0 L474.8,283.8 L481.1,284.4 L487.4,285.1 L493.7,285.8 L500.0,286.4"/><text class="tb" x="506.0" y="290.4" font-weight="500">q = 120</text><path class="cme" d="M199.2,20.0 L204.2,30.8 L209.2,40.8 L214.3,50.2 L219.3,59.0 L224.3,67.3 L229.3,75.1 L234.3,82.4 L239.3,89.3 L244.3,95.9 L249.3,102.1 L254.4,108.0 L259.4,113.5 L264.4,118.8 L269.4,123.9 L274.4,128.7 L279.4,133.3 L284.4,137.7 L289.5,141.9 L294.5,145.9 L299.5,149.8 L304.5,153.5 L309.5,157.0 L314.5,160.4 L319.5,163.7 L324.5,166.9 L329.6,169.9 L334.6,172.8 L339.6,175.6 L344.6,178.4 L349.6,181.0 L354.6,183.5 L359.6,186.0 L364.6,188.3 L369.7,190.6 L374.7,192.8 L379.7,195.0 L384.7,197.1 L389.7,199.1 L394.7,201.1 L399.7,203.0 L404.8,204.8 L409.8,206.6 L414.8,208.4 L419.8,210.0 L424.8,211.7 L429.8,213.3 L434.8,214.9 L439.8,216.4 L444.9,217.9 L449.9,219.3 L454.9,220.7 L459.9,222.1 L464.9,223.4 L469.9,224.7 L474.9,226.0 L479.9,227.2 L485.0,228.4 L490.0,229.6 L495.0,230.8 L500.0,231.9"/><text class="tb" x="506.0" y="235.9" font-weight="500">q = 180</text><path class="cme" d="M307.5,20.0 L310.7,24.0 L313.9,27.8 L317.1,31.6 L320.3,35.3 L323.5,38.9 L326.8,42.4 L330.0,45.8 L333.2,49.1 L336.4,52.4 L339.6,55.6 L342.8,58.7 L346.0,61.7 L349.2,64.7 L352.4,67.6 L355.6,70.5 L358.8,73.3 L362.0,76.0 L365.2,78.6 L368.5,81.3 L371.7,83.8 L374.9,86.3 L378.1,88.8 L381.3,91.2 L384.5,93.6 L387.7,95.9 L390.9,98.1 L394.1,100.4 L397.3,102.6 L400.5,104.7 L403.8,106.8 L407.0,108.9 L410.2,110.9 L413.4,112.9 L416.6,114.8 L419.8,116.8 L423.0,118.6 L426.2,120.5 L429.4,122.3 L432.6,124.1 L435.8,125.9 L439.0,127.6 L442.2,129.3 L445.5,131.0 L448.7,132.6 L451.9,134.2 L455.1,135.8 L458.3,137.4 L461.5,138.9 L464.7,140.4 L467.9,141.9 L471.1,143.4 L474.3,144.8 L477.5,146.2 L480.8,147.6 L484.0,149.0 L487.2,150.4 L490.4,151.7 L493.6,153.0 L496.8,154.3 L500.0,155.6"/><text class="tb" x="506.0" y="159.6" font-weight="500">q = 240</text><circle class="dot" cx="142.5" cy="97.5" r="5"/><text class="tink" x="151.5" y="89.5" font-weight="500">A</text><circle class="dot" cx="170.0" cy="155.6" r="5"/><text class="tink" x="179.0" y="147.6" font-weight="500">B</text><circle class="dot" cx="225.0" cy="213.8" r="5"/><text class="tink" x="234.0" y="205.8" font-weight="500">C</text><circle class="dot" cx="307.5" cy="252.5" r="5"/><text class="tink" x="316.5" y="244.5" font-weight="500">D</text><circle class="dot" cx="390.0" cy="271.9" r="5"/><text class="tink" x="399.0" y="263.9" font-weight="500">E</text></svg></div>
+    <figcaption>Mapa de isoquantas de q = 20 · √(K · L). Quanto mais longe da origem, maior a produção. Os pontos A a E estão todos na isoquanta de 120 m² por dia.</figcaption>
+  </figure>
+  <div class="grid g3">
+    <div class="card"><span class="s">Decrescentes</span><span>Para manter a produção, <strong>mais de um insumo exige menos do outro</strong>. Por isso a curva desce.</span></div>
+    <div class="card"><span class="s">Convexas</span><span>A inclinação diminui da esquerda para a direita: quanto menos trabalho sobra, mais difícil é substituí-lo por capital.</span></div>
+    <div class="card"><span class="s">Mais longe, mais produto</span><span>Curvas mais afastadas da origem representam <strong>maior produção</strong>.</span></div>
+  </div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Para entregar 120 m² por dia, a empresa pode ter uma frente <strong>intensiva em trabalho</strong> (poucos equipamentos, muita gente) ou <strong>intensiva em capital</strong> (muito equipamento, pouca gente). A isoquanta mostra todas as opções <strong>tecnicamente possíveis</strong>.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>A isoquanta mostra só a <strong>tecnologia</strong>. Para decidir qual combinação é a melhor (e se a empresa é "intensiva em capital"), é preciso conhecer também os <strong>custos dos fatores</strong>. Só com o formato das curvas, não dá para saber isso.</p></div>
+  <div class="box fora"><span class="tag">Em outras áreas</span><p>Uma <strong>lavoura</strong> de soja pode colher com muitos trabalhadores e poucas máquinas, ou com poucos trabalhadores e muitas colheitadeiras, e obter a mesma safra. Todas as combinações possíveis para a mesma colheita formam uma isoquanta.</p></div>
+</section>
+
+<!-- 08 -->
+<section id="tmst">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Taxa marginal de substituição técnica (TMST)</h2></div>
+  <div class="def"><span class="tag">Definição</span>A <mark>TMST</mark> mostra <strong>quanto de um insumo podemos reduzir ao ganhar uma unidade do outro, mantendo a produção</strong>. É a <strong>inclinação da isoquanta</strong> em determinado ponto.</div>
+  <div class="eq" style="text-align:center">TMST = −ΔL ÷ ΔK  (com q constante)
+       = PMgK ÷ PMgL   (L no eixo vertical, K no horizontal)</div>
+  <p>Na prática, a TMST do insumo que <strong>sai</strong> pelo insumo que <strong>entra</strong> é igual à <strong>razão entre as produtividades marginais</strong>: PMg do que entra ÷ PMg do que sai. Por isso o sinal e a ordem dependem de qual insumo está em cada eixo.</p>
+  <div class="tbl"><table style="min-width:640px">
+    <thead><tr><th>De → Para</th><th>Em K (ΔK)</th><th>Em L (ΔL)</th><th>TMST = −ΔL ÷ ΔK</th></tr></thead>
+    <tbody>
+      <tr><td>A (3; 12) → B (4; 9)</td><td class="num">+1</td><td class="num">−3</td><td class="num"><strong>3</strong></td></tr>
+      <tr><td>B (4; 9) → C (6; 6)</td><td class="num">+2</td><td class="num">−3</td><td class="num"><strong>1,5</strong></td></tr>
+      <tr><td>C (6; 6) → D (9; 4)</td><td class="num">+3</td><td class="num">−2</td><td class="num"><strong>0,67</strong></td></tr>
+      <tr><td>D (9; 4) → E (12; 3)</td><td class="num">+3</td><td class="num">−1</td><td class="num"><strong>0,33</strong></td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:.9rem;color:var(--muted)">Pontos do gráfico anterior, todos em 120 m² por dia. Quanto mais inclinada a curva, maior a TMST: TMST<sub>A</sub> &gt; TMST<sub>B</sub> &gt; TMST<sub>C</sub>.</p>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Entre A e B, <strong>1 equipamento a mais dispensa 3 trabalhadores</strong>. Entre D e E, 3 equipamentos a mais dispensam só 1 trabalhador: com muito capital já em uso, <strong>cada equipamento extra substitui cada vez menos gente</strong>. Isso é a convexidade da isoquanta, vista em números.</p></div>
+  <div class="box fora"><span class="tag">Em outras áreas</span><p>Num <strong>escritório</strong>, o primeiro software de lançamentos dispensa vários digitadores. O quinto software, que faz o mesmo que os anteriores, dispensa quase ninguém. A taxa de troca diminui à medida que o capital cresce.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Detalhes que enganam</span><ul>
+    <li>A TMST é <strong>decrescente</strong> ao longo de uma isoquanta convexa: a inclinação diminui, em módulo, quando se avança no sentido do insumo do eixo horizontal.</li>
+    <li>Ela é <strong>constante</strong> quando a isoquanta é uma reta (substitutos perfeitos).</li>
+    <li>"TMST de K por L" e "TMST de L por K" são <strong>inversas</strong>. Veja sempre qual insumo está no eixo vertical.</li>
+  </ul></div>
+</section>
+
+<!-- 09 -->
+<section id="especiais">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Duas isoquantas especiais</h2></div>
+  <div class="graus" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+    <div class="grau"><svg viewBox="0 0 140 115" role="img" aria-label="Isoquantas reta"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><line class="dem" x1="26" y1="38" x2="70" y2="102" style="stroke-width:2.5"/><line class="dem" x1="26" y1="60" x2="95" y2="102" style="stroke-width:2.5"/><line class="dem" x1="26" y1="82" x2="122" y2="102" style="stroke-width:2.5"/><text x="128" y="100" font-size="10" text-anchor="end">K</text><text x="24" y="16" font-size="10">L</text></svg><span class="v">Retas</span><h3>Substitutos perfeitos</h3><p>TMST constante: a troca entre insumos é sempre na mesma proporção.</p></div>
+    <div class="grau"><svg viewBox="0 0 140 115" role="img" aria-label="Isoquantas curva"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><path class="dem" d="M26.6,26.4 L29.3,48.8 L31.9,61.2 L34.6,69.2 L37.2,74.7 L39.9,78.7 L42.5,81.8 L45.2,84.3 L47.9,86.2 L50.5,87.9 L53.1,89.2 L55.8,90.4 L58.5,91.4 L61.1,92.3 L63.8,93.0 L66.4,93.7 L69.0,94.3 L71.7,94.9 L74.3,95.4 L77.0,95.8 L79.7,96.2 L82.3,96.6 L85.0,96.9 L87.6,97.3 L90.2,97.6 L92.9,97.8 L95.5,98.1 L98.2,98.3 L100.8,98.5 L103.5,98.7 L106.2,98.9 L108.8,99.1 L111.5,99.3 L114.1,99.4 L116.8,99.6 L119.4,99.7 L122.0,99.9 L124.7,100.0 L127.3,100.1 L130.0,100.2" style="stroke-width:2.5"/><path class="dem" d="M34.6,15.5 L37.2,29.2 L39.9,39.3 L42.5,47.0 L45.2,53.1 L47.9,58.1 L50.5,62.1 L53.1,65.6 L55.8,68.5 L58.5,71.0 L61.1,73.2 L63.8,75.1 L66.4,76.8 L69.0,78.3 L71.7,79.7 L74.3,80.9 L77.0,82.1 L79.7,83.1 L82.3,84.0 L85.0,84.9 L87.6,85.7 L90.2,86.4 L92.9,87.1 L95.5,87.7 L98.2,88.3 L100.8,88.8 L103.5,89.3 L106.2,89.8 L108.8,90.3 L111.5,90.7 L114.1,91.1 L116.8,91.5 L119.4,91.8 L122.0,92.2 L124.7,92.5 L127.3,92.8 L130.0,93.1" style="stroke-width:2.5"/><path class="dem" d="M47.9,11.1 L50.5,19.3 L53.1,26.1 L55.8,32.0 L58.5,37.0 L61.1,41.4 L63.8,45.2 L66.4,48.7 L69.0,51.7 L71.7,54.4 L74.3,56.9 L77.0,59.1 L79.7,61.2 L82.3,63.0 L85.0,64.7 L87.6,66.3 L90.2,67.8 L92.9,69.1 L95.5,70.4 L98.2,71.6 L100.8,72.7 L103.5,73.7 L106.2,74.7 L108.8,75.6 L111.5,76.4 L114.1,77.2 L116.8,78.0 L119.4,78.7 L122.0,79.4 L124.7,80.0 L127.3,80.6 L130.0,81.2" style="stroke-width:2.5"/><text x="128" y="100" font-size="10" text-anchor="end">K</text><text x="24" y="16" font-size="10">L</text></svg><span class="v">Convexas</span><h3>Caso comum</h3><p>Os insumos se substituem, mas com TMST decrescente.</p></div>
+    <div class="grau"><svg viewBox="0 0 140 115" role="img" aria-label="Isoquantas L"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><path class="dem" d="M36,72 L36,92 L70,92" style="stroke-width:2.5;fill:none"/><path class="dem" d="M66,46 L66,66 L100,66" style="stroke-width:2.5;fill:none"/><path class="dem" d="M96,20 L96,40 L130,40" style="stroke-width:2.5;fill:none"/><text x="128" y="100" font-size="10" text-anchor="end">K</text><text x="24" y="16" font-size="10">L</text></svg><span class="v">Em L</span><h3>Proporções fixas</h3><p>Complementares perfeitos: sem substituição possível.</p></div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Substitutos perfeitos (isoquanta reta)</span><span>A TMST é <strong>constante</strong>. Não precisa ser 1 para 1: basta que a proporção seja sempre a mesma (por exemplo, abrir mão de 4 de trabalho para ganhar 3 de capital).</span>
+      <div class="eq">24 = 6a + 3b
+PMga = 6      PMgb = 3
+TMST = 6 ÷ 3 = 2   (constante)</div></div>
+    <div class="card"><span class="s">Proporções fixas (função de Leontief)</span><span>q é o menor valor entre os insumos ponderados, <strong>q = mín(K, L)</strong>. Aumentar só um insumo não aumenta a produção.</span>
+      <div class="eq">q = mín(3; 5) = 3
+q = mín(3; 5.000) = 3
+q = mín(K; 4L)
+K = 8, L = 8:  mín(8; 32) = 8
+K = 8, L = 2:  mín(8; 8)  = 8</div></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhes que enganam</span><ul>
+    <li>Em q = mín(K, 4L), a proporção é de <strong>4 de capital para 1 de trabalho</strong>: é "invertido" porque o 4 multiplica o L.</li>
+    <li>No trecho horizontal da isoquanta em L, o <strong>PMgK é zero</strong>; no vertical, o <strong>PMgL é zero</strong>.</li>
+    <li>Funções do tipo q = mín(K, L) são sempre <strong>homogêneas de grau 1</strong> (rendimentos constantes de escala).</li>
+  </ul></div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Um <strong>caminhão-betoneira</strong> só opera com um motorista: é q = mín(caminhões, motoristas). Contratar motoristas sem caminhão, ou comprar caminhões sem motorista, não aumenta a entrega de concreto. Já <strong>gás ou lenha</strong> numa olaria são quase substitutos perfeitos: um pode trocar o outro numa proporção constante.</p></div>
+  <div class="box fora"><span class="tag">Em outras áreas</span><p><strong>Sapato:</strong> um pé esquerdo e um pé direito formam um par, e q = mín(E, D). <strong>Receita culinária:</strong> 2 ovos para cada 200 g de farinha; ovo sobrando não vira bolo. <strong>Moeda:</strong> notas de R$ 20 e duas de R$ 10 são substitutos perfeitos para pagar R$ 40.</p></div>
+</section>
+
+<!-- 10 -->
+<section id="escala">
+  <div class="sec-head"><span class="sec-num">10</span><h2>Rendimentos de escala</h2></div>
+  <p>No longo prazo, a empresa pode aumentar sua <strong>escala</strong>: elevar <strong>todos os insumos ao mesmo tempo, na mesma proporção</strong>. Se os insumos <strong>dobram</strong>, há três possibilidades:</p>
+  <div class="graus" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+    <div class="grau"><svg viewBox="0 0 140 115" role="img" aria-label="Isoquantas crescentes"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><path class="dem" d="M46.1,9.0 L47.6,14.0 L49.0,18.6 L50.4,22.7 L51.9,26.4 L53.3,29.8 L54.8,32.9 L56.2,35.8 L57.7,38.5 L59.1,40.9 L60.6,43.2 L62.0,45.3 L63.4,47.3 L64.9,49.2 L66.3,50.9 L67.8,52.5 L69.2,54.1 L70.7,55.5 L72.1,56.9 L73.6,58.2 L75.0,59.4 L76.5,60.6 L77.9,61.7 L79.3,62.8 L80.8,63.8 L82.2,64.7 L83.7,65.6 L85.1,66.5 L86.6,67.3 L88.0,68.1 L89.5,68.9 L90.9,69.6 L92.3,70.4 L93.8,71.0 L95.2,71.7 L96.7,72.3 L98.1,72.9 L99.6,73.5 L101.0,74.1 L102.5,74.6 L103.9,75.1 L105.3,75.6 L106.8,76.1 L108.2,76.6 L109.7,77.0 L111.1,77.5 L112.6,77.9 L114.0,78.3 L115.5,78.7 L116.9,79.1 L118.4,79.5 L119.8,79.9 L121.2,80.2 L122.7,80.6 L124.1,80.9 L125.6,81.3 L127.0,81.6 L128.5,81.9 L129.9,82.2 L131.4,82.5 L132.8,82.8" style="stroke-width:2.2"/><path class="dem" d="M72.2,9.0 L73.2,10.8 L74.2,12.6 L75.3,14.3 L76.3,15.9 L77.3,17.5 L78.3,19.0 L79.3,20.4 L80.3,21.9 L81.3,23.2 L82.3,24.6 L83.3,25.8 L84.3,27.1 L85.3,28.3 L86.4,29.4 L87.4,30.6 L88.4,31.7 L89.4,32.7 L90.4,33.8 L91.4,34.8 L92.4,35.8 L93.4,36.7 L94.4,37.6 L95.4,38.5 L96.5,39.4 L97.5,40.3 L98.5,41.1 L99.5,41.9 L100.5,42.7 L101.5,43.5 L102.5,44.2 L103.5,45.0 L104.5,45.7 L105.5,46.4 L106.5,47.1 L107.6,47.7 L108.6,48.4 L109.6,49.0 L110.6,49.7 L111.6,50.3 L112.6,50.9 L113.6,51.4 L114.6,52.0 L115.6,52.6 L116.6,53.1 L117.7,53.7 L118.7,54.2 L119.7,54.7 L120.7,55.2 L121.7,55.7 L122.7,56.2 L123.7,56.7 L124.7,57.1 L125.7,57.6 L126.7,58.0 L127.8,58.5 L128.8,58.9 L129.8,59.3 L130.8,59.7 L131.8,60.2 L132.8,60.6" style="stroke-width:2.2"/><path class="dem" d="M98.3,9.0 L98.9,9.7 L99.5,10.4 L100.1,11.1 L100.6,11.7 L101.2,12.4 L101.8,13.0 L102.4,13.7 L102.9,14.3 L103.5,14.9 L104.1,15.6 L104.7,16.2 L105.2,16.8 L105.8,17.4 L106.4,17.9 L107.0,18.5 L107.5,19.1 L108.1,19.6 L108.7,20.2 L109.2,20.7 L109.8,21.3 L110.4,21.8 L111.0,22.3 L111.5,22.9 L112.1,23.4 L112.7,23.9 L113.3,24.4 L113.8,24.9 L114.4,25.4 L115.0,25.8 L115.6,26.3 L116.1,26.8 L116.7,27.2 L117.3,27.7 L117.9,28.2 L118.4,28.6 L119.0,29.1 L119.6,29.5 L120.2,29.9 L120.7,30.3 L121.3,30.8 L121.9,31.2 L122.5,31.6 L123.0,32.0 L123.6,32.4 L124.2,32.8 L124.8,33.2 L125.3,33.6 L125.9,34.0 L126.5,34.4 L127.1,34.8 L127.6,35.1 L128.2,35.5 L128.8,35.9 L129.4,36.2 L129.9,36.6 L130.5,36.9 L131.1,37.3 L131.7,37.6 L132.2,38.0 L132.8,38.3" style="stroke-width:2.2"/><text x="128" y="100" font-size="10" text-anchor="end">K</text><text x="24" y="16" font-size="10">L</text></svg><span class="v">Mais que dobra</span><h3>Rendimentos crescentes</h3><p>Especialização, linhas de montagem. As isoquantas ficam <strong>mais próximas</strong>.</p></div>
+    <div class="grau"><svg viewBox="0 0 140 115" role="img" aria-label="Isoquantas constantes"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><path class="dem" d="M28.7,9.0 L30.4,25.0 L32.2,36.4 L33.9,44.9 L35.6,51.6 L37.4,56.9 L39.1,61.3 L40.8,64.9 L42.6,68.0 L44.3,70.6 L46.1,72.9 L47.8,74.9 L49.5,76.7 L51.3,78.3 L53.0,79.7 L54.7,80.9 L56.5,82.1 L58.2,83.1 L59.9,84.1 L61.7,84.9 L63.4,85.7 L65.1,86.5 L66.9,87.2 L68.6,87.8 L70.3,88.4 L72.1,89.0 L73.8,89.5 L75.5,90.0 L77.3,90.4 L79.0,90.8 L80.8,91.2 L82.5,91.6 L84.2,92.0 L86.0,92.3 L87.7,92.7 L89.4,93.0 L91.2,93.3 L92.9,93.5 L94.6,93.8 L96.4,94.1 L98.1,94.3 L99.8,94.5 L101.6,94.8 L103.3,95.0 L105.0,95.2 L106.8,95.4 L108.5,95.6 L110.2,95.7 L112.0,95.9 L113.7,96.1 L115.5,96.2 L117.2,96.4 L118.9,96.6 L120.7,96.7 L122.4,96.8 L124.1,97.0 L125.9,97.1 L127.6,97.2 L129.3,97.4 L131.1,97.5 L132.8,97.6" style="stroke-width:2.2"/><path class="dem" d="M54.8,9.0 L56.1,12.5 L57.4,15.7 L58.7,18.7 L60.0,21.5 L61.3,24.1 L62.6,26.6 L63.9,28.9 L65.2,31.1 L66.5,33.1 L67.8,35.1 L69.1,36.9 L70.4,38.7 L71.7,40.4 L73.0,42.0 L74.3,43.5 L75.6,44.9 L76.9,46.3 L78.2,47.6 L79.5,48.8 L80.8,50.0 L82.1,51.2 L83.4,52.3 L84.7,53.4 L86.0,54.4 L87.3,55.3 L88.6,56.3 L89.9,57.2 L91.2,58.1 L92.5,58.9 L93.8,59.7 L95.1,60.5 L96.4,61.3 L97.7,62.0 L99.0,62.7 L100.3,63.4 L101.6,64.0 L102.9,64.7 L104.2,65.3 L105.5,65.9 L106.8,66.5 L108.1,67.1 L109.4,67.6 L110.7,68.2 L112.0,68.7 L113.3,69.2 L114.6,69.7 L115.9,70.2 L117.2,70.6 L118.5,71.1 L119.8,71.5 L121.1,71.9 L122.4,72.4 L123.7,72.8 L125.0,73.2 L126.3,73.6 L127.6,73.9 L128.9,74.3 L130.2,74.7 L131.5,75.0 L132.8,75.4" style="stroke-width:2.2"/><path class="dem" d="M98.3,9.0 L98.9,9.7 L99.5,10.4 L100.1,11.1 L100.6,11.7 L101.2,12.4 L101.8,13.0 L102.4,13.7 L102.9,14.3 L103.5,14.9 L104.1,15.6 L104.7,16.2 L105.2,16.8 L105.8,17.4 L106.4,17.9 L107.0,18.5 L107.5,19.1 L108.1,19.6 L108.7,20.2 L109.2,20.7 L109.8,21.3 L110.4,21.8 L111.0,22.3 L111.5,22.9 L112.1,23.4 L112.7,23.9 L113.3,24.4 L113.8,24.9 L114.4,25.4 L115.0,25.8 L115.6,26.3 L116.1,26.8 L116.7,27.2 L117.3,27.7 L117.9,28.2 L118.4,28.6 L119.0,29.1 L119.6,29.5 L120.2,29.9 L120.7,30.3 L121.3,30.8 L121.9,31.2 L122.5,31.6 L123.0,32.0 L123.6,32.4 L124.2,32.8 L124.8,33.2 L125.3,33.6 L125.9,34.0 L126.5,34.4 L127.1,34.8 L127.6,35.1 L128.2,35.5 L128.8,35.9 L129.4,36.2 L129.9,36.6 L130.5,36.9 L131.1,37.3 L131.7,37.6 L132.2,38.0 L132.8,38.3" style="stroke-width:2.2"/><text x="128" y="100" font-size="10" text-anchor="end">K</text><text x="24" y="16" font-size="10">L</text></svg><span class="v">Dobra</span><h3>Rendimentos constantes</h3><p>Produção na mesma proporção. Isoquantas <strong>igualmente espaçadas</strong>.</p></div>
+    <div class="grau"><svg viewBox="0 0 140 115" role="img" aria-label="Isoquantas decrescentes"><line class="ax" x1="20" y1="8" x2="20" y2="105"/><line class="ax" x1="20" y1="105" x2="135" y2="105"/><path class="dem" d="M27.5,40.8 L29.3,53.0 L31.0,61.3 L32.8,67.3 L34.5,71.8 L36.3,75.4 L38.0,78.3 L39.8,80.6 L41.6,82.6 L43.3,84.3 L45.1,85.8 L46.8,87.0 L48.6,88.1 L50.3,89.1 L52.1,90.0 L53.8,90.7 L55.6,91.4 L57.3,92.1 L59.1,92.7 L60.9,93.2 L62.6,93.7 L64.4,94.1 L66.1,94.5 L67.9,94.9 L69.6,95.3 L71.4,95.6 L73.1,95.9 L74.9,96.2 L76.7,96.5 L78.4,96.7 L80.2,97.0 L81.9,97.2 L83.7,97.4 L85.4,97.6 L87.2,97.8 L88.9,98.0 L90.7,98.2 L92.4,98.3 L94.2,98.5 L96.0,98.6 L97.7,98.8 L99.5,98.9 L101.2,99.1 L103.0,99.2 L104.7,99.3 L106.5,99.4 L108.2,99.5 L110.0,99.6 L111.7,99.7 L113.5,99.8 L115.3,99.9 L117.0,100.0 L118.8,100.1 L120.5,100.2 L122.3,100.3 L124.0,100.4 L125.8,100.4 L127.5,100.5 L129.3,100.6 L131.0,100.7 L132.8,100.7" style="stroke-width:2.2"/><path class="dem" d="M48.4,9.0 L49.8,13.5 L51.2,17.6 L52.6,21.4 L54.1,24.9 L55.5,28.0 L56.9,31.0 L58.3,33.7 L59.7,36.2 L61.1,38.6 L62.5,40.8 L63.9,42.8 L65.3,44.8 L66.7,46.6 L68.1,48.3 L69.5,49.9 L70.9,51.4 L72.3,52.9 L73.7,54.2 L75.1,55.5 L76.6,56.7 L78.0,57.9 L79.4,59.0 L80.8,60.1 L82.2,61.1 L83.6,62.1 L85.0,63.0 L86.4,63.9 L87.8,64.8 L89.2,65.6 L90.6,66.4 L92.0,67.1 L93.4,67.8 L94.8,68.5 L96.2,69.2 L97.6,69.9 L99.1,70.5 L100.5,71.1 L101.9,71.7 L103.3,72.2 L104.7,72.8 L106.1,73.3 L107.5,73.8 L108.9,74.3 L110.3,74.8 L111.7,75.2 L113.1,75.7 L114.5,76.1 L115.9,76.6 L117.3,77.0 L118.7,77.4 L120.1,77.8 L121.6,78.1 L123.0,78.5 L124.4,78.9 L125.8,79.2 L127.2,79.5 L128.6,79.9 L130.0,80.2 L131.4,80.5 L132.8,80.8" style="stroke-width:2.2"/><path class="dem" d="M98.3,9.0 L98.9,9.7 L99.5,10.4 L100.1,11.1 L100.6,11.7 L101.2,12.4 L101.8,13.0 L102.4,13.7 L102.9,14.3 L103.5,14.9 L104.1,15.6 L104.7,16.2 L105.2,16.8 L105.8,17.4 L106.4,17.9 L107.0,18.5 L107.5,19.1 L108.1,19.6 L108.7,20.2 L109.2,20.7 L109.8,21.3 L110.4,21.8 L111.0,22.3 L111.5,22.9 L112.1,23.4 L112.7,23.9 L113.3,24.4 L113.8,24.9 L114.4,25.4 L115.0,25.8 L115.6,26.3 L116.1,26.8 L116.7,27.2 L117.3,27.7 L117.9,28.2 L118.4,28.6 L119.0,29.1 L119.6,29.5 L120.2,29.9 L120.7,30.3 L121.3,30.8 L121.9,31.2 L122.5,31.6 L123.0,32.0 L123.6,32.4 L124.2,32.8 L124.8,33.2 L125.3,33.6 L125.9,34.0 L126.5,34.4 L127.1,34.8 L127.6,35.1 L128.2,35.5 L128.8,35.9 L129.4,36.2 L129.9,36.6 L130.5,36.9 L131.1,37.3 L131.7,37.6 L132.2,38.0 L132.8,38.3" style="stroke-width:2.2"/><text x="128" y="100" font-size="10" text-anchor="end">K</text><text x="24" y="16" font-size="10">L</text></svg><span class="v">Menos que dobra</span><h3>Rendimentos decrescentes</h3><p>Dificuldade de administrar. Isoquantas <strong>cada vez mais distantes</strong>.</p></div>
+  </div>
+  <div class="def"><span class="tag">Definição formal</span>Multiplicando os insumos por <em>t</em> (t &gt; 1): <mark>f(tK, tL) &gt; t · f(K, L)</mark> é crescente, <mark>f(tK, tL) = t · f(K, L)</mark> é constante e <mark>f(tK, tL) &lt; t · f(K, L)</mark> é decrescente.</div>
+  <p>Os rendimentos podem <strong>mudar com o nível de produção</strong>: normalmente, em níveis baixos a empresa tem rendimentos crescentes e, em níveis altos, decrescentes.</p>
+  <div class="box lembrete"><span class="tag">Não confunda com a lei dos rendimentos marginais decrescentes</span><p>A <strong>lei dos rendimentos marginais decrescentes</strong> vale no curto prazo e muda <strong>um insumo</strong> (o outro fica fixo). Os <strong>rendimentos de escala</strong> valem no longo prazo e mudam <strong>todos os insumos juntos</strong>. É possível ter PMg decrescente e, ao mesmo tempo, rendimentos crescentes de escala.</p></div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>Uma empresa que abre a 2ª, 3ª e 4ª frentes de obra pode ganhar com <strong>projeto padronizado, compra em volume e equipes especializadas</strong> (rendimentos crescentes). Se continuar crescendo, a gestão passa a consumir cada vez mais gente em coordenação e controle, e o ganho some (rendimentos decrescentes).</p></div>
+  <div class="box fora"><span class="tag">Em outras áreas</span><p>Em <strong>petróleo e gás</strong>, quando os investimentos crescem 20%, a produção tende a crescer mais de 20%: rendimentos crescentes. Uma <strong>empresa gigante</strong> com muitos níveis hierárquicos tem de alocar capital e trabalho em atividades de gestão que não acrescentam produção: rendimentos decrescentes.</p></div>
+  <div class="box alerta"><span class="tag">⚠ Atenção</span><p>Para concluir o tipo de rendimento pelo gráfico, é preciso saber <strong>quanto vale cada isoquanta</strong>. Só o formato e a distância das curvas, sem os valores de q, não permitem afirmar nada.</p></div>
+</section>
+
+<!-- 11 -->
+<section id="grau">
+  <div class="sec-head"><span class="sec-num">11</span><h2>Grau da função de produção</h2></div>
+  <div class="def"><span class="tag">Regra</span>Em funções <mark>Cobb-Douglas</mark> (q = A · K<sup>a</sup> · L<sup>b</sup>), o <mark>grau é a soma dos expoentes</mark>. O grau define o tipo de rendimento de escala.</div>
+  <div class="tbl"><table style="min-width:520px">
+    <thead><tr><th>Grau</th><th>Rendimentos de escala</th><th>Dobrando os insumos</th></tr></thead>
+    <tbody>
+      <tr><td class="num">Menor que 1</td><td class="l">Decrescentes</td><td class="l">A produção <strong>menos que dobra</strong>.</td></tr>
+      <tr><td class="num">Igual a 1</td><td class="l">Constantes</td><td class="l">A produção <strong>dobra</strong>.</td></tr>
+      <tr><td class="num">Maior que 1</td><td class="l">Crescentes</td><td class="l">A produção <strong>mais que dobra</strong>.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Conferindo com números</h3>
+  <div class="tbl"><table style="min-width:640px">
+    <thead><tr><th>Função</th><th>Grau</th><th>Com K = 9 e L = 8</th><th>Com K = 18 e L = 16 (dobro)</th><th>Resultado</th></tr></thead>
+    <tbody>
+      <tr><td class="num">q = K<sup>1/2</sup> · L<sup>1/3</sup></td><td class="num">0,83</td><td class="num">6</td><td class="num">10,69</td><td class="l">Menos que o dobro (12)</td></tr>
+      <tr><td class="num">q = K<sup>1/2</sup> · L<sup>1/2</sup></td><td class="num">1,00</td><td class="num">8,49</td><td class="num">16,97</td><td class="l">O dobro (16,97)</td></tr>
+      <tr><td class="num">q = K² · L</td><td class="num">3,00</td><td class="num">648</td><td class="num">5.184</td><td class="l">Oito vezes mais (2³)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Função homogênea de grau H</span><span>Multiplicando os insumos por <em>t</em>, a produção fica multiplicada por <strong>t<sup>H</sup></strong>. Em q = K · L, multiplicar por 4 dá 4² = 16 vezes mais: homogênea de <strong>grau 2</strong>.</span>
+      <div class="eq">q = K · L:   (10; 15) → 150
+(40; 60) → 2.400 = 16 × 150</div></div>
+    <div class="card"><span class="s">E quando a soma não é produto?</span><span>Se os fatores <strong>se somam</strong> (como q = x² + y), não basta somar expoentes. <strong>Teste com números</strong>: dobre os insumos e compare.</span>
+      <div class="eq">q = x² + y
+(2; 2) → 6
+(4; 4) → 20 &gt; 2 · 6 = 12
+⇒ rendimentos crescentes</div></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhes que enganam</span><ul>
+    <li>O <strong>A</strong> (multiplicador) <strong>não muda o grau</strong>: só desloca o nível de produção. "A &gt; 1" não gera rendimentos crescentes.</li>
+    <li>Em <strong>q = a + xy</strong>, o resultado <strong>depende do valor de a</strong>: com a = 10 (f vai de 14 para 26, menos que o dobro), decrescentes; com a = 5 (de 9 para 21), crescentes. Logo, retornos de escala <strong>indefinidos</strong>.</li>
+    <li>O <strong>expoente de cada fator</strong> é a <strong>elasticidade da produção</strong> em relação a ele. Em q = K<sup>a</sup>L<sup>b</sup>, o parâmetro <strong>a</strong> é a elasticidade em relação ao capital.</li>
+    <li>O expoente de cada fator também diz como é o seu PMg: <strong>menor que 1, decrescente</strong>; igual a 1, constante; maior que 1, crescente.</li>
+  </ul></div>
+  <div class="box obra"><span class="tag">Na incorporadora</span><p>O modelo <strong>q = 20 · K<sup>0,5</sup> · L<sup>0,5</sup></strong> tem grau 1: abrir uma segunda frente idêntica (dobrando K e L) <strong>dobra</strong> a produção, nem mais, nem menos. Se a função fosse K<sup>0,5</sup> · L<sup>0,3</sup> (grau 0,8), dobrar a estrutura daria menos que o dobro.</p></div>
+</section>
+
+<!-- 12 -->
+<section id="complementos">
+  <div class="sec-head"><span class="sec-num">12</span><h2>Teorema de Euler e elasticidade de substituição</h2></div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Teorema de Euler</span><span>Se q = f(K, L) é <strong>homogênea de grau H</strong>:</span>
+      <div class="eq">K · PMgK + L · PMgL = H · q</div>
+      <span>Com H = 1, a soma dos insumos vezes suas produtividades marginais é <strong>igual à produção</strong>.</span>
+      <div class="eq">q = √(K·L)   com K = 4, L = 9
+PMgK = 0,5 · √(L/K) = 0,75
+PMgL = 0,5 · √(K/L) = 0,333...
+4 · 0,75 + 9 · 0,333... = 3 + 3 = 6
+q = √36 = 6   ✓</div></div>
+    <div class="card"><span class="s">Elasticidade de substituição (σ)</span><span>Mede a sensibilidade com que a razão capital-trabalho (K/L) muda quando a TMST muda, ao longo de uma isoquanta.</span>
+      <div class="eq">σ = %Δ(K/L) ÷ %ΔTMST</div>
+      <div class="tbl" style="background:transparent"><table style="min-width:340px"><thead><tr><th>Tecnologia</th><th>σ</th></tr></thead><tbody>
+        <tr><td class="l">Proporções fixas (L)</td><td class="num">0</td></tr>
+        <tr><td class="l">Cobb-Douglas</td><td class="num">1</td></tr>
+        <tr><td class="l">Substitutos perfeitos (reta)</td><td class="num">∞</td></tr>
+      </tbody></table></div></div>
+  </div>
+  <p style="font-size:.9rem;color:var(--muted)">Em cada um desses casos o σ é constante: não muda com a combinação de insumos utilizada.</p>
+</section>
+
+<!-- Síntese -->
+<section id="resumo">
+  <div class="sec-head"><span class="sec-num">Síntese</span><h2>As ideias que ficam</h2></div>
+  <ol class="cola">
+    <li><span>Os <strong>fatores de produção</strong> são trabalho (L), capital físico (K) e matérias-primas. A função <strong>q = f(K, L)</strong> dá a quantidade máxima obtida com cada combinação.</span></li>
+    <li><span><strong>Curto prazo</strong>: pelo menos um insumo é fixo. <strong>Longo prazo</strong>: todos podem mudar. Não depende do calendário.</span></li>
+    <li><span><strong>PMeL = q ÷ L</strong> e <strong>PMgL = Δq ÷ ΔL</strong> (a derivada de q em relação a L).</span></li>
+    <li><span>A <strong>lei dos rendimentos marginais decrescentes</strong>: a partir de certo ponto, o PMg do insumo variável cai.</span></li>
+    <li><span>PMg &gt; 0, PT cresce. <strong>PMg = 0, PT máximo.</strong> PMg &lt; 0, PT cai. O PMg corta o PMe no <strong>máximo do PMe</strong>.</span></li>
+    <li><span>A <strong>isoquanta</strong> reúne as combinações de K e L que dão a mesma produção. É decrescente e convexa.</span></li>
+    <li><span>A <strong>TMST</strong> é a inclinação da isoquanta e é igual à razão entre os produtos marginais.</span></li>
+    <li><span><strong>Substitutos perfeitos</strong> têm isoquantas retas (TMST constante). <strong>Complementares perfeitos</strong> têm isoquantas em L (função mín).</span></li>
+    <li><span>Dobrando todos os insumos: produção que <strong>mais que dobra, dobra ou menos que dobra</strong> são rendimentos crescentes, constantes ou decrescentes.</span></li>
+    <li><span>Em Cobb-Douglas, o <strong>grau é a soma dos expoentes</strong>: menor que 1, decrescentes; 1, constantes; maior que 1, crescentes.</span></li>
+    <li><span>Função <strong>homogênea de grau H</strong>: multiplicar os insumos por t multiplica q por t<sup>H</sup>.</span></li>
+    <li><span><strong>σ</strong>: 0 nas proporções fixas, 1 na Cobb-Douglas, infinito nos substitutos perfeitos.</span></li>
+  </ol>
+
+  <h3>O que dominar, passo a passo</h3>
+  <p>Cada bloco traz a regra, o roteiro de cálculo e o detalhe que costuma enganar.</p>
+
+  <div class="def"><span class="tag"><span class="sg l">1</span> Rendimentos de escala</span>
+    Dobrando <strong>todos</strong> os insumos: produção que <mark>mais que dobra</mark> é crescente; <mark>dobra</mark>, constante; <mark>menos que dobra</mark>, decrescente.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Roteiro</span><span>1) Se for Cobb-Douglas, some os expoentes. 2) Se não for, escolha números, multiplique os insumos por 2 e compare com o dobro da produção. 3) Se houver um parâmetro desconhecido, teste dois valores dele.</span>
+      <div class="eq">q = x² + y
+(2; 2) → 6
+(4; 4) → 20 &gt; 12   ⇒ crescentes</div></div>
+    <div class="card"><span class="s">Quando o resultado é indefinido</span><span>Em <strong>q = a + xy</strong>, o tipo de rendimento depende de <strong>a</strong>.</span>
+      <div class="eq">a = 10:  (2; 2) → 14
+        (4; 4) → 26 &lt; 28  decrescentes
+a = 5:   (2; 2) → 9
+        (4; 4) → 21 &gt; 18  crescentes
+⇒ indefinidos</div></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhes que enganam</span><ul>
+    <li>q = mín(aK, bL) é <strong>sempre</strong> de rendimentos constantes, quaisquer que sejam a e b.</li>
+    <li>Isoquantas cada vez mais <strong>próximas</strong>: crescentes. <strong>Igualmente espaçadas</strong>: constantes. Cada vez mais <strong>distantes</strong>: decrescentes. Mas só se os valores de q de cada curva forem conhecidos.</li>
+    <li>Se um aumento proporcional de todos os investimentos gera uma produção <strong>proporcionalmente maior</strong>, há rendimentos crescentes de escala, e não "ganhos de lucro".</li>
+    <li>A fórmula formal: crescentes, f(tK, tL) &gt; t · f(K, L). Em 4f(x,y) &lt; f(4x,4y), há <strong>mais que o quádruplo</strong> de produto: crescentes.</li>
+  </ul></div>
+
+  <div class="def"><span class="tag"><span class="sg l">2</span> Grau da função e Cobb-Douglas</span>
+    <mark>Grau = soma dos expoentes</mark>. Menor que 1, decrescentes; igual a 1, constantes; maior que 1, crescentes.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Exemplos resolvidos</span>
+      <div class="eq">q = a · K · L              grau 2
+q = A · K^a · L^(1−a)     grau 1
+q = 10 · K^0,3 · L^0,7    grau 1
+q = 10 · K^(1/3) · L^(1/2)
+  1/3 + 1/2 = 5/6         decrescentes
+q = A · K^α · L^β · T^δ
+  grau 1 se α + β + δ = 1</div></div>
+    <div class="card"><span class="s">O que o grau e os expoentes dizem</span><span>O <strong>grau</strong> mede a escala. O <strong>expoente de cada fator</strong> diz como é o produto marginal dele (menor que 1: decrescente) e é a <strong>elasticidade da produção</strong> em relação a ele.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhes que enganam</span><ul>
+    <li>O parâmetro <strong>A não muda o grau</strong>: "A &gt; 1" só aumenta o nível de q, não cria rendimentos crescentes.</li>
+    <li>Somar os expoentes só vale para funções <strong>Cobb-Douglas</strong> (fatores multiplicados). Com fatores somados, teste com números.</li>
+    <li>Cobb-Douglas com expoentes <strong>α e β maiores que 1</strong> tem rendimentos crescentes de escala (a soma passa de 1).</li>
+  </ul></div>
+
+  <div class="def"><span class="tag"><span class="sg l">3</span> Isoquantas</span>
+    <mark>Todas as combinações de K e L que geram a mesma quantidade</mark>. São curvas <strong>decrescentes e convexas</strong>.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Como usar</span><span>Na isoquanta, <strong>acrescentar um insumo exige reduzir o outro</strong> para manter a produção. Mais longe da origem, mais produto. Para saber qual combinação compensa, é preciso conhecer os <strong>custos dos fatores</strong>.</span></div>
+    <div class="card"><span class="s">Lendo a tabela de produção</span><span>Escolha uma linha (L) e uma coluna (K) e leia a quantidade. Duas células com <strong>o mesmo valor</strong> estão na mesma isoquanta.</span>
+      <div class="eq">q(K=4, L=9) = 120
+q(K=9, L=4) = 120   ⇒ mesma isoquanta</div></div>
+  </div>
+
+  <div class="def"><span class="tag"><span class="sg l">4</span> Substitutos perfeitos e proporções fixas</span>
+    <mark>Retas</mark> (TMST constante): substitutos perfeitos. <mark>Em L</mark>: complementares perfeitos, função <strong>mín</strong>, PMg zero nos segmentos.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Reconhecendo pela função</span><div class="eq">q = 6a + 3b      soma ⇒ substitutos
+q = mín(K; 4L)   mín ⇒ proporção fixa
+K = 8, L = 2 ⇒ 8 (4 de K por 1 de L)</div></div>
+    <div class="card"><span class="s">Pelo gráfico</span><span>Isoquantas retas: <strong>substitutos perfeitos</strong>. Isoquantas em L: <strong>proporções fixas</strong>. Em L, aumentar só um insumo não muda a produção. Para saber a escala, ainda precisa dos valores de q em cada curva.</span></div>
+  </div>
+
+  <div class="def"><span class="tag"><span class="sg l">5</span> Lei dos rendimentos marginais decrescentes</span>
+    A partir de determinado ponto, o <mark>produto marginal do insumo variável diminui</mark>, com o outro insumo fixo.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Lendo uma função Cobb-Douglas</span><span>O PMg de um fator é <strong>decrescente</strong> se o expoente dele for <strong>menor que 1</strong>, constante se for igual a 1 e crescente se for maior que 1.</span>
+      <div class="eq">q = 10 · K^(1/3) · L^(1/2)
+expoente de L = 1/2 &lt; 1
+⇒ PMgL decrescente</div></div>
+    <div class="card"><span class="s">Em palavras</span><span>Mais trabalho com a mesma estrutura acrescenta <strong>cada vez menos</strong>. Isso não quer dizer que o produto total caia: ele só cai quando o PMg fica <strong>negativo</strong>.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhe que engana</span><p>Em q = x · y, o produto marginal de x é y: <strong>constante</strong> em x. Logo, não há "taxas marginais decrescentes" para x e y, embora a função tenha rendimentos crescentes de escala (grau 2).</p></div>
+
+  <div class="def"><span class="tag"><span class="sg l">6</span> Relações entre PT, PMe e PMg</span>
+    <mark>PMg = 0 ⇒ PT máximo.</mark> <mark>PMg = PMe ⇒ PMe máximo.</mark> Sempre que o PMg está acima do PMe, o PMe sobe; abaixo, cai.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Resumo das relações</span><div class="eq">PMg &gt; 0      PT cresce
+PMg = 0      PT máximo
+PMg &lt; 0      PT cai
+PMg máximo   PT desacelera
+PMg &gt; PMe    PMe sobe
+PMg = PMe    PMe máximo
+PMg &lt; PMe    PMe cai</div></div>
+    <div class="card"><span class="s">Conferindo na frente de obra</span><span>3º trabalhador: PMg = 30 (máximo). 4º: PMg = PMe = 20 (PMe máximo). 8º: PMg = 0 e PT = 112 (máximo). Do 5º em diante, PMg &lt; PMe e o PMe cai.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhe que engana</span><p>Com PMg &lt; PMe, <strong>os dois podem estar decrescendo</strong>, e o PMg ainda ser positivo. O PMe cai sempre que o PMg está abaixo dele.</p></div>
+
+  <div class="def"><span class="tag"><span class="sg l">7</span> TMST</span>
+    <mark>Inclinação da isoquanta</mark> = quanto de um insumo se abre mão por uma unidade do outro. Em módulo, é a <mark>razão entre os produtos marginais</mark>.</div>
+  <div class="grid g2">
+    <div class="card"><span class="s">Fórmula e ordem</span><span>TMST = −ΔL ÷ ΔK = PMgK ÷ PMgL, com <strong>L no eixo vertical e K no horizontal</strong>. Em geral: <strong>PMg do insumo do eixo horizontal ÷ PMg do insumo do eixo vertical</strong>.</span>
+      <div class="eq">24 = 6a + 3b
+PMga = 6     PMgb = 3
+TMST (b por a) = 6 ÷ 3 = 2</div></div>
+    <div class="card"><span class="s">Comportamento</span><span>Nas isoquantas convexas, a TMST <strong>diminui</strong> conforme se avança no eixo horizontal. Nas retas, é <strong>constante</strong>. Quanto mais inclinada a curva, maior a TMST.</span></div>
+  </div>
+  <div class="box alerta"><span class="tag">⚠ Detalhe que engana</span><p>A TMST de "capital por trabalho" e a de "trabalho por capital" são <strong>inversas</strong> uma da outra: PMgL ÷ PMgK e PMgK ÷ PMgL. Confira o que sai e o que entra.</p></div>
+
+  <h3>Complementos</h3>
+  <div class="box lembrete"><span class="tag">Produção máxima com função</span><p>Derive q em relação ao insumo, iguale o PMg a zero e escolha a raiz em que o PMg está <strong>decrescendo</strong>. Em q = 6L² − 0,1L³: PMg = 12L − 0,3L² = 0 ⇒ L = 40 e q = 3.200. A raiz L = 0 é descartada.</p></div>
+  <div class="box lembrete"><span class="tag">Euler e elasticidade de substituição</span><p><strong>Euler:</strong> K · PMgK + L · PMgL = H · q (com H = 1, soma igual a q). <strong>σ:</strong> 0 em proporções fixas, 1 em Cobb-Douglas, infinito em substitutos perfeitos, sempre constante.</p></div>
+
+  <h3>Quadro-resumo de fórmulas</h3>
+  <div class="tbl"><table style="min-width:620px">
+    <thead><tr><th>Fórmula</th><th>Para que serve</th></tr></thead>
+    <tbody>
+      <tr><td class="num">q = f(K, L)</td><td class="l">Função de produção: quantidade máxima com cada combinação de insumos.</td></tr>
+      <tr><td class="num">PMeL = q ÷ L</td><td class="l">Produtividade média do trabalho.</td></tr>
+      <tr><td class="num">PMgL = Δq ÷ ΔL = ∂q/∂L</td><td class="l">Produtividade marginal; derivada parcial da função.</td></tr>
+      <tr><td class="num">PMgL = 0</td><td class="l">Produto total máximo (com PMg decrescente).</td></tr>
+      <tr><td class="num">TMST = −ΔL ÷ ΔK = PMgK ÷ PMgL</td><td class="l">Inclinação da isoquanta (L vertical, K horizontal).</td></tr>
+      <tr><td class="num">q = mín(K; aL)</td><td class="l">Proporções fixas (isoquanta em L, σ = 0, grau 1).</td></tr>
+      <tr><td class="num">q = A · K<sup>a</sup> · L<sup>b</sup></td><td class="l">Cobb-Douglas: grau = a + b; σ = 1.</td></tr>
+      <tr><td class="num">f(tK, tL) &gt; = &lt; t · f(K, L)</td><td class="l">Rendimentos crescentes, constantes ou decrescentes.</td></tr>
+      <tr><td class="num">f(tK, tL) = t<sup>H</sup> · f(K, L)</td><td class="l">Função homogênea de grau H.</td></tr>
+      <tr><td class="num">K · PMgK + L · PMgL = H · q</td><td class="l">Teorema de Euler.</td></tr>
+      <tr><td class="num">σ = %Δ(K/L) ÷ %ΔTMST</td><td class="l">Elasticidade de substituição.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+</div>
+</main>
+<footer><div class="wrap">Os números das frentes de obra, padarias e demais exemplos (equipamentos, trabalhadores, produção, preços) são hipotéticos, criados para ilustrar o raciocínio.</div></footer>
+</body>
+</html>
